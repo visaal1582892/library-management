@@ -1,6 +1,8 @@
 package com.library_management.controllers.book;
 
+import com.library_management.domain.BookAvailability;
 import com.library_management.domain.BookCategory;
+import com.library_management.domain.BookStatus;
 
 import javafx.fxml.FXML;
 import javafx.scene.control.ComboBox;
@@ -14,23 +16,44 @@ public class AddBookController {
     @FXML
     private TextField authorField;
 
-    @FXML
-    private TextField statusField;
-
-    @FXML
-    private TextField availabilityField;
+//    @FXML
+//    private ComboBox<String> statusComboBox;
+//
+//    @FXML
+//    private ComboBox<String> availabilityComboBox;
 
     @FXML
     private ComboBox<String> categoryComboBox;
 
     @FXML
     public void initialize() {
-        // Example categories
+        // Adding categories from enum values.
     	for(BookCategory enumValue:BookCategory.values()) {
     		categoryComboBox.getItems().addAll(enumValue.getStringValue());
     	}
+    	
+//    	for(BookStatus enumValue:BookStatus.values()) {
+//    		statusComboBox.getItems().addAll(enumValue.getStringValue());
+//    	}
+//    	
+//    	for(BookAvailability enumValue:BookAvailability.values()) {
+//    		availabilityComboBox.getItems().addAll(enumValue.getStringValue());
+//    	}
     }
 
-    // Add methods to save book data, validate fields, etc.
+    // Methods to handle events
+    @FXML
+    public void addBook() {
+    	String title=titleField.getText();
+    	String author=authorField.getText();
+    	String category=categoryComboBox.getValue();
+//    	String status=statusComboBox.getValue();
+//    	String availability=availabilityComboBox.getValue();
+    	
+//    	System.out.println(title+" "+author+" "+category+" "+status+" "+availability);
+    	System.out.println(title+" "+author+" "+category);
+    }
+    
+    
 }
 
