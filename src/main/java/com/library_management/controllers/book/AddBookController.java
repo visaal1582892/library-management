@@ -4,14 +4,17 @@ import com.google.protobuf.DescriptorProtos.FieldDescriptorProto.Label;
 import com.library_management.domain.BookAvailability;
 import com.library_management.domain.BookCategory;
 import com.library_management.domain.BookStatus;
+import com.library_management.exceptions.DatabaseException;
 import com.library_management.exceptions.InvalidDetailsException;
 import com.library_management.services.implementation.BookServiceImplementation;
 
+import javafx.animation.PauseTransition;
 import javafx.fxml.FXML;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.TextField;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Text;
+import javafx.util.Duration;
 
 public class AddBookController {
 
@@ -28,7 +31,7 @@ public class AddBookController {
 //    private ComboBox<String> availabilityComboBox;
 
     @FXML
-    private ComboBox<String> categoryComboBox;
+    private ComboBox<BookCategory> categoryComboBox;
     
     @FXML
     private Text message;
@@ -36,20 +39,18 @@ public class AddBookController {
     @FXML
     public void initialize() {
         // Adding categories from enum values.
-    	for(BookCategory enumValue:BookCategory.values()) {
-    		categoryComboBox.getItems().addAll(enumValue.getStringValue());
-    	}
+    	categoryComboBox.getItems().addAll(BookCategory.values());
     	
-//    	for(BookStatus enumValue:BookStatus.values()) {
-//    		statusComboBox.getItems().addAll(enumValue.getStringValue());
-//    	}
+//    	statusComboBox.getItems().addAll(BookStatus.values());
 //    	
-//    	for(BookAvailability enumValue:BookAvailability.values()) {
-//    		availabilityComboBox.getItems().addAll(enumValue.getStringValue());
-//    	}
+//    	statusComboBox.getItems().addAll(BookAvailability.values());
     }
 
-
+    public void clearForm() {
+    	titleField.setText("");
+		authorField.setText("");
+		categoryComboBox.setValue(null);
+    }
    
    
     // Methods to handle events
@@ -57,8 +58,7 @@ public class AddBookController {
     public void addBook() throws InterruptedException {
     	String title=titleField.getText();
     	String author=authorField.getText();
-    	String categoryCombo=categoryComboBox.getValue();
-    	String category=(categoryCombo==null)?"":categoryCombo;
+    	BookCategory category=categoryComboBox.getSelectionModel().getSelectedItem();
 //    	String status=statusComboBox.getValue();
 //    	String availability=availabilityComboBox.getValue();
     	
@@ -66,10 +66,19 @@ public class AddBookController {
 //    	System.out.println(title+" "+author+" "+category);
     	try {
 			new BookServiceImplementation().validateAddBook(title, author, category);
-		} catch (InvalidDetailsException e) {
+			message.setText("Book Added Succesfully...");
+			message.setFill(Color.GREEN);
+			clearForm();
+			PauseTransition pauseTransition=new PauseTransition(Duration.seconds(3));
+			pauseTransition.setOnFinished(event -> message.setText(""));
+			pauseTransition.play();
+		} catch (InvalidDetailsException|DatabaseException e) {
 			
 			message.setText(e.getMessage());
 			message.setFill(Color.RED);
+			PauseTransition pauseTransition=new PauseTransition(Duration.seconds(3));
+			pauseTransition.setOnFinished(event -> message.setText(""));
+			pauseTransition.play();
 		}
     }
 

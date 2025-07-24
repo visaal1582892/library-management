@@ -1,13 +1,17 @@
 package com.library_management.services;
 
+import com.library_management.domain.BookAvailability;
+import com.library_management.domain.BookCategory;
+import com.library_management.domain.BookStatus;
+import com.library_management.exceptions.DatabaseException;
 import com.library_management.exceptions.InvalidDetailsException;
 
 public interface BookServiceInterface {
-	void validateAddBook (String title, String author, String category) throws InvalidDetailsException;
+	void validateAddBook (String title, String author, BookCategory category) throws InvalidDetailsException, DatabaseException;
 	
-	void validateUpdateBook(String title, String author, String category, char status);
+	void validateUpdateBook(int id, String title, String author, BookCategory category, BookStatus status);
 	
-	void validateUpdateBookAvailability(char availability);
+	void validateUpdateBookAvailability(int id, BookAvailability availability);
 	
 	void validateViewAllBooks();
 }
