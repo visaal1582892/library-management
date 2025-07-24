@@ -1,5 +1,7 @@
 package com.library_management.controllers.book;
 
+import com.library_management.domain.BookCategory;
+
 import javafx.fxml.FXML;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.TextField;
@@ -24,7 +26,9 @@ public class AddBookController {
     @FXML
     public void initialize() {
         // Example categories
-        categoryComboBox.getItems().addAll("Science", "History", "Fiction", "Biography");
+    	for(BookCategory enumValue:BookCategory.values()) {
+    		categoryComboBox.getItems().addAll(enumValue.getStringValue());
+    	}
     }
 
     // Add methods to save book data, validate fields, etc.
