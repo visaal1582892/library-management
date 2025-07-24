@@ -32,7 +32,7 @@ public class IssueRecordServiceImplementation implements IssueRecordServiceInter
 	}
 
 	@Override
-	public List<IssueRecord> getActiveIssuedBooks() {
+	public List<List<String>> getActiveIssuedBooks() {
 		return dao.getActiveIssuedBooks();
 	}
 

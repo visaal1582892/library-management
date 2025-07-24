@@ -9,5 +9,5 @@ public interface IssueRecordServiceInterface {
 	void returnBook(int issueId);
 	List<IssueRecord> getAllIssues();
 	List<IssueRecord> getOverdueBooks();
-	List<IssueRecord> getActiveIssuedBooks();
+	List<List<String>> getActiveIssuedBooks();
 }
