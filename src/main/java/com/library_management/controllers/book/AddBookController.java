@@ -41,6 +41,9 @@ public class AddBookController {
 //    	}
     }
 
+
+   
+   
     // Methods to handle events
     @FXML
     public void addBook() {
@@ -54,7 +57,6 @@ public class AddBookController {
 //    	System.out.println(title+" "+author+" "+category+" "+status+" "+availability);
     	System.out.println(title+" "+author+" "+category);
     }
-    
-    
+
 }
 
