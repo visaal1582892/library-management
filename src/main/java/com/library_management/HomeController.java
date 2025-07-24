@@ -12,7 +12,7 @@ public class HomeController {
 	 
 	 @FXML
 	    private void memberManagement() throws IOException {
-	        App.setRoot("home");
+	        App.setRoot("memberOptions");
 	    }
 	 
 	 @FXML
