@@ -4,25 +4,33 @@
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.effect.Blend?>
 <?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.FlowPane?>
 <?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
 
-<AnchorPane focusTraversable="true" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.library_management.HomeController">
+<AnchorPane focusTraversable="true" maxHeight="-Infinity" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/24.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.library_management.HomeController">
    <children>
-      <Button fx:id="book" layoutX="36.0" layoutY="188.0" mnemonicParsing="false" onAction="#bookManagement" text="Book">
+      <Button fx:id="book" contentDisplay="CENTER" layoutX="180.0" layoutY="140.0" mnemonicParsing="false" onAction="#bookManagement" prefHeight="38.0" prefWidth="200.0" text="Book" textAlignment="CENTER">
          <font>
             <Font size="17.0" />
          </font>
       </Button>
-      <Button fx:id="memberManagement" layoutX="171.0" layoutY="189.0" mnemonicParsing="false" onAction="#memberManagement" text="MemberManagement">
+      <Button fx:id="memberManagement" layoutX="180.0" layoutY="220.0" mnemonicParsing="false" onAction="#memberManagement" prefHeight="36.0" prefWidth="200.0" text="MemberManagement" textAlignment="CENTER">
          <font>
             <Font size="16.0" />
          </font>
       </Button>
-      <Button fx:id="issueBook" layoutX="399.0" layoutY="188.0" mnemonicParsing="false" onAction="#issueAndReturnBooks" text="Issue&amp;Return Books">
+      <Button fx:id="issueBook" layoutX="180.0" layoutY="300.0" mnemonicParsing="false" onAction="#issueAndReturnBooks" prefHeight="38.0" prefWidth="200.0" text="Issue&amp;Return Books" textAlignment="CENTER">
          <font>
             <Font size="17.0" />
          </font>
       </Button>
+      <FlowPane prefHeight="200.0" prefWidth="200.0" />
+      <Text layoutX="59.0" layoutY="70.0" strokeType="OUTSIDE" strokeWidth="0.0" text="LIBRARY MANAGEMENT SYSTEM">
+         <font>
+            <Font size="33.0" />
+         </font>
+      </Text>
    </children>
    <opaqueInsets>
       <Insets />
