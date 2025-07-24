@@ -30,6 +30,5 @@ com\library_management\dao\MemberDAOInterface.class
 com\library_management\controllers\member\UpdateMemberDetailsController.class
 com\library_management\utilities\DBConnection.class
 com\library_management\domain\MemberGender.class
-com\library_management\Main.class
 com\library_management\services\implementation\BookServiceImplementation.class
 com\library_management\controllers\book\AddBookController.class
