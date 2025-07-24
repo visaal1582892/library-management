@@ -7,6 +7,11 @@ public class BookServiceImplementation {
 		if(title.trim().equals("") || author.trim().equals("") || category.trim().equals("")) {
 			throw new InvalidDetailsException("All Details Must Be Given...");
 		}
-//		else if()
+		else if(title.length()>255 || author.length()>255 || category.length()>100) {
+			throw new InvalidDetailsException("Lengths Of Fields Exceeded Max Length...");
+		}
+		else {
+			
+		}
 	}
 }
