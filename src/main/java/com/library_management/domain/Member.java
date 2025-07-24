@@ -4,6 +4,13 @@ public class Member {
 	private int memberId;
 	private String memberName;
 	private String memberMail;
+	private String mobileNo;
+	public String getMobileNo() {
+		return mobileNo;
+	}
+	public void setMobileNo(String mobileNo) {
+		this.mobileNo = mobileNo;
+	}
 	private String gender;
 	private String memberAddress;
 	public int getMemberId() {
@@ -45,10 +52,20 @@ public class Member {
 		this.gender = gender;
 		this.memberAddress = memberAddress;
 	}
+	public Member(int memberId, String memberName, String memberMail, String mobileNo, String gender,
+			String memberAddress) {
+		super();
+		this.memberId = memberId;
+		this.memberName = memberName;
+		this.memberMail = memberMail;
+		this.mobileNo = mobileNo;
+		this.gender = gender;
+		this.memberAddress = memberAddress;
+	}
 	@Override
 	public String toString() {
 		return "Member [memberId=" + memberId + ", memberName=" + memberName + ", memberMail=" + memberMail
-				+ ", gender=" + gender + ", memberAddress=" + memberAddress + "]";
+				+ ", mobileNo=" + mobileNo + ", gender=" + gender + ", memberAddress=" + memberAddress + "]";
 	}
 	
 

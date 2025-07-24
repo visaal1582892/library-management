@@ -4,22 +4,21 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/24.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.library_management.controllers.member.MemberOptionsController">
    <children>
-      <Button fx:id="register" layoutX="248.0" layoutY="98.0" mnemonicParsing="false" onAction="#onRegister" text="Register Member" textOverrun="CLIP">
+      <Button fx:id="register" layoutX="180.0" layoutY="100.0" mnemonicParsing="false" onAction="#onRegister" prefHeight="52.0" prefWidth="245.0" text="Register Member">
          <font>
-            <Font size="15.0" />
+            <Font name="System Bold Italic" size="25.0" />
          </font>
       </Button>
-      <Button fx:id="updateMember" layoutX="248.0" layoutY="188.0" mnemonicParsing="false" onAction="#updateMember" text="Update Member">
+      <Button fx:id="updateMember" layoutX="180.0" layoutY="200.0" mnemonicParsing="false" onAction="#updateMember" prefHeight="52.0" prefWidth="245.0" text="Update Member">
          <font>
-            <Font size="15.0" />
+            <Font name="System Bold Italic" size="25.0" />
          </font>
       </Button>
-      <Button fx:id="viewAllMembers" layoutX="245.0" layoutY="282.0" mnemonicParsing="false" onAction="#viewAllMembers" text="View All Members">
+      <Button fx:id="viewAllMembers" layoutX="180.0" layoutY="300.0" mnemonicParsing="false" onAction="#viewAllMembers" text="View All Members">
          <font>
-            <Font size="15.0" />
+            <Font name="System Bold Italic" size="25.0" />
          </font>
       </Button>
    </children>
