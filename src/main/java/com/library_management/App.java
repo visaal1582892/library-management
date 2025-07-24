@@ -8,6 +8,8 @@ import javafx.stage.Stage;
 
 import java.io.IOException;
 
+import com.library_management.utilities.DBConnection;
+
 public class App extends Application {
 
     private static Scene scene;
@@ -29,6 +31,7 @@ public class App extends Application {
     }
 
     public static void main(String[] args) {
+    	DBConnection.connectToDB("jdbc:mysql://localhost:3306/lms");
         launch();
     }
 

@@ -1,7 +1,11 @@
 package com.library_management.services;
 
 public interface BookServiceInterface {
-	void validateAddBook(String title, String author, String category, char status, char availability);
+	void validateAddBook(String title, String author, String category);
 	
-	void updateBook(String title, String author, String category, char status, char availability);
+	void validateUpdateBook(String title, String author, String category, char status);
+	
+	void validateUpdateBookAvailability(char availability);
+	
+	void validateViewAllBooks();
 }
