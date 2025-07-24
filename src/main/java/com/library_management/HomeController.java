@@ -7,7 +7,7 @@ import javafx.fxml.FXML;
 public class HomeController {
 	 @FXML
 	    private void bookManagement() throws IOException {
-	        App.setRoot("home");
+	        App.setRoot("bookOptions");
 	    }
 	 
 	 @FXML
