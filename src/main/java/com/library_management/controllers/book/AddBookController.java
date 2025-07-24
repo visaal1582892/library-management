@@ -1,12 +1,17 @@
 package com.library_management.controllers.book;
 
+import com.google.protobuf.DescriptorProtos.FieldDescriptorProto.Label;
 import com.library_management.domain.BookAvailability;
 import com.library_management.domain.BookCategory;
 import com.library_management.domain.BookStatus;
+import com.library_management.exceptions.InvalidDetailsException;
+import com.library_management.services.implementation.BookServiceImplementation;
 
 import javafx.fxml.FXML;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.TextField;
+import javafx.scene.paint.Color;
+import javafx.scene.text.Text;
 
 public class AddBookController {
 
@@ -24,6 +29,9 @@ public class AddBookController {
 
     @FXML
     private ComboBox<String> categoryComboBox;
+    
+    @FXML
+    private Text message;
 
     @FXML
     public void initialize() {
@@ -46,15 +54,23 @@ public class AddBookController {
    
     // Methods to handle events
     @FXML
-    public void addBook() {
+    public void addBook() throws InterruptedException {
     	String title=titleField.getText();
     	String author=authorField.getText();
-    	String category=categoryComboBox.getValue();
+    	String categoryCombo=categoryComboBox.getValue();
+    	String category=(categoryCombo==null)?"":categoryCombo;
 //    	String status=statusComboBox.getValue();
 //    	String availability=availabilityComboBox.getValue();
     	
 //    	System.out.println(title+" "+author+" "+category+" "+status+" "+availability);
-    	System.out.println(title+" "+author+" "+category);
+//    	System.out.println(title+" "+author+" "+category);
+    	try {
+			new BookServiceImplementation().validateAddBook(title, author, category);
+		} catch (InvalidDetailsException e) {
+			
+			message.setText(e.getMessage());
+			message.setFill(Color.RED);
+		}
     }
 
 }
