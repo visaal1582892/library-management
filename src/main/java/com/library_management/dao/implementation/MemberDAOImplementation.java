@@ -14,6 +14,7 @@ import com.library_management.utilities.DBConnection;
 public class MemberDAOImplementation implements MemberDAOInterface {
 
 	@Override
+
 	public void insertMember(Member member) throws SQLException {
 		String query="insert into members values (?,?,?,?,?)";
 		Connection con=DBConnection.getConn();
@@ -24,7 +25,7 @@ public class MemberDAOImplementation implements MemberDAOInterface {
 		ps.setString(4,member.getGender());
 		ps.setString(5, member.getMemberAddress());
 		ps.execute();	
-		
+
 	}
 
 	@Override
