@@ -1,5 +1,7 @@
 package com.library_management.controllers.member;
 
+
+
 import java.io.IOException;
 
 import com.library_management.App;
@@ -7,14 +9,8 @@ import com.library_management.App;
 import javafx.fxml.FXML;
 import javafx.scene.control.ComboBox;
 
-public class AddMemberController {
+public class MemberManagementController{
 
-	@FXML
-
-	private ComboBox<String> genderComboBox;
-	@FXML
-	public void initialize()
-	{
-		genderComboBox.getItems().addAll("Male","Female");	
-	}
 }
+	
+

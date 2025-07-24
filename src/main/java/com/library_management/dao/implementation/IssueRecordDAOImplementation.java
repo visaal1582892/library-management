@@ -21,7 +21,7 @@ public class IssueRecordDAOImplementation implements IssueRecordDAOInterface {
 	public void issueBook(IssueRecord issue) {
 		Connection conn = null;
 		try {
-			conn = DBConnection.getConnection();
+			conn = DBConnection.getConn();
 
 			// Check if member exists
 			String memberSql = "SELECT COUNT(*) FROM members WHERE member_id = ?";
@@ -107,7 +107,7 @@ public class IssueRecordDAOImplementation implements IssueRecordDAOInterface {
 	public void returnBook(int issueId) {
 		Connection conn = null;
 		try {
-			conn = DBConnection.getConnection();
+			conn = DBConnection.getConn();
 
 			// Verify issue record and get BookId
 			String selectSql = "SELECT book_id FROM issue_records WHERE issue_id = ? AND satus = 'I'";
@@ -162,7 +162,7 @@ public class IssueRecordDAOImplementation implements IssueRecordDAOInterface {
 	public List<IssueRecord> getOverdueBooks() {
 		List<IssueRecord> overdue = new ArrayList<>();
 		String sql = "SELECT * FROM issue_records WHERE status = 'I' AND issue_date < ?";
-		try (Connection conn = DBConnection.getConnection(); PreparedStatement pstmt = conn.prepareStatement(sql)) {
+		try (Connection conn = DBConnection.getConn(); PreparedStatement pstmt = conn.prepareStatement(sql)) {
 			pstmt.setDate(1, Date.valueOf(LocalDate.now().minusDays(17)));
 			ResultSet rs = pstmt.executeQuery();
 			while (rs.next()) {
@@ -185,7 +185,7 @@ public class IssueRecordDAOImplementation implements IssueRecordDAOInterface {
 	public List<IssueRecord> getAllIssues() {
 		List<IssueRecord> issues = new ArrayList<>();
 		String sql = "SELECT * FROM issue_records";
-		try (Connection conn = DBConnection.getConnection();
+		try (Connection conn = DBConnection.getConn();
 				Statement stmt = conn.createStatement();
 				ResultSet rs = stmt.executeQuery(sql)) {
 			while (rs.next()) {
@@ -214,7 +214,7 @@ public class IssueRecordDAOImplementation implements IssueRecordDAOInterface {
 				+ "WHERE ir.Status = 'I' \r\n"
 				+ "  AND b.Status = 'A';\r\n"
 				+ "";
-		try (Connection conn = DBConnection.getConnection();
+		try (Connection conn = DBConnection.getConn();
 				Statement stmt = conn.createStatement();
 				ResultSet rs = stmt.executeQuery(sql)) {
 			while (rs.next()) {
@@ -236,7 +236,7 @@ public class IssueRecordDAOImplementation implements IssueRecordDAOInterface {
 	private void logIssueAction(int issueId) {
 		String selectSql = "SELECT * FROM issue_records where issue_id = ?";
 		String logSql = "INSERT INTO issue_records_log (issue_id, book_id, member_id, status, issue_date, return_date) VALUES (?, ?, ?, ?, ?, ?)";
-		try (Connection conn = DBConnection.getConnection();
+		try (Connection conn = DBConnection.getConn();
 				PreparedStatement pstmt = conn.prepareStatement(logSql);
 				Statement stmt = conn.createStatement();
 				ResultSet rs = stmt.executeQuery(selectSql)) {

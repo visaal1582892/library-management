@@ -1,17 +1,61 @@
 package com.library_management.utilities;
 
 import java.sql.Connection;
-import java.sql.DriverManager;
 import java.sql.SQLException;
 
-public class DBConnection {
+import java.sql.Statement;
+import com.mysql.cj.jdbc.MysqlDataSource;
 
-	private static final String URL = "jdbc:mysql://localhost:3306/lms";
-	private static final String USER = "root";
-	private static final String PASSWORD = System.getenv("password");
+
+public class DBConnection {
+	private static Connection conn;
+	private static Statement statement;
 	
-	public static Connection getConnection() throws SQLException {
-		return DriverManager.getConnection(URL, USER, PASSWORD);
+	public static void setConn(Connection conn) {
+		DBConnection.conn=conn;
+	}
+	
+	public static Connection getConn() {
+		return DBConnection.conn;
+	}
+	
+	public static void setStatement(Statement statement) {
+		DBConnection.statement=statement;
+	}
+	
+	public static Statement getStatement() {
+		return DBConnection.statement;
+	}
+	
+	public static void closeStatement() {
+		try {
+			DBConnection.getStatement().close();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+	}
+	
+	public static void closeConn() {
+		try {
+			DBConnection.getConn().close();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+	}
+	
+	public static void connectToDB(String connectionString) {
+		MysqlDataSource dataSource=new MysqlDataSource();
+		dataSource.setUser(System.getenv("DATABASE_USER"));
+		dataSource.setPassword(System.getenv("DATABASE_PASSWORD"));
+		dataSource.setURL(connectionString);
+		try {
+			Connection conn=dataSource.getConnection();
+			Statement statement=conn.createStatement();
+			setConn(conn);
+			setStatement(statement);
+		}catch(SQLException e) {
+			e.printStackTrace();
+		}
 	}
 
 }

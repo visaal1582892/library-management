@@ -16,4 +16,16 @@ public enum BookStatus {
 			return 'N';
 		}
 	}
+	
+	public String getStringValue() {
+		int ordinal=this.ordinal();
+		switch(ordinal) {
+		case 0:
+			return "Active";
+		case 1:
+			return "Inactive";
+		default:
+			return "NA";
+		}
+	}
 }

@@ -16,4 +16,16 @@ public enum BookAvailability {
 			return 'N';
 		}
 	}
+	
+	public String getStringValue() {
+		int ordinal=this.ordinal();
+		switch(ordinal) {
+		case 0:
+			return "Available";
+		case 1:
+			return "Issued";
+		default:
+			return "NA";
+		}
+	}
 }
