@@ -46,7 +46,8 @@ public class AddBookController {
     public void addBook() {
     	String title=titleField.getText();
     	String author=authorField.getText();
-    	String category=categoryComboBox.getValue();
+    	String categoryCombo=categoryComboBox.getValue();
+    	String category=(categoryCombo==null)?"":categoryCombo;
 //    	String status=statusComboBox.getValue();
 //    	String availability=availabilityComboBox.getValue();
     	
