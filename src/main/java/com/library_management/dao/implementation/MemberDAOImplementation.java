@@ -15,13 +15,13 @@ public class MemberDAOImplementation implements MemberDAOInterface {
 
 	@Override
 	public void addMember(Member member) {
-		String query="insert into members values (?,?,?)";
-		Connection con=DBConnection.getConn();
-		PreparedStatement ps=con.prepareStatement(query);
-		ps.setString(1,member.getMemberId());
-		ps.setString(2, member.getName());
-		ps.setInt(3, member.getAge());
-		ps.execute();	
+//		String query="insert into members values (?,?,?)";
+//		Connection con=DBConnection.getConn();
+//		PreparedStatement ps=con.prepareStatement(query);
+//		ps.setString(1,member.getMemberId());
+//		ps.setString(2, member.getName());
+//		ps.setInt(3, member.getAge());
+//		ps.execute();	
 		
 	}
 
