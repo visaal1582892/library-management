@@ -6,8 +6,9 @@ import java.util.List;
 import com.library_management.domain.Member;
 
 public interface MemberDAOInterface {
-   public void addMember(Member member);
+   public void insertMember(Member member) throws SQLException;
    List<Member> getAllMembers() throws SQLException;
    public void updateMember();
+   public void deleteBook();
    
 }
