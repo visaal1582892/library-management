@@ -9,12 +9,15 @@ import com.library_management.domain.BookCategory;
 import com.library_management.domain.BookStatus;
 import com.library_management.exceptions.DatabaseException;
 import com.library_management.exceptions.InvalidDetailsException;
+import com.library_management.services.implementation.BookServiceImplementation;
+import com.library_management.utilities.ResponseHandler;
 
 import javafx.animation.PauseTransition;
 import javafx.fxml.FXML;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.TextField;
 import javafx.scene.paint.Color;
+import javafx.scene.paint.Paint;
 import javafx.scene.text.Text;
 import javafx.util.Duration;
 
@@ -82,13 +85,18 @@ public class UpdateBookDetailsController {
 	@FXML
 	public void handleButtonClick() {
 		try {
-			
-		}catch(Exception e) {
-			message.setText(e.getMessage());
-			message.setFill(Color.RED);
-			PauseTransition pauseTransition=new PauseTransition(Duration.seconds(3));
-			pauseTransition.setOnFinished(event -> message.setText(""));
-			pauseTransition.play();
+			if(bookSelector.getValue()==null) {
+				throw new InvalidDetailsException("First Select Book To Update...");
+			}
+			int id=Integer.parseInt(bookSelector.getValue().split("\\.")[0].trim());
+			String title=titleField.getText();
+			String author=authorField.getText();
+			BookCategory category=categoryComboBox.getSelectionModel().getSelectedItem();
+			BookStatus status=statusComboBox.getSelectionModel().getSelectedItem();
+			new BookServiceImplementation().validateUpdateBookDetails(id, title, author, category, status);
+			ResponseHandler.showResponse(message, "Book Details Updated Succesfully...", Color.GREEN);
+		}catch(InvalidDetailsException|DatabaseException e) {
+			ResponseHandler.showResponse(message, e.getMessage(), Color.RED);
 		}
 		System.out.println(titleField.getText()+" "+
 		authorField.getText()+" "+

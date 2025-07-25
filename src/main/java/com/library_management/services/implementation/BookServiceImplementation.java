@@ -35,7 +35,7 @@ public class BookServiceImplementation implements BookServiceInterface {
 	}
 
 	@Override
-	public void validateUpdateBookDetails(int id, String title, String author, BookCategory category, BookStatus status) throws InvalidDetailsException,DatabaseException {
+	public void validateUpdateBookDetails(int id, String title, String author, BookCategory category, BookStatus status) throws InvalidDetailsException, DatabaseException {
 		if(title.trim().equals("") || author.trim().equals("") || category==null || status==null) {
 			throw new InvalidDetailsException("All Details Must Be Given...");
 		}
@@ -43,27 +43,24 @@ public class BookServiceImplementation implements BookServiceInterface {
 			throw new InvalidDetailsException("Lengths Of Fields Exceeded Max Length...");
 		}
 		else {
+			Book currentBook=null;
 			try {
-				Book currentBook=new BookDAOImplementation().selectBookById(id);
-				if(currentBook==null) {
-					throw new InvalidDetailsException("Book Details Not Found...");
-				}
-				
-//				Checking if atleast one detail is changed or not
-				if(currentBook.getTitle().equals(title) && currentBook.getAuthor().equals(author) && currentBook.getCategory()==category && currentBook.getStatus()==status) {
-					throw new InvalidDetailsException("Atleast One Detail Should Be Updated...");
-				}
-				
-//				Creating a new Book obj
-				Book newBook=new Book(id,title, author, category,status);
-//				try {
-//					new BookDAOImplementation().updateBookDetails(id, newBook);
-//				} catch (DatabaseException e) {
-//					throw new DatabaseException(e.getMessage());
-//				}
-			} catch (DatabaseException e) {
+				currentBook=new BookDAOImplementation().selectBookById(id);
+			}catch(DatabaseException e) {
+				throw new DatabaseException("Mentioned Book Not Found...");
+			}
+			if(currentBook==null) {
 				throw new InvalidDetailsException("Book Details Not Found...");
 			}
+			
+//			Checking if atleast one detail is changed or not
+			if(currentBook.getTitle().equals(title) && currentBook.getAuthor().equals(author) && currentBook.getCategory()==category && currentBook.getStatus()==status) {
+				throw new InvalidDetailsException("Atleast One Detail Should Be Updated...");
+			}
+			
+//			Creating a new Book obj
+			Book newBook=new Book(id, title, author, category,status);
+			new BookDAOImplementation().updateBookDetails(currentBook, newBook);
 		}
 	}
 
