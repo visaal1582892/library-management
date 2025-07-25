@@ -22,27 +22,33 @@ public class IssueRecordDAOImplementation implements IssueRecordDAOInterface {
 		
 		try (Connection conn = DBConnection.getConn()) {
 			String memberSql = "SELECT * FROM members WHERE member_id = ?";
-			try (PreparedStatement memberStmt = conn.prepareStatement(memberSql)) {
+			PreparedStatement memberStmt = conn.prepareStatement(memberSql);
 				memberStmt.setInt(1, issue.getMemberId());
-				ResultSet rs = memberStmt.executeQuery();
-				if (!rs.next()) {
+				ResultSet memberRs = memberStmt.executeQuery();
+				if (!memberRs.next()) {
 					System.out.println("Member does not exist");
 					return;
 				}
-			}
+			
 
-			String bookSql = "SELECT status, availability FROM books WHERE book_id = ?";
-			try (PreparedStatement bookStmt = conn.prepareStatement(bookSql)) {
+			String bookSql = "SELECT * FROM books WHERE book_id = ?";
+			PreparedStatement bookStmt = conn.prepareStatement(bookSql);
 				bookStmt.setInt(1, issue.getBookId());
-				ResultSet rs = bookStmt.executeQuery();
-				if (!rs.next()) {
+				ResultSet bookRs = bookStmt.executeQuery();
+				if (!bookRs.next()) {
 					System.out.println("Book does not exist");
 					return;
 				}
 
-				char status = rs.getString("status").charAt(0);
-				char availability = rs.getString("availability").charAt(0);
-
+				char status = bookRs.getString("status").charAt(0);
+				char availability = bookRs.getString("availability").charAt(0);
+				System.out.println("-----------");
+				System.out.println(bookRs.getString("title"));
+				System.out.println(bookRs.getString("author"));
+				System.out.println(bookRs.getString("category"));
+				System.out.println(status);
+				System.out.println(availability);
+				System.out.println("-----------");
 				if (status != 'A') {
 					System.out.println("Book is not active");
 					return;
@@ -51,26 +57,26 @@ public class IssueRecordDAOImplementation implements IssueRecordDAOInterface {
 					System.out.println("Book is not available for issue");
 					return;
 				}
-			}
+			
 
 			String issueSql = "INSERT INTO issue_records (book_id, member_id, status, issue_date, return_date) VALUES (?, ?, ?, ?, ?)";
-			try (PreparedStatement pstmt = conn.prepareStatement(issueSql)) {
+		 PreparedStatement pstmt = conn.prepareStatement(issueSql);
 				pstmt.setInt(1, issue.getBookId());
 				pstmt.setInt(2, issue.getMemberId());
 				pstmt.setString(3, String.valueOf(issue.getStatus()));
 				pstmt.setDate(4, Date.valueOf(issue.getIssueDate()));
 				pstmt.setDate(5, issue.getReturnDate() != null ? Date.valueOf(issue.getReturnDate()) : null);
 				pstmt.executeUpdate();
-			}
+			
 
 			String updateSql = "UPDATE books SET availability = 'I' WHERE book_id = ?";
-			try (PreparedStatement updateStmt = conn.prepareStatement(updateSql)) {
+			PreparedStatement updateStmt = conn.prepareStatement(updateSql);
 				updateStmt.setInt(1, issue.getBookId());
 				int rows = updateStmt.executeUpdate();
 				if (rows == 0) {
 					System.out.println("Failed to update book availability");
 				}
-			}
+			
 
 		} catch (SQLException e) {
 			e.printStackTrace();
