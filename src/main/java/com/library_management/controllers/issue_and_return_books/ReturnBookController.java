@@ -35,15 +35,15 @@ public class ReturnBookController {
 
 	@FXML
 	public void initialize() {
-		try {
-			List<Book> booksList = new BookDAOImplementation().selectBooksByMemberId();
-			this.setBooksList(booksList);
-			for (Book book : booksList) {
-				bookSelector.getItems().add(book.getBookId() + ". " + book.getTitle());
-			}
-		} catch (DatabaseException e) {
-			e.printStackTrace();
-		}
+//		try {
+//			List<Book> booksList = new BookDAOImplementation().selectBooksByMemberId();
+//			this.setBooksList(booksList);
+//			for (Book book : booksList) {
+//				bookSelector.getItems().add(book.getBookId() + ". " + book.getTitle());
+//			}
+//		} catch (DatabaseException e) {
+//			e.printStackTrace();
+//		}
 	}
 	
 	@FXML
