@@ -7,16 +7,17 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="562.0" prefWidth="756.0" xmlns="http://javafx.com/javafx/24.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.library_management.controllers.book.ViewAllBooksController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="556.0" prefWidth="776.0" xmlns="http://javafx.com/javafx/24.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.library_management.controllers.book.ViewAllBooksController">
    <children>
-      <TableView fx:id="viewBooksTable" layoutX="4.0" layoutY="156.0" prefHeight="392.0" prefWidth="749.0">
+      <TableView fx:id="viewBooksTable" layoutX="4.0" layoutY="156.0" prefHeight="392.0" prefWidth="767.0">
         <columns>
-          <TableColumn fx:id="bookIdColumn" prefWidth="53.0" text="Book Id" />
-          <TableColumn fx:id="titleColumn" prefWidth="203.0" text="Title" />
-            <TableColumn fx:id="authorColumn" prefWidth="192.0" text="Author" />
-            <TableColumn fx:id="categoryColumn" prefWidth="144.0" text="Category" />
-            <TableColumn fx:id="statusColumn" prefWidth="79.0" text="Status" />
-            <TableColumn fx:id="availabilityColumn" prefWidth="77.0" text="Availability" />
+          <TableColumn fx:id="bookIdColumn" prefWidth="64.0" text="Book Id" />
+          <TableColumn fx:id="titleColumn" prefWidth="109.0" text="Title" />
+            <TableColumn fx:id="authorColumn" prefWidth="117.0" text="Author" />
+            <TableColumn fx:id="categoryColumn" prefWidth="103.0" text="Category" />
+            <TableColumn fx:id="statusColumn" prefWidth="73.0" text="Status" />
+            <TableColumn fx:id="availabilityColumn" prefWidth="79.0" text="Availability" />
+            <TableColumn fx:id="actionsColumn" prefWidth="220.0" text="Actions" />
         </columns>
       </TableView>
       <Label alignment="CENTER" contentDisplay="CENTER" layoutX="223.0" layoutY="14.0" prefHeight="46.0" prefWidth="311.0" text="All Books" textAlignment="CENTER" underline="true">
@@ -24,7 +25,7 @@
             <Font size="26.0" />
          </font>
       </Label>
-      <Text fx:id="message" layoutX="13.0" layoutY="103.0" strokeType="OUTSIDE" strokeWidth="0.0" textAlignment="CENTER" wrappingWidth="731.9814453125" text="">
+      <Text fx:id="message" layoutX="13.0" layoutY="103.0" strokeType="OUTSIDE" strokeWidth="0.0" text="" textAlignment="CENTER" wrappingWidth="731.9814453125">
          <font>
             <Font size="20.0" />
          </font>
