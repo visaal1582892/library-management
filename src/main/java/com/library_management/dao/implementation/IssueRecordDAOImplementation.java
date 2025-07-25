@@ -154,7 +154,8 @@ public class IssueRecordDAOImplementation implements IssueRecordDAOInterface {
 	public List<IssueRecord> getAllIssues() {
 		List<IssueRecord> issues = new ArrayList<>();
 		String sql = "SELECT * FROM issue_records";
-		try (Connection conn = DBConnection.getConn()) {
+		Connection conn = DBConnection.getConn();
+		try  {
 			Statement stmt = conn.createStatement();
 			ResultSet rs = stmt.executeQuery(sql);
 			while (rs.next()) {

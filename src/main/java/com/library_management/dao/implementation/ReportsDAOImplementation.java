@@ -3,19 +3,23 @@ package com.library_management.dao.implementation;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
+import com.library_management.dao.IssueRecordDAOInterface;
 import com.library_management.dao.ReportsDAOInterface;
 import com.library_management.domain.Book;
+import com.library_management.domain.IssueRecord;
 import com.library_management.exceptions.DatabaseException;
 import com.library_management.services.implementation.ReportsServiceImplementation;
 import com.library_management.utilities.DBConnection;
 
 public class ReportsDAOImplementation implements ReportsDAOInterface {
+	IssueRecordDAOInterface dao = new IssueRecordDAOImplementation();
 
 	@Override
 	public Map<Object, Long> countOfBooksPerCategory() {
@@ -39,4 +43,20 @@ public class ReportsDAOImplementation implements ReportsDAOInterface {
 		return countMap;
 	}
 	
+	@Override
+	public List<IssueRecord> getOverdueBooks() {
+		//return dao.getOverdueBooks();
+		List<IssueRecord> overdue = dao.getAllIssues().stream()
+				.filter(b -> b.getReturnDate().isBefore(LocalDate.now().minusDays(17)))
+				.collect(Collectors.toList());
+		return overdue;
+	}
+
+	@Override
+	public List<List<String>> getActiveIssuedBooks() {
+		List<List<String>> data =  dao.getStatusTable().stream()
+				.filter(row -> row.get(4).equals("A") && row.get(3).equals("I"))
+				.collect(Collectors.toList());
+		return data;
+	}
 }

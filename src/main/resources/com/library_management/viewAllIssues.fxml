@@ -24,7 +24,7 @@
             <Font name="System Bold" size="26.0" />
          </font>
       </Label>
-      <Text fx:id="message" layoutX="13.0" layoutY="82.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Hello" textAlignment="CENTER" wrappingWidth="731.9814453125">
+      <Text fx:id="message" layoutX="13.0" layoutY="82.0" strokeType="OUTSIDE" strokeWidth="0.0" text="" textAlignment="CENTER" wrappingWidth="731.9814453125">
          <font>
             <Font size="20.0" />
          </font>
