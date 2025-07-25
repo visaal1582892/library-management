@@ -5,9 +5,10 @@ import java.util.regex.Pattern;
 
 import com.library_management.dao.implementation.MemberDAOImplementation;
 import com.library_management.domain.Member;
+import com.library_management.services.MemberServiceInterface;
 import com.library_management.services.implementation.*;
 
-public class MemberServiceImplementation {
+public class MemberServiceImplementation implements MemberServiceInterface{
 
     private MemberDAOImplementation memberDAO = new MemberDAOImplementation();
     public void addMember(Member member) throws SQLException {
@@ -37,7 +38,7 @@ public class MemberServiceImplementation {
         memberDAO.insertMember(member);
     }
 
-    private boolean isValidEmail(String email) {
+   public boolean isValidEmail(String email) {
         String regex = "^[A-Za-z0-9+_.-]+@[A-Za-z0-9.-]+$";
         return Pattern.matches(regex, email);
     }
