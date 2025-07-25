@@ -25,6 +25,14 @@ public class UpdateBookDetailsController {
 	
 	private List<Book> booksList;
 	
+	public void clearForm() {
+		bookSelector.setValue(null);
+		titleField.setText("");
+		authorField.setText("");
+		categoryComboBox.setValue(null);
+		statusComboBox.setValue(null);
+	}
+	
 	public void setBooksList(List<Book> booksList) {
 		this.booksList=booksList;
 	}
@@ -69,6 +77,9 @@ public class UpdateBookDetailsController {
 	
 	@FXML
 	public void loadBookDetails() {
+		if(bookSelector.getValue()==null) {
+			return;
+		}
 		int id=Integer.parseInt(bookSelector.getValue().split("\\.")[0].trim());
 		Book selectedBook=this.getBooksList().stream()
 				.filter(b -> b.getBookId()==id)
@@ -94,6 +105,7 @@ public class UpdateBookDetailsController {
 			BookCategory category=categoryComboBox.getSelectionModel().getSelectedItem();
 			BookStatus status=statusComboBox.getSelectionModel().getSelectedItem();
 			new BookServiceImplementation().validateUpdateBookDetails(id, title, author, category, status);
+			clearForm();
 			ResponseHandler.showResponse(message, "Book Details Updated Succesfully...", Color.GREEN);
 		}catch(InvalidDetailsException|DatabaseException e) {
 			ResponseHandler.showResponse(message, e.getMessage(), Color.RED);

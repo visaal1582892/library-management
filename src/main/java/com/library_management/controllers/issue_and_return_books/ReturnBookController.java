@@ -50,6 +50,8 @@ public class ReturnBookController {
 	@FXML
 	private Text message;
 
+	private int memberId;
+
 	@FXML
 	public void initialize() {
 //		try {
@@ -67,13 +69,7 @@ public class ReturnBookController {
 			for (Member member : membersList) {
 				memberSelector.getItems().add(member.getMemberId() + ". " + member.getMemberName());
 			}
-
-			List<Book> booksList = new BookDAOImplementation().selectAllBooks();
-			this.setBooksList(booksList);
-			for (Book book : booksList) {
-				bookSelector.getItems().add(book.getBookId() + ". " + book.getTitle());
-			}
-		} catch (DatabaseException | SQLException e) {
+		} catch (SQLException e) {
 			e.printStackTrace();
 		}
 
@@ -86,7 +82,32 @@ public class ReturnBookController {
 
 	@FXML
 	public void loadMemberDetails() {
-		System.out.println("Member selected: " + memberSelector.getValue());
+		try {
+			if (memberSelector.getValue() == null) {
+				throw new InvalidDetailsException("Select Member To Return...");
+			}
+
+			bookSelector.getItems().clear();
+
+			memberId = Integer.parseInt(memberSelector.getValue().split("\\.")[0].trim());
+			System.out.println(memberId);
+
+			List<Book> booksList = new BookDAOImplementation().selectAllMemberBooks(memberId);
+			this.setBooksList(booksList);
+
+			for (Book book : booksList) {
+				bookSelector.getItems().add(book.getBookId() + ". " + book.getTitle());
+			}
+
+			System.out.println("Member selected: " + memberSelector.getValue());
+		} catch (DatabaseException e) {
+			e.printStackTrace();
+		}
+//		System.out.println("Member selected: " + memberSelector.getValue());
+		catch (InvalidDetailsException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 
 	@FXML
@@ -95,10 +116,6 @@ public class ReturnBookController {
 			if (bookSelector.getValue() == null) {
 				throw new InvalidDetailsException("Select Book To Return...");
 			}
-			if (memberSelector.getValue() == null) {
-				throw new InvalidDetailsException("Select Member To Issue...");
-			}
-			int memberId = Integer.parseInt(memberSelector.getValue().split("\\.")[0].trim());
 
 			int bookId = Integer.parseInt(bookSelector.getValue().split("\\.")[0].trim());
 
