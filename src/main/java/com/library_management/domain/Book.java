@@ -5,21 +5,38 @@ public class Book {
 		private int bookId;
 		private String title;
 		private String author;
-		private String category;
-		private String status;
-		private String availability;
+		private BookCategory category;
+		private BookStatus status;
+		private BookAvailability availability;
 		
 //		Constructors
-		public Book(String title, String author, String category) {
-			this(title,author,category,"A","A");
+		public Book(String title, String author, BookCategory category) {
+			this(title,author,category,BookStatus.ACTIVE,BookAvailability.AVAILABLE);
 		}
 		
-		public Book(String title, String author, String category, String status, String availability) {
+		public Book(String title, String author, BookCategory category, BookStatus status, BookAvailability availability) {
 			this.title=title;
 			this.author=author;
 			this.category=category;
 			this.status=status;
 			this.availability=availability;
+		}
+		
+		public Book(int id, String title, String author, BookCategory category, BookStatus status, BookAvailability availability) {
+			this.bookId=id;
+			this.title=title;
+			this.author=author;
+			this.category=category;
+			this.status=status;
+			this.availability=availability;
+		}
+		
+		public Book(int id, String title, String author, BookCategory category, BookStatus status) {
+			this.bookId=id;
+			this.title=title;
+			this.author=author;
+			this.category=category;
+			this.status=status;
 		}
 
 		public int getBookId() {
@@ -46,28 +63,30 @@ public class Book {
 			this.author = author;
 		}
 
-		public String getCategory() {
+		public BookCategory getCategory() {
 			return category;
 		}
 
-		public void setCategory(String category) {
+		public void setCategory(BookCategory category) {
 			this.category = category;
 		}
 
-		public String getStatus() {
+		public BookStatus getStatus() {
 			return status;
 		}
 
-		public void setStatus(String status) {
+		public void setStatus(BookStatus status) {
 			this.status = status;
 		}
 
-		public String getAvailability() {
+		public BookAvailability getAvailability() {
 			return availability;
 		}
 
-		public void setAvailability(String availability) {
+		public void setAvailability(BookAvailability availability) {
 			this.availability = availability;
 		}
+
+		
 		
 }

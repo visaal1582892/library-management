@@ -1,31 +1,33 @@
 package com.library_management.domain;
 
+import java.util.stream.Stream;
+
 public enum BookAvailability {
-//	Defining all the constants
-	AVAILABLE,ISSUED;
+//	Defining all the status constants
+	AVAILABLE("Available"),
+	ISSUED("Issued");
 	
-//	Defining all the functions
-	public char getCharValue() {
-		int ordinal=this.ordinal();
-		switch(ordinal) {
-		case 0:
-			return 'A';
-		case 1:
-			return 'I';
-		default:
-			return 'N';
-		}
+	private String displayName;
+	
+//	Constructor
+	BookAvailability(String displayName){
+		this.displayName=displayName;
 	}
 	
+//	Defining all the related functions
 	public String getStringValue() {
-		int ordinal=this.ordinal();
-		switch(ordinal) {
-		case 0:
-			return "Available";
-		case 1:
-			return "Issued";
-		default:
-			return "NA";
-		}
+		return this.displayName.substring(0,1);
+	}
+	
+	@Override
+	public String toString() {
+		return this.displayName;
+	}
+	
+	public static BookAvailability getEnumConstant(String value) {
+	    return Stream.of(BookAvailability.values())
+	        .filter(e -> e.getStringValue().equals(value))
+	        .findFirst()
+	        .orElse(null);
 	}
 }
