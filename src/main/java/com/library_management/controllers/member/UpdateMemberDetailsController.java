@@ -4,9 +4,13 @@ import java.sql.SQLException;
 import java.util.List;
 
 import com.library_management.dao.implementation.MemberDAOImplementation;
+import com.library_management.domain.BookCategory;
+import com.library_management.domain.BookStatus;
 import com.library_management.domain.Member;
 import com.library_management.exceptions.DatabaseException;
 import com.library_management.exceptions.InvalidDetailsException;
+import com.library_management.services.implementation.BookServiceImplementation;
+import com.library_management.utilities.ResponseHandler;
 
 import javafx.animation.PauseTransition;
 import javafx.fxml.FXML;
@@ -76,5 +80,29 @@ public class UpdateMemberDetailsController {
 		}
 	}
 	
+	@FXML
+	public void handleButtonClick() {
+//		try {
+//			if(memberSelector.getValue()==null) {
+//				throw new InvalidDetailsException("First Select Member To Update...");
+//			}
+//			int id=Integer.parseInt(memberSelector.getValue().split("\\:")[0].trim());
+//			String memberName=memberNameField.getText();
+//			String author=authorField.getText();
+//			BookCategory category=categoryComboBox.getSelectionModel().getSelectedItem();
+//			BookStatus status=statusComboBox.getSelectionModel().getSelectedItem();
+//			new BookServiceImplementation().validateUpdateBookDetails(id, title, author, category, status);
+//			ResponseHandler.showResponse(message, "Book Details Updated Succesfully...", Color.GREEN);
+//		}catch(InvalidDetailsException|DatabaseException e) {
+//			ResponseHandler.showResponse(message, e.getMessage(), Color.RED);
+//		}
+//		System.out.println(titleField.getText()+" "+
+//		authorField.getText()+" "+
+//		categoryComboBox.getSelectionModel().getSelectedItem()+" "+
+//		statusComboBox.getSelectionModel().getSelectedItem());
+//	}
 	
+	
+	
+	}
 }
