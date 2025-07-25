@@ -39,6 +39,12 @@ public class IssueRecord {
 	public IssueRecord() {
 	}
 
+	public IssueRecord(int bookId, int memberId, LocalDate issueDate) {
+		this.bookId = bookId;
+		this.memberId = memberId;
+		this.issueDate = issueDate;
+	}
+
 	public int getIssueId() {
 		return issueId;
 	}

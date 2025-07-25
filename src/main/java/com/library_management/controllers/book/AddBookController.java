@@ -1,6 +1,5 @@
 package com.library_management.controllers.book;
 
-import com.google.protobuf.DescriptorProtos.FieldDescriptorProto.Label;
 import com.library_management.domain.BookAvailability;
 import com.library_management.domain.BookCategory;
 import com.library_management.domain.BookStatus;

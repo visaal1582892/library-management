@@ -1,6 +1,7 @@
 package com.library_management.services.implementation;
 
 import java.sql.SQLException;
+import java.util.List;
 import java.util.regex.Pattern;
 
 import com.library_management.dao.implementation.BookDAOImplementation;
@@ -72,6 +73,13 @@ public class MemberServiceImplementation implements MemberServiceInterface{
 		}
     	
     }
+    
+    @Override
+	public List<Member> validateViewAllMembers() throws DatabaseException, SQLException {
+		List<Member> memberList=new MemberDAOImplementation().getAllMembers();
+		return memberList;
+		
+	}
 
    public boolean isValidEmail(String email) {
         String regex = "^[A-Za-z0-9+_.-]+@[A-Za-z0-9.-]+$";

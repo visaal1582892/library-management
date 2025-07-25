@@ -1,6 +1,5 @@
 package com.library_management.dao;
 
-import java.sql.PreparedStatement;
 import java.util.List;
 
 import com.library_management.domain.Book;
@@ -18,4 +17,6 @@ public interface BookDAOInterface {
 	List<Book> selectAllBooks() throws DatabaseException;
 	
 	Book selectBookById(int id) throws DatabaseException;
+	
+	List<Book> selectAllMemberBooks(int memberId) throws DatabaseException;
 }
