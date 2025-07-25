@@ -6,7 +6,7 @@ import com.library_management.domain.IssueRecord;
 public interface IssueRecordServiceInterface {
 
 	void issueBook(IssueRecord issue);
-	void returnBook(int issueId);
+	void returnBook(int memberId, int bookId);
 	List<IssueRecord> getAllIssues();
 	List<IssueRecord> getOverdueBooks();
 	List<List<String>> getActiveIssuedBooks();

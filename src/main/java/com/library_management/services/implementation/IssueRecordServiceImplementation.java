@@ -1,6 +1,8 @@
 package com.library_management.services.implementation;
 
+import java.time.LocalDate;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import com.library_management.dao.IssueRecordDAOInterface;
 import com.library_management.dao.implementation.IssueRecordDAOImplementation;
@@ -17,8 +19,8 @@ public class IssueRecordServiceImplementation implements IssueRecordServiceInter
 	}
 
 	@Override
-	public void returnBook(int issueId) {
-		dao.returnBook(issueId);
+	public void returnBook(int memberId, int bookId) {
+		dao.returnBook(memberId, bookId);
 	}
 
 	@Override
@@ -28,7 +30,11 @@ public class IssueRecordServiceImplementation implements IssueRecordServiceInter
 
 	@Override
 	public List<IssueRecord> getOverdueBooks() {
-		return dao.getOverdueBooks();
+		//return dao.getOverdueBooks();
+		List<IssueRecord> overdue = getAllIssues().stream()
+				.filter(b -> b.getReturnDate().isBefore(LocalDate.now().minusDays(17)))
+				.collect(Collectors.toList());
+		return overdue;
 	}
 
 	@Override
