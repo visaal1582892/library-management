@@ -33,7 +33,7 @@ public class AddMemberController {
 
             try{
                 memberService.addMember(member);
-                ResponseHandler.showResponse(message, "Book Added Succesfully...", Color.GREEN);
+                ResponseHandler.showResponse(message, "Member Added Successfully...", Color.GREEN);
                 clearForm();
             }
             catch(Exception ex) {
