@@ -110,7 +110,7 @@ public class IssueRecordDAOImplementation implements IssueRecordDAOInterface {
 				return "Failed to update issue record";
 			}
 			System.out.println("Book returned successfully");
-			logIssueAction(issueId);
+			//logIssueAction(issueId);
 
 			String updateBookSql = "UPDATE books SET availability = 'A' WHERE book_id = ?";
 			PreparedStatement updateStmt = conn.prepareStatement(updateBookSql);
@@ -120,7 +120,8 @@ public class IssueRecordDAOImplementation implements IssueRecordDAOInterface {
 				System.out.println("Failed to update book availability");
 				return "Failed to update book availability";
 			}
-
+			System.out.println("Book status updated successfully");
+			
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}

@@ -128,10 +128,11 @@ public class BookDAOImplementation implements BookDAOInterface {
 		Connection conn=DBConnection.getConn();
 		List<Book> memberBooks=new ArrayList<Book>();
 		try {
-			PreparedStatement psSelect=conn.prepareStatement(null);
+			
 			String selectQuery="select b.* from books b join issue_records i on b.book_id=i.book_id join members m on i.member_id=m.member_id where i.member_id=? and i.status='I'";
+			PreparedStatement psSelect=conn.prepareStatement(selectQuery);
 			psSelect.setInt(1, memberId);
-			ResultSet result=psSelect.executeQuery(selectQuery);
+			ResultSet result=psSelect.executeQuery();
 			while(result.next()) {
 				int id=result.getInt(1);
 				String title=result.getString(2);

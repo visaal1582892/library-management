@@ -1,4 +1,5 @@
 package com.library_management.controllers.book;
+import com.library_management.domain.BookAvailability;
 
 import com.library_management.domain.BookCategory;
 import com.library_management.exceptions.DatabaseException;

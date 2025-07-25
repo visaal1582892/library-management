@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="562.0" prefWidth="756.0" xmlns="http://javafx.com/javafx/24.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.library_management.controllers.member.ViewAllMembersController">
+   <children>
+      <TableView fx:id="viewMembersTable" layoutX="4.0" layoutY="156.0" prefHeight="392.0" prefWidth="749.0">
+        <columns>
+          <TableColumn fx:id="memberIdColumn" prefWidth="53.0" text="Member Id" />
+          <TableColumn fx:id="memberNameColumn" prefWidth="203.0" text="Name" />
+            <TableColumn fx:id="memberMailColumn" prefWidth="192.0" text="Email Id" />
+            <TableColumn fx:id="memberMobileNoColumn" prefWidth="144.0" text="Mobile No" />
+            <TableColumn fx:id="memberGenderColumn" prefWidth="79.0" text="Gender" />
+            <TableColumn fx:id="memberAddressColumn" prefWidth="77.0" text="Address" />
+        </columns>
+      </TableView>
+      <Label alignment="CENTER" contentDisplay="CENTER" layoutX="223.0" layoutY="14.0" prefHeight="46.0" prefWidth="311.0" text="All Books" textAlignment="CENTER" underline="true">
+         <font>
+            <Font size="26.0" />
+         </font>
+      </Label>
+      <Text fx:id="message" layoutX="13.0" layoutY="103.0" strokeType="OUTSIDE" strokeWidth="0.0" text="" textAlignment="CENTER" wrappingWidth="731.9814453125">
+         <font>
+            <Font size="20.0" />
+         </font>
+      </Text>
+   </children>
+</AnchorPane>
