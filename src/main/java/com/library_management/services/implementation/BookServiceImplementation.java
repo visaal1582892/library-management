@@ -1,5 +1,7 @@
 package com.library_management.services.implementation;
 
+import java.util.List;
+
 import com.library_management.dao.implementation.BookDAOImplementation;
 import com.library_management.domain.Book;
 import com.library_management.domain.BookAvailability;
@@ -29,8 +31,13 @@ public class BookServiceImplementation implements BookServiceInterface {
 	}
 
 	@Override
-	public void validateViewAllBooks() {
-		// TODO Auto-generated method stub
+	public List<Book> validateViewAllBooks() throws DatabaseException {
+		try {
+			List<Book> bookList=new BookDAOImplementation().selectAllBooks();
+			return bookList;
+		} catch (DatabaseException e) {
+			throw new DatabaseException(e.getMessage());
+		}
 		
 	}
 

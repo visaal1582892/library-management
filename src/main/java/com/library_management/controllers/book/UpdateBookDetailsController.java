@@ -98,9 +98,5 @@ public class UpdateBookDetailsController {
 		}catch(InvalidDetailsException|DatabaseException e) {
 			ResponseHandler.showResponse(message, e.getMessage(), Color.RED);
 		}
-		System.out.println(titleField.getText()+" "+
-		authorField.getText()+" "+
-		categoryComboBox.getSelectionModel().getSelectedItem()+" "+
-		statusComboBox.getSelectionModel().getSelectedItem());
 	}
 }
