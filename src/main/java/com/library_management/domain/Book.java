@@ -21,6 +21,23 @@ public class Book {
 			this.status=status;
 			this.availability=availability;
 		}
+		
+		public Book(int id, String title, String author, BookCategory category, BookStatus status, BookAvailability availability) {
+			this.bookId=id;
+			this.title=title;
+			this.author=author;
+			this.category=category;
+			this.status=status;
+			this.availability=availability;
+		}
+		
+		public Book(int id, String title, String author, BookCategory category, BookStatus status) {
+			this.bookId=id;
+			this.title=title;
+			this.author=author;
+			this.category=category;
+			this.status=status;
+		}
 
 		public int getBookId() {
 			return bookId;

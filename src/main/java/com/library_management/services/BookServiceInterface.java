@@ -9,7 +9,7 @@ import com.library_management.exceptions.InvalidDetailsException;
 public interface BookServiceInterface {
 	void validateAddBook (String title, String author, BookCategory category) throws InvalidDetailsException, DatabaseException;
 	
-	void validateUpdateBook(int id, String title, String author, BookCategory category, BookStatus status);
+	void validateUpdateBookDetails(int id, String title, String author, BookCategory category, BookStatus status) throws InvalidDetailsException, DatabaseException;
 	
 	void validateUpdateBookAvailability(int id, BookAvailability availability);
 	

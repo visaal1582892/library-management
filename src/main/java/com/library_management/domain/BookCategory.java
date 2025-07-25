@@ -1,5 +1,8 @@
 package com.library_management.domain;
 
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
+
 public enum BookCategory {
 //	Defining all the category constants
 	FICTION("Fiction"),
@@ -26,4 +29,12 @@ public enum BookCategory {
 	public String toString() {
 		return this.displayName;
 	}
+	
+	public static BookCategory getEnumConstant(String value) {
+	    return Stream.of(BookCategory.values())
+	        .filter(e -> e.getStringValue().equals(value))
+	        .findFirst()
+	        .orElse(null);
+	}
+
 }
