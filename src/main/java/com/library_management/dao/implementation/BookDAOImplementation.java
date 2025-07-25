@@ -125,11 +125,13 @@ public class BookDAOImplementation implements BookDAOInterface {
 	@Override
 	public List<Book> selectAllMemberBooks(int memberId) throws DatabaseException {
 		
+		Connection conn=DBConnection.getConn();
 		List<Book> memberBooks=new ArrayList<Book>();
-		Statement statement=DBConnection.getStatement();
-		String selectQuery="select b.* from books b join issue_records i on b.book_id=i.book_id join members m on i.member_id=m.member_id where i.member_id=?";
 		try {
-			ResultSet result=statement.executeQuery(selectQuery);
+			PreparedStatement psSelect=conn.prepareStatement(null);
+			String selectQuery="select b.* from books b join issue_records i on b.book_id=i.book_id join members m on i.member_id=m.member_id where i.member_id=? and i.status='I'";
+			psSelect.setInt(1, memberId);
+			ResultSet result=psSelect.executeQuery(selectQuery);
 			while(result.next()) {
 				int id=result.getInt(1);
 				String title=result.getString(2);
