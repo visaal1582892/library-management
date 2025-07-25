@@ -14,13 +14,13 @@ public class IssueRecordServiceImplementation implements IssueRecordServiceInter
 	IssueRecordDAOInterface dao = new IssueRecordDAOImplementation();
 
 	@Override
-	public void issueBook(IssueRecord issue) {
-		dao.issueBook(issue);
+	public String issueBook(IssueRecord issue) {
+		return dao.issueBook(issue);
 	}
 
 	@Override
-	public void returnBook(int memberId, int bookId) {
-		dao.returnBook(memberId, bookId);
+	public String returnBook(int memberId, int bookId) {
+		return dao.returnBook(memberId, bookId);
 	}
 
 	@Override
