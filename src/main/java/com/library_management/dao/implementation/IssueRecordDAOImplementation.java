@@ -19,12 +19,9 @@ public class IssueRecordDAOImplementation implements IssueRecordDAOInterface {
 
 	@Override
 	public void issueBook(IssueRecord issue) {
-		Connection conn = null;
-		try {
-			conn = DBConnection.getConn();
-
-			// Check if member exists
-			String memberSql = "SELECT COUNT(*) FROM members WHERE member_id = ?";
+		
+		try (Connection conn = DBConnection.getConn()) {
+			String memberSql = "SELECT * FROM members WHERE member_id = ?";
 			try (PreparedStatement memberStmt = conn.prepareStatement(memberSql)) {
 				memberStmt.setInt(1, issue.getMemberId());
 				ResultSet rs = memberStmt.executeQuery();
@@ -34,7 +31,6 @@ public class IssueRecordDAOImplementation implements IssueRecordDAOInterface {
 				}
 			}
 
-			// Check book status
 			String bookSql = "SELECT status, availability FROM books WHERE book_id = ?";
 			try (PreparedStatement bookStmt = conn.prepareStatement(bookSql)) {
 				bookStmt.setInt(1, issue.getBookId());
@@ -43,7 +39,7 @@ public class IssueRecordDAOImplementation implements IssueRecordDAOInterface {
 					System.out.println("Book does not exist");
 					return;
 				}
-				
+
 				char status = rs.getString("status").charAt(0);
 				char availability = rs.getString("availability").charAt(0);
 
@@ -57,7 +53,6 @@ public class IssueRecordDAOImplementation implements IssueRecordDAOInterface {
 				}
 			}
 
-			// Insert issue record
 			String issueSql = "INSERT INTO issue_records (book_id, member_id, status, issue_date, return_date) VALUES (?, ?, ?, ?, ?)";
 			try (PreparedStatement pstmt = conn.prepareStatement(issueSql)) {
 				pstmt.setInt(1, issue.getBookId());
@@ -68,7 +63,6 @@ public class IssueRecordDAOImplementation implements IssueRecordDAOInterface {
 				pstmt.executeUpdate();
 			}
 
-			// Update book availability
 			String updateSql = "UPDATE books SET availability = 'I' WHERE book_id = ?";
 			try (PreparedStatement updateStmt = conn.prepareStatement(updateSql)) {
 				updateStmt.setInt(1, issue.getBookId());
@@ -84,25 +78,21 @@ public class IssueRecordDAOImplementation implements IssueRecordDAOInterface {
 	}
 
 	@Override
-	public void returnBook(int issueId) {
-		Connection conn = null;
-		try {
-			conn = DBConnection.getConn();
-
-			// Verify issue record and get BookId
-			String selectSql = "SELECT book_id FROM issue_records WHERE issue_id = ? AND status = 'I'";
-			int bookId;
+	public void returnBook(int memberId, int bookId) {
+		try (Connection conn = DBConnection.getConn()) {
+			int issueId;
+			String selectSql = "SELECT * FROM issue_records WHERE member_id = ? AND bookId = ? AND status = 'I'";
 			try (PreparedStatement selectStmt = conn.prepareStatement(selectSql)) {
-				selectStmt.setInt(1, issueId);
+				selectStmt.setInt(1, memberId);
+				selectStmt.setInt(2, bookId);
 				ResultSet rs = selectStmt.executeQuery();
 				if (!rs.next()) {
 					System.out.println("Issue record not found or already returned");
 					return;
 				}
-				bookId = rs.getInt("BookId");
+				issueId = rs.getInt("issue_id");
 			}
 
-			// Update issue record
 			String updateIssueSql = "UPDATE issue_records SET status = 'R', return_date = ? WHERE issue_id = ?";
 			try (PreparedStatement pstmt = conn.prepareStatement(updateIssueSql)) {
 				pstmt.setDate(1, Date.valueOf(LocalDate.now()));
@@ -115,7 +105,6 @@ public class IssueRecordDAOImplementation implements IssueRecordDAOInterface {
 				logIssueAction(issueId);
 			}
 
-			// Update book availability
 			String updateBookSql = "UPDATE books SET availability = 'A' WHERE book_id = ?";
 			try (PreparedStatement updateStmt = conn.prepareStatement(updateBookSql)) {
 				updateStmt.setInt(1, bookId);
@@ -124,17 +113,17 @@ public class IssueRecordDAOImplementation implements IssueRecordDAOInterface {
 					System.out.println("Failed to update book availability");
 				}
 			}
-			
+
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
 	}
 
-	@Override
 	public List<IssueRecord> getOverdueBooks() {
 		List<IssueRecord> overdue = new ArrayList<>();
 		String sql = "SELECT * FROM issue_records WHERE status = 'I' AND issue_date < ?";
-		try (Connection conn = DBConnection.getConn(); PreparedStatement pstmt = conn.prepareStatement(sql)) {
+		try (Connection conn = DBConnection.getConn()) {
+			PreparedStatement pstmt = conn.prepareStatement(sql);
 			pstmt.setDate(1, Date.valueOf(LocalDate.now().minusDays(17)));
 			ResultSet rs = pstmt.executeQuery();
 			while (rs.next()) {
@@ -156,9 +145,9 @@ public class IssueRecordDAOImplementation implements IssueRecordDAOInterface {
 	public List<IssueRecord> getAllIssues() {
 		List<IssueRecord> issues = new ArrayList<>();
 		String sql = "SELECT * FROM issue_records";
-		try (Connection conn = DBConnection.getConn();
-				Statement stmt = conn.createStatement();
-				ResultSet rs = stmt.executeQuery(sql)) {
+		try (Connection conn = DBConnection.getConn()) {
+			Statement stmt = conn.createStatement();
+			ResultSet rs = stmt.executeQuery(sql);
 			while (rs.next()) {
 				IssueRecord issue = new IssueRecord();
 				issue.setIssueId(rs.getInt("issue_id"));
@@ -179,9 +168,9 @@ public class IssueRecordDAOImplementation implements IssueRecordDAOInterface {
 	public List<List<String>> getActiveIssuedBooks() {
 		List<List<String>> activeIssues = new ArrayList<>();
 		String sql = "SELECT * FROM members m JOIN issue_records ir ON m.member_id = ir.member_id JOIN books b ON ir.book_id = b.book_id WHERE ir.status = 'I' AND b.status = 'A'";
-		try (Connection conn = DBConnection.getConn();
-				Statement stmt = conn.createStatement();
-				ResultSet rs = stmt.executeQuery(sql)) {
+		try (Connection conn = DBConnection.getConn()) {
+			Statement stmt = conn.createStatement();
+			ResultSet rs = stmt.executeQuery(sql);
 			while (rs.next()) {
 				List<String> issue = new ArrayList<>();
 				issue.add(String.valueOf(rs.getInt("issue_id")));
@@ -201,10 +190,10 @@ public class IssueRecordDAOImplementation implements IssueRecordDAOInterface {
 	private void logIssueAction(int issueId) {
 		String selectSql = "SELECT * FROM issue_records where issue_id = ?";
 		String logSql = "INSERT INTO issue_records_log (issue_id, book_id, member_id, status, issue_date, return_date) VALUES (?, ?, ?, ?, ?, ?)";
-		try (Connection conn = DBConnection.getConn();
-				PreparedStatement pstmt = conn.prepareStatement(logSql);
-				Statement stmt = conn.createStatement();
-				ResultSet rs = stmt.executeQuery(selectSql)) {
+		try (Connection conn = DBConnection.getConn()) {
+			PreparedStatement pstmt = conn.prepareStatement(logSql);
+			Statement stmt = conn.createStatement();
+			ResultSet rs = stmt.executeQuery(selectSql);
 			pstmt.setInt(1, issueId);
 			pstmt.setInt(2, rs.getInt("book_id"));
 			pstmt.setInt(3, rs.getInt("member_id"));

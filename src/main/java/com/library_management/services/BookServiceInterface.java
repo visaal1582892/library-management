@@ -1,5 +1,8 @@
 package com.library_management.services;
 
+import java.util.List;
+
+import com.library_management.domain.Book;
 import com.library_management.domain.BookAvailability;
 import com.library_management.domain.BookCategory;
 import com.library_management.domain.BookStatus;
@@ -13,5 +16,5 @@ public interface BookServiceInterface {
 	
 	void validateUpdateBookAvailability(int id, BookAvailability availability);
 	
-	void validateViewAllBooks();
+	List<Book> validateViewAllBooks() throws DatabaseException;
 }

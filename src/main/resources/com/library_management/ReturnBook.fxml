@@ -18,8 +18,10 @@
 		</font>
 	</Text>
 
-	<TextField fx:id="issueIdField" layoutX="300.0"
-		layoutY="119.0" prefWidth="200.0" promptText="Enter Issue Id" />
+	<TextField fx:id="memberIdField" layoutX="300.0"
+		layoutY="119.0" prefWidth="200.0" promptText="Enter Member Id" />
+		
+		<ComboBox fx:id="bookSelector" layoutX="175.0" layoutY="172.0" onAction="#loadBookDetails" prefHeight="27.0" prefWidth="249.0" promptText="Select Book" />
 
 	<Label alignment="CENTER" contentDisplay="CENTER" layoutX="193.0"
 		layoutY="36.0" text="Return Book">
@@ -28,7 +30,7 @@
 		</font>
 	</Label>
 	<Button layoutX="233.0" layoutY="224.0" mnemonicParsing="false" onAction="#switchToReturnBookSubmit"
-		prefHeight="38.0" prefWidth="97.0" text="Submit">
+		prefHeight="38.0" prefWidth="97.0" text="Return Book">
 		<font>
 			<Font size="17.0" />
 		</font>
