@@ -1,5 +1,7 @@
 package com.library_management.domain;
 
+import java.util.Objects;
+
 public class Member {
 	private int memberId;
 	private String memberName;
@@ -45,7 +47,7 @@ public class Member {
 	}
 	
 	
-	public Member(int memberId, String memberName, String memberMail, String gender, String memberAddress) {
+	public Member() {
 		this.memberId = memberId;
 		this.memberName = memberName;
 		this.memberMail = memberMail;
@@ -67,6 +69,22 @@ public class Member {
 		return "Member [memberId=" + memberId + ", memberName=" + memberName + ", memberMail=" + memberMail
 				+ ", mobileNo=" + mobileNo + ", gender=" + gender + ", memberAddress=" + memberAddress + "]";
 	}
+	
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Member other = (Member) obj;
+		return Objects.equals(gender, other.gender) && Objects.equals(memberAddress, other.memberAddress)
+				&& memberId == other.memberId && Objects.equals(memberMail, other.memberMail)
+				&& Objects.equals(memberName, other.memberName) && Objects.equals(mobileNo, other.mobileNo);
+	}
+	
+	
 	
 
 }

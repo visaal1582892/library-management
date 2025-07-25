@@ -21,7 +21,7 @@
             <Font size="23.0" />
          </font>
       </Label>
-      <TextField fx:id="memberNameField" layoutX="287.0" layoutY="216.0" prefHeight="34.0" prefWidth="209.0" promptText="Enter Name" />
+      <TextField fx:id="nameField" layoutX="287.0" layoutY="216.0" prefHeight="34.0" prefWidth="209.0" promptText="Enter Name" />
       <Label layoutX="126.0" layoutY="262.0" prefHeight="35.0" prefWidth="79.0" text="EmailId">
          <font>
             <Font size="24.0" />
@@ -52,5 +52,10 @@
       </Text>
       <TextField fx:id="addressField" layoutX="283.0" layoutY="424.0" prefHeight="25.0" prefWidth="209.0" promptText="Enter Your Address" />
       <ComboBox fx:id="genderComboBox" layoutX="287.0" layoutY="376.0" prefHeight="27.0" prefWidth="209.0" promptText="Select Your Gender" />
+      <Text fx:id="message" layoutX="140.0" layoutY="109.0" strokeType="OUTSIDE" strokeWidth="0.0" wrappingWidth="321.98301124572754">
+         <font>
+            <Font size="17.0" />
+         </font>
+      </Text>
    </children>
 </AnchorPane>

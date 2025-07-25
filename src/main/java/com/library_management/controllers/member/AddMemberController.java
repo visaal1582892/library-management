@@ -1,9 +1,11 @@
 package com.library_management.controllers.member;
-
+import com.library_management.utilities.ResponseHandler;
 import com.library_management.domain.Member;
 import com.library_management.services.implementation.MemberServiceImplementation;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
+import javafx.scene.paint.Color;
+import javafx.scene.text.Text;
 
 public class AddMemberController {
 
@@ -13,6 +15,7 @@ public class AddMemberController {
     @FXML private ComboBox<String> genderComboBox;
     @FXML private TextField address;
     @FXML private Button register;
+    @FXML private Text message;
 
     private MemberServiceImplementation memberService = new MemberServiceImplementation();
     @FXML
@@ -30,7 +33,7 @@ public class AddMemberController {
 
             try{
                 memberService.addMember(member);
-                showAlert("Success","Member registered successfully!", Alert.AlertType.INFORMATION);
+                ResponseHandler.showResponse(message, "Book Added Succesfully...", Color.GREEN);
                 clearForm();
             }
             catch(Exception ex) {

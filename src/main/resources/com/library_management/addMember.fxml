@@ -7,47 +7,53 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/24.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.library_management.controllers.member.AddMemberController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/24.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.library_management.controllers.member.AddMemberController">
    <children>
       <!-- Name -->
-      <Text layoutX="97.0" layoutY="98.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Name">
+      <Text layoutX="85.0" layoutY="205.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Name         :">
          <font>
-            <Font size="18.0" />
+            <Font name="System Italic" size="18.0" />
          </font>
       </Text>
-      <TextField fx:id="name" layoutX="200.0" layoutY="75.0" prefWidth="250.0" promptText="Enter Your Name" />
+      <TextField fx:id="name" layoutX="210.0" layoutY="190.0" prefWidth="250.0" promptText="Enter Your Name" style="-fx-border-color: lightblue;" />
 
       <!-- EmailId -->
-      <Text layoutX="97.0" layoutY="142.0" strokeType="OUTSIDE" strokeWidth="0.0" text="EmailId">
+      <Text layoutX="85.0" layoutY="265.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Email Id      :">
          <font>
-            <Font size="18.0" />
+            <Font name="System Italic" size="18.0" />
          </font>
       </Text>
-      <TextField fx:id="email" layoutX="200.0" layoutY="119.0" prefWidth="250.0" promptText="Enter Your Email Id" />
+      <TextField fx:id="email" layoutX="210.0" layoutY="250.0" prefWidth="250.0" promptText="Enter Your Email Id" style="-fx-border-color: lightblue;" />
 
       <!-- Mobile No. -->
-      <Text layoutX="97.0" layoutY="193.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Mobile No.">
+      <Text layoutX="85.0" layoutY="322.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Mobile No. :">
          <font>
-            <Font size="18.0" />
+            <Font name="System Italic" size="18.0" />
          </font>
       </Text>
-      <TextField fx:id="mobile" layoutX="200.0" layoutY="173.0" prefWidth="250.0" promptText="Enter Your Mobile No." />
+      <TextField fx:id="mobile" layoutX="210.0" layoutY="305.0" prefWidth="250.0" promptText="Enter Your Mobile No." style="-fx-border-color: lightblue;" />
 
       <!-- Gender -->
-      <Text layoutX="97.0" layoutY="240.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Gender">
+      <Text layoutX="85.0" layoutY="378.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Gender       :">
          <font>
             <Font size="18.0" />
          </font>
       </Text>
 
       <!-- Address -->
-      <Text layoutX="97.0" layoutY="297.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Address">
+      <Text layoutX="85.0" layoutY="431.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Address      :">
          <font>
-            <Font size="18.0" />
+            <Font name="System Italic" size="18.0" />
          </font>
       </Text>
-      <TextField fx:id="address" layoutX="200.0" layoutY="277.0" prefWidth="250.0" promptText="Enter your Address" />
-      <ComboBox fx:id="genderComboBox" layoutX="200.0" layoutY="232.0" prefHeight="25.0" prefWidth="250.0" promptText="Select Your Gender" />
-      <Button   fx:id="register" layoutX="299.0" layoutY="336.0" mnemonicParsing="false" text="Register" />
+      <TextField fx:id="address" layoutX="210.0" layoutY="415.0" prefHeight="25.0" prefWidth="250.0" promptText="Enter your Address" style="-fx-border-color: light blue;" />
+      <ComboBox fx:id="genderComboBox" layoutX="210.0" layoutY="360.0" prefHeight="25.0" prefWidth="250.0" promptText="Select Your Gender" style="-fx-border-color: lightblue;" />
+      <Button fx:id="register" layoutX="295.0" layoutY="474.0" mnemonicParsing="false" text="Register" />
+      <Text layoutX="201.0" layoutY="50.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Registratin Form" textAlignment="CENTER" wrappingWidth="250.0">
+         <font>
+            <Font name="System Bold Italic" size="28.0" />
+         </font>
+      </Text>
+      <Text fx:id="message" layoutX="315.0" layoutY="100.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Text" />
    </children>
 </AnchorPane>
