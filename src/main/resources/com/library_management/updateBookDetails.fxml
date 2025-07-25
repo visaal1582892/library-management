@@ -41,7 +41,7 @@
       <ComboBox fx:id="categoryComboBox" layoutX="262.0" layoutY="335.0" prefHeight="35.0" prefWidth="209.0" promptText="Select Category" />
       <ComboBox fx:id="statusComboBox" layoutX="262.0" layoutY="389.0" prefHeight="35.0" prefWidth="209.0" promptText="Select Status" />
       <Button layoutX="261.0" layoutY="472.0" mnemonicParsing="false" onAction="#handleButtonClick" prefHeight="34.0" prefWidth="79.0" text="Update"/>
-      <Text id="message" layoutX="20.0" layoutY="105.0" strokeType="OUTSIDE" strokeWidth="0.0" text="" textAlignment="CENTER" textOrigin="CENTER" wrappingWidth="560.9814453125">
+      <Text fx:id="message" layoutX="20.0" layoutY="105.0" strokeType="OUTSIDE" strokeWidth="0.0" text="" textAlignment="CENTER" textOrigin="CENTER" wrappingWidth="560.9814453125">
          <font>
             <Font size="22.0" />
          </font>

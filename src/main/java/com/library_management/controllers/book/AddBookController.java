@@ -7,6 +7,7 @@ import com.library_management.domain.BookStatus;
 import com.library_management.exceptions.DatabaseException;
 import com.library_management.exceptions.InvalidDetailsException;
 import com.library_management.services.implementation.BookServiceImplementation;
+import com.library_management.utilities.ResponseHandler;
 
 import javafx.animation.PauseTransition;
 import javafx.fxml.FXML;
@@ -66,19 +67,10 @@ public class AddBookController {
 //    	System.out.println(title+" "+author+" "+category);
     	try {
 			new BookServiceImplementation().validateAddBook(title, author, category);
-			message.setText("Book Added Succesfully...");
-			message.setFill(Color.GREEN);
 			clearForm();
-			PauseTransition pauseTransition=new PauseTransition(Duration.seconds(3));
-			pauseTransition.setOnFinished(event -> message.setText(""));
-			pauseTransition.play();
+			ResponseHandler.showResponse(message, "Book Added Succesfully...", Color.GREEN);
 		} catch (InvalidDetailsException|DatabaseException e) {
-			
-			message.setText(e.getMessage());
-			message.setFill(Color.RED);
-			PauseTransition pauseTransition=new PauseTransition(Duration.seconds(3));
-			pauseTransition.setOnFinished(event -> message.setText(""));
-			pauseTransition.play();
+			ResponseHandler.showResponse(message, e.getMessage(), Color.RED);
 		}
     }
 
