@@ -110,7 +110,7 @@ public class IssueRecordDAOImplementation implements IssueRecordDAOInterface {
 				return "Failed to update issue record";
 			}
 			System.out.println("Book returned successfully");
-			//logIssueAction(issueId);
+			logIssueAction(issueId);
 
 			String updateBookSql = "UPDATE books SET availability = 'A' WHERE book_id = ?";
 			PreparedStatement updateStmt = conn.prepareStatement(updateBookSql);
@@ -174,20 +174,17 @@ public class IssueRecordDAOImplementation implements IssueRecordDAOInterface {
 	}
 
 	@Override
-	public List<List<String>> getActiveIssuedBooks() {
+	public List<List<String>> getStatusTable() {
 		List<List<String>> activeIssues = new ArrayList<>();
-		String sql = "SELECT * FROM members m JOIN issue_records ir ON m.member_id = ir.member_id JOIN books b ON ir.book_id = b.book_id WHERE ir.status = 'I' AND b.status = 'A'";
+		String sql = "SELECT m.member_id, m.name, b.title, ir.status as issue_status, b.status as book_status FROM members m JOIN issue_records ir ON m.member_id = ir.member_id JOIN books b ON ir.book_id = b.book_id";
 		try (Connection conn = DBConnection.getConn()) {
 			Statement stmt = conn.createStatement();
 			ResultSet rs = stmt.executeQuery(sql);
 			while (rs.next()) {
 				List<String> issue = new ArrayList<>();
-				issue.add(String.valueOf(rs.getInt("issue_id")));
-				issue.add(String.valueOf(rs.getInt("book_id")));
 				issue.add(String.valueOf(rs.getInt("member_id")));
-				issue.add(rs.getString("status"));
-				issue.add(rs.getDate("issue_date").toString());
-				issue.add(rs.getDate("return_date") != null ? rs.getDate("return_date").toString() : null);
+				issue.add(rs.getString("name"));
+				issue.add(rs.getString("title"));
 				activeIssues.add(issue);
 			}
 		} catch (SQLException e) {
@@ -197,22 +194,17 @@ public class IssueRecordDAOImplementation implements IssueRecordDAOInterface {
 	}
 
 	private void logIssueAction(int issueId) {
-		String selectSql = "SELECT * FROM issue_records where issue_id = ?";
-		String logSql = "INSERT INTO issue_records_log (issue_id, book_id, member_id, status, issue_date, return_date) VALUES (?, ?, ?, ?, ?, ?)";
-		try (Connection conn = DBConnection.getConn()) {
+		
+		String logSql = "INSERT INTO issue_records_log (issue_id, book_id, member_id, status, issue_date, return_date) SELECT * FROM issue_records WHERE issue_records.issue_id = ?";
+		Connection conn = DBConnection.getConn();
+		try {
 			PreparedStatement pstmt = conn.prepareStatement(logSql);
-			Statement stmt = conn.createStatement();
-			ResultSet rs = stmt.executeQuery(selectSql);
 			pstmt.setInt(1, issueId);
-			pstmt.setInt(2, rs.getInt("book_id"));
-			pstmt.setInt(3, rs.getInt("member_id"));
-			pstmt.setString(4, rs.getString("status"));
-			pstmt.setDate(5, rs.getDate("issue_date"));
-			pstmt.setDate(6, rs.getDate("return_date"));
 			pstmt.executeUpdate();
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
+		System.out.println("Inserting log");
 	}
 
 }
