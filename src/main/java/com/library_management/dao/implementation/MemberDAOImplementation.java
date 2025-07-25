@@ -29,6 +29,8 @@ public class MemberDAOImplementation implements MemberDAOInterface {
 		ps.execute();	
 
 	}
+	
+	
 
 	@Override
 	public List<Member> getAllMembers() throws SQLException {
@@ -39,12 +41,12 @@ public class MemberDAOImplementation implements MemberDAOInterface {
 	    ResultSet rs = ps.executeQuery();
 
 	    while (rs.next()) {
-	        int id = rs.getInt("member_id"); // Adjust based on DB column name
-	        String name = rs.getString("member_name");
-	        String email = rs.getString("member_email");
-	        String mobile = rs.getString("mobile_no");
+	        int id=rs.getInt("member_id"); 
+	        String name=rs.getString("name");
+	        String email = rs.getString("email");
+	        String mobile = rs.getString("mobile");
 	        String gender = rs.getString("gender");
-	        String address = rs.getString("member_address");
+	        String address = rs.getString("address");
 
 	        Member member = new Member(id, name, email, mobile, gender, address);
 	        members.add(member);
