@@ -33,9 +33,30 @@ public class BookDAOImplementation implements BookDAOInterface {
 	}
 
 	@Override
-	public void updateBookDetails(int id, Book book) {
+	public void updateBookDetails(Book oldBook,Book newBook) throws DatabaseException {
 		Connection conn=DBConnection.getConn();
-		String updateQuery="update ";
+		String updateBooksQuery="update lms.books set title=?, author=?, category=?, status=? where book_id=?";
+		String insertBooksLogQuery="insert into lms.books_log(book_id,title,author,category,status,availability) values(?,?,?,?,?,?)";
+		try {
+			PreparedStatement psInsertLog=conn.prepareStatement(insertBooksLogQuery);
+			psInsertLog.setInt(1, oldBook.getBookId());
+			psInsertLog.setString(2, oldBook.getTitle());
+			psInsertLog.setString(3, oldBook.getAuthor());
+			psInsertLog.setString(4, oldBook.getCategory().getStringValue());
+			psInsertLog.setString(5, oldBook.getStatus().getStringValue());
+			psInsertLog.setString(6, oldBook.getAvailability().getStringValue());
+			psInsertLog.executeUpdate();
+			PreparedStatement psUpdate=conn.prepareStatement(updateBooksQuery);
+			psUpdate.setString(1, newBook.getTitle());
+			psUpdate.setString(2, newBook.getAuthor());
+			psUpdate.setString(3, newBook.getCategory().getStringValue());
+			psUpdate.setString(4, newBook.getStatus().getStringValue());
+			psUpdate.setInt(5, oldBook.getBookId());
+			psUpdate.executeUpdate();
+			
+		} catch (SQLException e) {
+			throw new DatabaseException("Error Occurred while updating data...");
+		}
 		
 	}
 
@@ -83,7 +104,7 @@ public class BookDAOImplementation implements BookDAOInterface {
 		try {
 			PreparedStatement psSelectOne=conn.prepareStatement(selectOneQuery);
 			psSelectOne.setInt(1, id);
-			psSelectOne.executeUpdate();
+			psSelectOne.execute();
 			ResultSet resultSet=psSelectOne.getResultSet();
 			if(resultSet.next()) {
 				int bookId=resultSet.getInt(1);
@@ -93,7 +114,7 @@ public class BookDAOImplementation implements BookDAOInterface {
 				BookStatus status=BookStatus.getEnumConstant(resultSet.getString(5));
 				BookAvailability availability=BookAvailability.getEnumConstant(resultSet.getString(6));
 				
-				currentBook=new Book(id,title,author,category,status,availability);
+				currentBook=new Book(bookId,title,author,category,status,availability);
 			}
 		} catch (SQLException e) {
 			throw new DatabaseException(e.getMessage());

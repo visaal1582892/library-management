@@ -9,7 +9,7 @@ import com.library_management.exceptions.DatabaseException;
 public interface BookDAOInterface {
 	void addBook(Book book) throws DatabaseException;
 	
-	void updateBookDetails(int id, Book book);
+	void updateBookDetails(Book oldBook, Book newBook) throws DatabaseException;
 	
 	void updateBookAvailability(int id, String availability);
 	

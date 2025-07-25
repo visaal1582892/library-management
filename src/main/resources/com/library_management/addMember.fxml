@@ -7,7 +7,7 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<AnchorPane fx:id="register" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/24.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.library_management.controllers.member.AddMemberController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/24.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.library_management.controllers.member.AddMemberController">
    <children>
       <!-- Name -->
       <Text layoutX="97.0" layoutY="98.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Name">
@@ -48,6 +48,6 @@
       </Text>
       <TextField fx:id="address" layoutX="200.0" layoutY="277.0" prefWidth="250.0" promptText="Enter your Address" />
       <ComboBox fx:id="genderComboBox" layoutX="200.0" layoutY="232.0" prefHeight="25.0" prefWidth="250.0" promptText="Select Your Gender" />
-      <Button layoutX="299.0" layoutY="336.0" mnemonicParsing="false" text="Register" />
+      <Button   fx:id="register" layoutX="299.0" layoutY="336.0" mnemonicParsing="false" text="Register" />
    </children>
 </AnchorPane>
