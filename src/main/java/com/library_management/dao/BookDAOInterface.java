@@ -18,4 +18,6 @@ public interface BookDAOInterface {
 	List<Book> selectAllBooks() throws DatabaseException;
 	
 	Book selectBookById(int id) throws DatabaseException;
+	
+	List<Book> selectAllMemberBooks(int memberId) throws DatabaseException;
 }

@@ -119,8 +119,32 @@ public class BookDAOImplementation implements BookDAOInterface {
 		} catch (SQLException e) {
 			throw new DatabaseException(e.getMessage());
 		}
-		
 		return currentBook;
+	}
+
+	@Override
+	public List<Book> selectAllMemberBooks(int memberId) throws DatabaseException {
+		
+		List<Book> memberBooks=new ArrayList<Book>();
+		Statement statement=DBConnection.getStatement();
+		String selectQuery="select b.* from books b join issue_records i on b.book_id=i.book_id join members m on i.member_id=m.member_id where i.member_id=?";
+		try {
+			ResultSet result=statement.executeQuery(selectQuery);
+			while(result.next()) {
+				int id=result.getInt(1);
+				String title=result.getString(2);
+				String author=result.getString(3);
+				BookCategory category=BookCategory.getEnumConstant(result.getString(4));
+				BookStatus status=BookStatus.getEnumConstant(result.getString(5));
+				BookAvailability availability=BookAvailability.getEnumConstant(result.getString(6));
+				
+				Book currentBook=new Book(id,title,author,category,status,availability);
+				memberBooks.add(currentBook);
+			}
+		} catch (SQLException e) {
+			throw new DatabaseException(e.getMessage());
+		}
+		return memberBooks;
 	}
 	
 	
