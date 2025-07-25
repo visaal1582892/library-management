@@ -1,20 +1,57 @@
 package com.library_management.controllers.member;
 
-import java.io.IOException;
-
-import com.library_management.App;
-
+import com.library_management.domain.Member;
+import com.library_management.services.implementation.MemberServiceImplementation;
 import javafx.fxml.FXML;
-import javafx.scene.control.ComboBox;
+import javafx.scene.control.*;
 
 public class AddMemberController {
 
-	@FXML
+    @FXML private TextField name;
+    @FXML private TextField email;
+    @FXML private TextField mobile;
+    @FXML private ComboBox<String> genderComboBox;
+    @FXML private TextField address;
+    @FXML private Button register;
 
-	private ComboBox<String> genderComboBox;
-	@FXML
-	public void initialize()
-	{
-		genderComboBox.getItems().addAll("Male","Female");	
-	}
+    private MemberServiceImplementation memberService = new MemberServiceImplementation();
+    @FXML
+    public void initialize() {
+        genderComboBox.getItems().addAll("Male", "Female");
+
+        register.setOnAction(e -> {
+            String memberName=name.getText();
+            String memberMail=email.getText();
+            String mobileNo=mobile.getText();
+            String gender=genderComboBox.getValue();
+            String memberAddress=address.getText();
+
+            Member member=new Member(0,memberName,memberMail,mobileNo,gender,memberAddress);
+
+            try{
+                memberService.addMember(member);
+                showAlert("Success","Member registered successfully!", Alert.AlertType.INFORMATION);
+                clearForm();
+            }
+            catch(Exception ex) {
+                showAlert("Error",ex.getMessage(),Alert.AlertType.ERROR);
+            }
+        });
+    }
+
+    private void clearForm() {
+        name.clear();
+        email.clear();
+        mobile.clear();
+        genderComboBox.getSelectionModel().clearSelection();
+        address.clear();
+    }
+
+    private void showAlert(String title, String message, Alert.AlertType type) {
+        Alert alert=new Alert(type);
+        alert.setTitle(title);
+        alert.setHeaderText(null);
+        alert.setContentText(message);
+        alert.showAndWait();
+    }
 }
