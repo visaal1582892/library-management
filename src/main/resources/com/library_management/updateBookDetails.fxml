@@ -4,47 +4,63 @@
 <?import javafx.scene.control.ComboBox?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.TextField?>
+<?import javafx.scene.effect.DropShadow?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="560.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/24.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.library_management.controllers.book.UpdateBookDetailsController">
-   <children>
-      <Label alignment="CENTER" layoutX="130.0" layoutY="23.0" prefHeight="46.0" prefWidth="341.0" text="Update Book Details" textAlignment="CENTER" textOverrun="CENTER_WORD_ELLIPSIS" underline="true">
-         <font>
-            <Font size="31.0" />
-         </font>
-      </Label>
-      <ComboBox fx:id="bookSelector" layoutX="176.0" layoutY="151.0" onAction="#loadBookDetails" prefHeight="27.0" prefWidth="249.0" promptText="Select Book To Update" />
-      <Label layoutX="118.0" layoutY="233.0" text="Title">
-         <font>
-            <Font size="23.0" />
-         </font>
-      </Label>
-      <TextField fx:id="titleField" layoutX="262.0" layoutY="233.0" prefHeight="34.0" prefWidth="209.0" promptText="Enter Title" />
-      <Label layoutX="118.0" layoutY="281.0" prefHeight="35.0" prefWidth="79.0" text="Author">
-         <font>
-            <Font size="24.0" />
-         </font>
-      </Label>
-      <Label layoutX="118.0" layoutY="335.0" text="Category">
-         <font>
-            <Font size="24.0" />
-         </font>
-      </Label>
-      <Label layoutX="117.0" layoutY="389.0" text="Status">
-         <font>
-            <Font size="24.0" />
-         </font>
-      </Label>
-      <TextField fx:id="authorField" layoutX="262.0" layoutY="282.0" prefHeight="34.0" prefWidth="209.0" promptText="Enter Author Name" />
-      <ComboBox fx:id="categoryComboBox" layoutX="262.0" layoutY="335.0" prefHeight="35.0" prefWidth="209.0" promptText="Select Category" />
-      <ComboBox fx:id="statusComboBox" layoutX="262.0" layoutY="389.0" prefHeight="35.0" prefWidth="209.0" promptText="Select Status" />
-      <Button layoutX="261.0" layoutY="472.0" mnemonicParsing="false" onAction="#handleButtonClick" prefHeight="34.0" prefWidth="79.0" text="Update"/>
-      <Text fx:id="message" layoutX="20.0" layoutY="105.0" strokeType="OUTSIDE" strokeWidth="0.0" text="" textAlignment="CENTER" textOrigin="CENTER" wrappingWidth="560.9814453125">
-         <font>
-            <Font size="22.0" />
-         </font>
-      </Text>
-   </children>
+<AnchorPane prefHeight="550.0" prefWidth="760.0" style="-fx-background-color: linear-gradient(to bottom, #e3f2fd, #ffffff);" xmlns="http://javafx.com/javafx/24.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.library_management.controllers.book.UpdateBookDetailsController">
+
+   <!-- Heading -->
+   <Label layoutX="189.0" layoutY="35.0" prefHeight="46.0" prefWidth="403.0" style="-fx-text-fill: #2090bc;" text="UPDATE BOOK DETAILS" underline="true">
+      <font><Font name="System Bold Italic" size="31.0" /></font>
+   </Label>
+
+   <!-- Message -->
+   <Text fx:id="message" layoutX="190.0" layoutY="123.0" style="-fx-fill: #d32f2f;" textAlignment="CENTER" wrappingWidth="414.6667232513428">
+      <font><Font size="22.0" /></font>
+   </Text>
+
+   <!-- Book Selector -->
+   <ComboBox fx:id="bookSelector" layoutX="242.0" layoutY="154.0" onAction="#loadBookDetails" prefWidth="249.0" promptText="Select Book To Update" style="-fx-background-radius: 10; -fx-font-size: 14px;" />
+
+   <!-- Labels -->
+   <Label layoutX="190.0" layoutY="233.0" text="Title">
+      <font><Font name="System Italic" size="24.0" /></font>
+   </Label>
+
+   <Label layoutX="190.0" layoutY="281.0" text="Author">
+      <font><Font name="System Italic" size="24.0" /></font>
+   </Label>
+
+   <Label layoutX="190.0" layoutY="335.0" text="Category">
+      <font><Font name="System Italic" size="24.0" /></font>
+   </Label>
+
+   <Label layoutX="190.0" layoutY="389.0" text="Status">
+      <font><Font name="System Italic" size="24.0" /></font>
+   </Label>
+
+   <!-- Input Fields -->
+   <TextField fx:id="titleField" layoutX="340.0" layoutY="236.0" prefWidth="209.0" promptText="Enter Title" style="-fx-background-radius: 10; -fx-font-size: 14px;" />
+
+   <TextField fx:id="authorField" layoutX="340.0" layoutY="284.0" prefWidth="209.0" promptText="Enter Author Name" style="-fx-background-radius: 10; -fx-font-size: 14px;" />
+
+   <ComboBox fx:id="categoryComboBox" layoutX="340.0" layoutY="335.0" prefWidth="209.0" promptText="Select Category" style="-fx-background-radius: 10; -fx-font-size: 14px;" />
+
+   <ComboBox fx:id="statusComboBox" layoutX="340.0" layoutY="389.0" prefWidth="209.0" promptText="Select Status" style="-fx-background-radius: 10; -fx-font-size: 14px;" />
+
+   <!-- Update Button -->
+   <Button layoutX="300.0" layoutY="473.0" onAction="#handleButtonClick" prefHeight="34.0" prefWidth="79.0" style="-fx-background-color: lightblue; -fx-background-radius: 10px; -fx-font-size: 16px;" text="Update">
+      <effect>
+         <DropShadow color="gray" offsetX="2" offsetY="2" radius="3" />
+      </effect>
+   </Button>
+   
+<!-- Back Button -->
+      <Button layoutX="22.0" layoutY="20.0" onAction="#backButton" prefHeight="30.0" prefWidth="80.0" style="-fx-background-color: #bbdefb; -fx-text-fill: #0d47a1; -fx-font-weight: bold; -fx-background-radius: 8;" text="← Back" />
+
+      <!-- Home Button -->
+      <Button layoutX="650.0" layoutY="20.0" onAction="#homeButton" prefHeight="30.0" prefWidth="80.0" style="-fx-background-color: #c8e6c9; -fx-text-fill: #1b5e20; -fx-font-weight: bold; -fx-background-radius: 8;" text="Home 🏠" />
+
 </AnchorPane>

@@ -1,8 +1,10 @@
 package com.library_management.controllers.member;
 
+import java.io.IOException;
 import java.sql.SQLException;
 import java.util.List;
 
+import com.library_management.App;
 import com.library_management.domain.Book;
 import com.library_management.domain.Member;
 import com.library_management.exceptions.DatabaseException;
@@ -38,6 +40,15 @@ public class ViewAllMembersController {
     @FXML
     private Text message;
     
+    @FXML
+    private void backButton() throws IOException {
+        App.setRoot("memberOptions");
+    }
+    
+    @FXML
+	private void homeButton() throws IOException{
+		App.setRoot("home");
+    }
 //    Creating Observable list
     private ObservableList<MemberTableView> memberData = FXCollections.observableArrayList();
 	

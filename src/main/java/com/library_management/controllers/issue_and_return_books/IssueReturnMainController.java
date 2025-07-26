@@ -19,4 +19,8 @@ public class IssueReturnMainController {
 	private void switchToViewAllIssues() throws IOException{
 		App.setRoot("viewAllIssues");
 	}
+	@FXML
+	private void backButton() throws IOException{
+		App.setRoot("home");
+	}
 }

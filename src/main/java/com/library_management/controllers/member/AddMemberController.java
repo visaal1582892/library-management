@@ -1,5 +1,9 @@
 package com.library_management.controllers.member;
 import com.library_management.utilities.ResponseHandler;
+
+import java.io.IOException;
+
+import com.library_management.App;
 import com.library_management.domain.Member;
 import com.library_management.services.implementation.MemberServiceImplementation;
 import javafx.fxml.FXML;
@@ -17,6 +21,15 @@ public class AddMemberController {
     @FXML private Button register;
     @FXML private Text message;
 
+    @FXML
+    private void backButton() throws IOException {
+        App.setRoot("memberOptions");
+    }
+	
+	@FXML
+	private void homeButton() throws IOException{
+		App.setRoot("home");
+	}
     private MemberServiceImplementation memberService = new MemberServiceImplementation();
     @FXML
     public void initialize() {

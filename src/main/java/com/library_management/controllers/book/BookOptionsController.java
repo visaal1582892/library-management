@@ -27,4 +27,9 @@ public class BookOptionsController {
 	private void switchToViewAllBooks() throws IOException{
 		App.setRoot("viewAllBooks");
 	}
+	
+	@FXML
+	private void backButton() throws IOException{
+		App.setRoot("home");
+	}
 }

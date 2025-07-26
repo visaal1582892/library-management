@@ -1,4 +1,7 @@
 package com.library_management.controllers.book;
+import java.io.IOException;
+
+import com.library_management.App;
 import com.library_management.domain.BookAvailability;
 
 import com.library_management.domain.BookCategory;
@@ -48,6 +51,16 @@ public class AddBookController {
 		authorField.setText("");
 		categoryComboBox.setValue(null);
     }
+    
+    @FXML
+    private void backButton() throws IOException {
+        App.setRoot("bookOptions");
+    }
+	
+	@FXML
+	private void homeButton() throws IOException{
+		App.setRoot("home");
+	}
    
    
     // Methods to handle events

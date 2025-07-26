@@ -1,7 +1,9 @@
 package com.library_management.controllers.book;
 
+import java.io.IOException;
 import java.util.List;
 
+import com.library_management.App;
 import com.library_management.dao.implementation.BookDAOImplementation;
 import com.library_management.domain.Book;
 import com.library_management.domain.BookAvailability;
@@ -59,6 +61,16 @@ public class UpdateBookDetailsController {
 	@FXML
 	private Text message;
 	
+	@FXML
+	private void backButton() throws IOException {
+	    App.setRoot("bookOptions");
+	}
+
+	@FXML
+	private void homeButton() throws IOException {
+	    App.setRoot("home");
+	}
+
 	@FXML
     public void initialize() {
 		try {

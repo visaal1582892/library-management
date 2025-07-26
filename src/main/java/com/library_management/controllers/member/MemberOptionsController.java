@@ -22,4 +22,9 @@ public class MemberOptionsController {
 	private void viewAllMembers() throws IOException {
 	    App.setRoot("viewAllMembers");
 	}
+	
+	@FXML
+	private void backButton() throws IOException{
+		App.setRoot("home");
+	}
 }

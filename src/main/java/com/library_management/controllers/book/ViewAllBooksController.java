@@ -1,7 +1,9 @@
 package com.library_management.controllers.book;
 
+import java.io.IOException;
 import java.util.List;
 
+import com.library_management.App;
 import com.library_management.domain.Book;
 import com.library_management.exceptions.DatabaseException;
 import com.library_management.services.implementation.BookServiceImplementation;
@@ -37,6 +39,17 @@ public class ViewAllBooksController {
     @FXML
     private Text message;
     
+    @FXML
+    private void backButton() throws IOException {
+        App.setRoot("bookOptions");
+    }
+
+    @FXML
+    private void homeButton() throws IOException {
+        App.setRoot("home");
+    }
+
+    
 //    Creating Observable list
     private ObservableList<CustomBookForTableView> bookData = FXCollections.observableArrayList();
 	
@@ -56,11 +69,13 @@ public class ViewAllBooksController {
 			for(Book book:books) {
 				bookData.add(new CustomBookForTableView(book.getBookId(), book.getTitle(), book.getAuthor(), book.getCategory(), book.getStatus(), book.getAvailability()));
 			}
+			viewBooksTable.setItems(bookData);
+			ResponseHandler.showResponse(message, "Books Fetched Succesfully...", Color.GREEN);
+			
 		} catch (DatabaseException e) {
 			ResponseHandler.showResponse(message, "Cannot Fetch Books Data...", Color.RED);
 		}
 		
-        viewBooksTable.setItems(bookData);
-		ResponseHandler.showResponse(message, "Books Fetched Succesfully...", null);
+        
     }
 }

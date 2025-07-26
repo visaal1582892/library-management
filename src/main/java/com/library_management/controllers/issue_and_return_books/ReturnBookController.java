@@ -1,8 +1,10 @@
 package com.library_management.controllers.issue_and_return_books;
 
+import java.io.IOException;
 import java.sql.SQLException;
 import java.util.List;
 
+import com.library_management.App;
 import com.library_management.dao.implementation.BookDAOImplementation;
 import com.library_management.dao.implementation.MemberDAOImplementation;
 import com.library_management.domain.Book;
@@ -24,6 +26,15 @@ public class ReturnBookController {
 
 	private List<Book> booksList;
 	private List<Member> memberList;
+	@FXML
+    private void backButton() throws IOException {
+        App.setRoot("IssueReturnMain");
+    }
+	
+	@FXML
+	private void homeButton() throws IOException{
+		App.setRoot("home");
+	}
 
 	public void setBooksList(List<Book> booksList) {
 		this.booksList = booksList;
