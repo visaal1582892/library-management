@@ -4,6 +4,7 @@ import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.image.Image;
 import javafx.stage.Stage;
 
 import java.io.IOException;
@@ -17,6 +18,7 @@ public class App extends Application {
 
     @Override
     public void start(Stage stage) throws IOException {
+    	stage.getIcons().add(new Image("/Images/lmsIcon.png"));
         scene = new Scene(loadFXML("home"), 760, 550);
         stage.setScene(scene);
         stage.show();
