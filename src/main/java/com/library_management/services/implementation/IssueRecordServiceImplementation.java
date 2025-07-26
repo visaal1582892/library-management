@@ -39,7 +39,10 @@ public class IssueRecordServiceImplementation implements IssueRecordServiceInter
 
 	@Override
 	public List<List<String>> getActiveIssuedBooks() {
-		return dao.getActiveIssuedBooks();
+		List<List<String>> data =  dao.getStatusTable().stream()
+				.filter(row -> row.get(4).equals("A") && row.get(3).equals("I"))
+				.collect(Collectors.toList());
+		return data;
 	}
 
 }
