@@ -8,33 +8,23 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<AnchorPane prefHeight="550.0" prefWidth="760.0"
-            xmlns="http://javafx.com/javafx/24.0.1"
-            xmlns:fx="http://javafx.com/fxml/1"
-            fx:controller="com.library_management.controllers.issue_and_return_books.ReturnBookController"
-            style="-fx-background-color: linear-gradient(to bottom, #e3f2fd, #ffffff);">
+<AnchorPane prefHeight="550.0" prefWidth="760.0" style="-fx-background-color: linear-gradient(to bottom, #e3f2fd, #ffffff);" xmlns="http://javafx.com/javafx/24.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.library_management.controllers.issue_and_return_books.ReturnBookController">
 
     <!-- Back Button -->
-    <Button layoutX="22.0" layoutY="20.0" onAction="#backButton" prefHeight="30.0" prefWidth="80.0"
-            style="-fx-background-color: #bbdefb; -fx-text-fill: #0d47a1; -fx-font-weight: bold; -fx-background-radius: 8;"
-            text="← Back" />
+    <Button layoutX="22.0" layoutY="20.0" onAction="#backButton" prefHeight="30.0" prefWidth="80.0" style="-fx-background-color: #bbdefb; -fx-text-fill: #0d47a1; -fx-font-weight: bold; -fx-background-radius: 8;" text="← Back" />
 
     <!-- Home Button -->
-    <Button layoutX="658.0" layoutY="20.0" onAction="#homeButton" prefHeight="30.0" prefWidth="80.0"
-            style="-fx-background-color: #c8e6c9; -fx-text-fill: #1b5e20; -fx-font-weight: bold; -fx-background-radius: 8;"
-            text="Home 🏠" />
+    <Button layoutX="658.0" layoutY="20.0" onAction="#homeButton" prefHeight="30.0" prefWidth="80.0" style="-fx-background-color: #c8e6c9; -fx-text-fill: #1b5e20; -fx-font-weight: bold; -fx-background-radius: 8;" text="Home 🏠" />
 
     <!-- Heading -->
-    <Label layoutX="290.0" layoutY="60.0" text="Return Book" style="-fx-text-fill: #2090bc;" underline="true">
+    <Label layoutX="290.0" layoutY="60.0" style="-fx-text-fill: #2090bc;" text="RETURN BOOK" underline="true">
         <font>
             <Font name="System Bold Italic" size="32.0" />
         </font>
     </Label>
 
     <!-- Message Text -->
-    <Text fx:id="message" layoutX="50.0" layoutY="120.0" strokeType="OUTSIDE" strokeWidth="0.0" text=""
-          textAlignment="CENTER" textOrigin="CENTER" wrappingWidth="660.0"
-          style="-fx-fill: #d32f2f;">
+    <Text fx:id="message" layoutX="50.0" layoutY="120.0" strokeType="OUTSIDE" strokeWidth="0.0" style="-fx-fill: #d32f2f;" text="" textAlignment="CENTER" textOrigin="CENTER" wrappingWidth="660.0">
         <font>
             <Font size="17.0" />
         </font>
@@ -43,31 +33,25 @@
     <!-- Select Member Label -->
     <Label layoutX="140.0" layoutY="160.0" text="Select Member Id">
         <font>
-            <Font name="System Bold" size="15.0" />
+            <Font name="System Italic" size="23.0" />
         </font>
     </Label>
 
     <!-- Member ComboBox -->
-    <ComboBox fx:id="memberSelector" layoutX="310.0" layoutY="155.0" onAction="#loadMemberDetails"
-              prefHeight="30.0" prefWidth="200.0" promptText="Select Member Id"
-              style="-fx-background-radius: 10; -fx-font-size: 14px;" />
+    <ComboBox fx:id="memberSelector" layoutX="374.0" layoutY="160.0" onAction="#loadMemberDetails" prefHeight="30.0" prefWidth="200.0" promptText="Select Member Id" style="-fx-background-radius: 10; -fx-font-size: 14px;" />
 
     <!-- Select Book Label -->
     <Label layoutX="140.0" layoutY="210.0" text="Select Book">
         <font>
-            <Font name="System Bold" size="15.0" />
+            <Font name="System Italic" size="23.0" />
         </font>
     </Label>
 
     <!-- Book ComboBox -->
-    <ComboBox fx:id="bookSelector" layoutX="310.0" layoutY="205.0" onAction="#loadBookDetails"
-              prefHeight="30.0" prefWidth="200.0" promptText="Select Book"
-              style="-fx-background-radius: 10; -fx-font-size: 14px;" />
+    <ComboBox fx:id="bookSelector" layoutX="374.0" layoutY="216.0" onAction="#loadBookDetails" prefHeight="30.0" prefWidth="200.0" promptText="Select Book" style="-fx-background-radius: 10; -fx-font-size: 14px;" />
 
     <!-- Return Book Button -->
-    <Button layoutX="320.0" layoutY="280.0" mnemonicParsing="false" onAction="#switchToReturnBookSubmit"
-            prefHeight="40.0" prefWidth="130.0" text="Return Book"
-            style="-fx-background-color: lightblue; -fx-background-radius: 10px; -fx-font-size: 16px;">
+    <Button layoutX="374.0" layoutY="286.0" mnemonicParsing="false" onAction="#switchToReturnBookSubmit" prefHeight="40.0" prefWidth="130.0" style="-fx-background-color: lightblue; -fx-background-radius: 10px; -fx-font-size: 16px;" text="Return Book">
         <effect>
             <DropShadow color="gray" offsetX="2" offsetY="2" radius="3" />
         </effect>
