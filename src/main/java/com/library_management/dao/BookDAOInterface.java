@@ -10,13 +10,13 @@ public interface BookDAOInterface {
 	
 	void updateBookDetails(Book oldBook, Book newBook) throws DatabaseException;
 	
-	void updateBookAvailability(int id, String availability);
-	
-	void deleteBook(int id);
-	
 	List<Book> selectAllBooks() throws DatabaseException;
 	
 	Book selectBookById(int id) throws DatabaseException;
 	
 	List<Book> selectAllMemberBooks(int memberId) throws DatabaseException;
+
+	void updateBookAvailability(Book book, String availability) throws DatabaseException;
+
+	void deleteBook(Book oldBook) throws DatabaseException;
 }

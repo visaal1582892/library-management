@@ -21,8 +21,8 @@ public class BookDAOImplementation implements BookDAOInterface {
 	@Override
 	public void addBook(Book book) throws DatabaseException {
 		Connection conn=DBConnection.getConn();
-		try {
-			PreparedStatement psInsert=conn.prepareStatement("insert into lms.books(title,author,category) values(?,?,?)");
+		try(PreparedStatement psInsert=conn.prepareStatement("insert into lms.books(title,author,category) values(?,?,?)");) {
+			
 			psInsert.setString(1, book.getTitle());
 			psInsert.setString(2, book.getAuthor());
 			psInsert.setString(3, book.getCategory().getStringValue());
@@ -37,8 +37,9 @@ public class BookDAOImplementation implements BookDAOInterface {
 		Connection conn=DBConnection.getConn();
 		String updateBooksQuery="update lms.books set title=?, author=?, category=?, status=? where book_id=?";
 		String insertBooksLogQuery="insert into lms.books_log(book_id,title,author,category,status,availability) values(?,?,?,?,?,?)";
-		try {
-			PreparedStatement psInsertLog=conn.prepareStatement(insertBooksLogQuery);
+		try(PreparedStatement psInsertLog=conn.prepareStatement(insertBooksLogQuery);
+				PreparedStatement psUpdate=conn.prepareStatement(updateBooksQuery);) {
+			
 			psInsertLog.setInt(1, oldBook.getBookId());
 			psInsertLog.setString(2, oldBook.getTitle());
 			psInsertLog.setString(3, oldBook.getAuthor());
@@ -46,7 +47,7 @@ public class BookDAOImplementation implements BookDAOInterface {
 			psInsertLog.setString(5, oldBook.getStatus().getStringValue());
 			psInsertLog.setString(6, oldBook.getAvailability().getStringValue());
 			psInsertLog.executeUpdate();
-			PreparedStatement psUpdate=conn.prepareStatement(updateBooksQuery);
+			
 			psUpdate.setString(1, newBook.getTitle());
 			psUpdate.setString(2, newBook.getAuthor());
 			psUpdate.setString(3, newBook.getCategory().getStringValue());
@@ -61,14 +62,49 @@ public class BookDAOImplementation implements BookDAOInterface {
 	}
 
 	@Override
-	public void updateBookAvailability(int id, String availability) {
-		// TODO Auto-generated method stub
+	public void updateBookAvailability(Book oldBook, String availability) throws DatabaseException {
 		
+		Connection conn=DBConnection.getConn();
+		String updateAvailabilityQuery="update lms.books set availability=? where book_id=?";
+		String insertBookLog="insert into books_log(book_id,title,author,category,status,availability) values(?,?,?,?,?,?)";
+		try(PreparedStatement psUpdate=conn.prepareStatement(updateAvailabilityQuery);
+			PreparedStatement psInsertLog=conn.prepareStatement(insertBookLog);) {
+			psInsertLog.setInt(1, oldBook.getBookId());
+			psInsertLog.setString(2, oldBook.getTitle());
+			psInsertLog.setString(3, oldBook.getAuthor());
+			psInsertLog.setString(4, oldBook.getCategory().getStringValue());
+			psInsertLog.setString(5, oldBook.getStatus().getStringValue());
+			psInsertLog.setString(6, oldBook.getAvailability().getStringValue());
+			psInsertLog.executeUpdate();
+			
+			psUpdate.setString(1, availability);
+			psUpdate.setInt(2, oldBook.getBookId());
+			psUpdate.executeUpdate();
+		}catch(SQLException e) {
+			throw new DatabaseException("Failed To Update Availability...");
+		}
 	}
 
 	@Override
-	public void deleteBook(int id) {
-		// TODO Auto-generated method stub
+	public void deleteBook(Book oldBook) throws DatabaseException {
+		Connection conn=DBConnection.getConn();
+		String deleteQuery="delete from lms.books where book_id=?";
+		String insertBookLog="insert into books_log(book_id,title,author,category,status,availability) values(?,?,?,?,?,?)";
+		try(PreparedStatement psDelete=conn.prepareStatement(deleteQuery);
+			PreparedStatement psInsertLog=conn.prepareStatement(insertBookLog);) {
+			psInsertLog.setInt(1, oldBook.getBookId());
+			psInsertLog.setString(2, oldBook.getTitle());
+			psInsertLog.setString(3, oldBook.getAuthor());
+			psInsertLog.setString(4, oldBook.getCategory().getStringValue());
+			psInsertLog.setString(5, oldBook.getStatus().getStringValue());
+			psInsertLog.setString(6, oldBook.getAvailability().getStringValue());
+			psInsertLog.executeUpdate();
+			
+			psDelete.setInt(1, oldBook.getBookId());
+			psDelete.executeUpdate();
+		}catch(SQLException e) {
+			throw new DatabaseException("Failed To Delete Book...");
+		}
 		
 	}
 

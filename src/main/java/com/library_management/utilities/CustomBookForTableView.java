@@ -73,5 +73,10 @@ public class CustomBookForTableView {
 	public SimpleStringProperty availabilityProperty() {
 		return availability;
 	}
+
+	public void setAvailability(String newAvailabilityValue) {
+		availability.set(newAvailabilityValue);
+		
+	}
     
 }
