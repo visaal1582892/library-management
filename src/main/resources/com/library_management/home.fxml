@@ -59,6 +59,18 @@
          </font>
          <text>Issue &amp; Return Books</text>
       </Button>
+      
+       <Button fx:id="reports" layoutX="212.0" layoutY="397.0" mnemonicParsing="false"
+              onAction="#reports" prefHeight="52.0" prefWidth="290.0"
+              style="-fx-background-color: lightblue; -fx-background-radius: 10px; -fx-font-size: 25px; -fx-font-family: 'System Italic';">
+         <effect>
+            <DropShadow color="gray" offsetX="2" offsetY="2" radius="3" />
+         </effect>
+         <font>
+            <Font size="25.0" />
+         </font>
+         <text>Reports</text>
+      </Button>
 
       <!-- Unused FlowPane -->
       <FlowPane prefHeight="200.0" prefWidth="200.0" />

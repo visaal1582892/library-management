@@ -33,6 +33,8 @@
         <TableColumn fx:id="memberMobileNoColumn" prefWidth="120.0" text="Mobile No" />
         <TableColumn fx:id="memberGenderColumn" prefWidth="100.0" text="Gender" />
         <TableColumn fx:id="memberAddressColumn" prefWidth="130.0" text="Address" />
+        <TableColumn fx:id="deleteColumn" text="Delete" prefWidth="80.0"/>
+        
     </columns>
 </TableView>
       
