@@ -30,21 +30,15 @@ public class MemberDaoImplementationTest {
     public void setUp() throws Exception {
     	DBConnection.connectToDB("jdbc:mysql://localhost:3306/lms_test");
         dao=new MemberDAOImplementation();
-        this.generatedId=dao.insertMember(new Member("test", "test@gmail.com","9999999999","M","seeeyhas"));
+        
+        this.generatedId=dao.insertMember(new Member("test", "test3@gmail.com","9899999989","M","seeeyhas"));
     }
 
     @Test
     public void testAddBook_ShouldPass() throws DatabaseException, SQLException {
-    	dao.insertMember(new Member("tarun","tarun123@gmail.com","9398626813","M","seethampetys"));
+    	dao.insertMember(new Member("tarun","tarun12345@gmail.com","9397626811","M","seethampetys"));
     }
-//    
-//    @Test
-//    public void testUpdateBookDetails_ShouldPass() throws DatabaseException {
-//    	System.out.println(this.generatedId);
-//    	Book oldBook=new Book(this.generatedId, "test", "test", BookCategory.FICTION, BookStatus.ACTIVE, BookAvailability.AVAILABLE);
-//    	Book newBook=new Book(this.generatedId, "What is Health", "Varma", BookCategory.NON_FICTION, BookStatus.INACTIVE);
-//    	dao.updateBookDetails(oldBook, newBook);
-//    }
+
 //    
 //    @Test
 //    public void testUpdateBookAvailability_ShouldPass() throws DatabaseException{

@@ -33,7 +33,7 @@ public class AddMemberController {
     private MemberServiceImplementation memberService = new MemberServiceImplementation();
     @FXML
     public void initialize() {
-        genderComboBox.getItems().addAll("Male", "Female");
+        genderComboBox.getItems().addAll("Male","Female");
 
         register.setOnAction(e -> {
             String memberName=name.getText();

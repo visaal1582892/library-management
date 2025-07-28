@@ -16,26 +16,26 @@ import com.library_management.services.implementation.*;
 public class MemberServiceImplementation implements MemberServiceInterface{
 
     private MemberDAOImplementation memberDAO = new MemberDAOImplementation();
-    public void addMember(Member member) throws SQLException, DatabaseException {
+    public void addMember(Member member) throws SQLException, DatabaseException, InvalidDetailsException {
         if (member.getMemberName()==null || member.getMemberName().trim().isEmpty()) {
-            throw new IllegalArgumentException("Name is required");
+            throw new InvalidDetailsException("Name is required");
         }
 
         if (member.getMemberMail()==null || !isValidEmail(member.getMemberMail())) {
-            throw new IllegalArgumentException("Invalid email format");
+            throw new InvalidDetailsException("Invalid email format");
         }
 
         if (member.getMobileNo()==null || !member.getMobileNo().matches("\\d{10}")) {
-            throw new IllegalArgumentException("Mobile number must be exactly 10 digits");
+            throw new InvalidDetailsException("Mobile number must be exactly 10 digits");
         }
 
         if (member.getGender()==null || !(member.getGender().equalsIgnoreCase("Male")||
         		member.getGender().equalsIgnoreCase("Female"))) {
-            throw new IllegalArgumentException("Please select your gender");
+            throw new InvalidDetailsException("Please select your gender");
         }
 
         if (member.getMemberAddress()==null || member.getMemberAddress().trim().isEmpty()) {
-            throw new IllegalArgumentException("Address is required");
+            throw new InvalidDetailsException("Address is required");
         }
         String genderCode = member.getGender().equalsIgnoreCase("Male") ? "M" : "F";
         member.setGender(genderCode);
