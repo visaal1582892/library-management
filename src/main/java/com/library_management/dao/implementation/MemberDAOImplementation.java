@@ -9,10 +9,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.library_management.dao.MemberDAOInterface;
-import com.library_management.domain.Book;
-import com.library_management.domain.BookAvailability;
-import com.library_management.domain.BookCategory;
-import com.library_management.domain.BookStatus;
 import com.library_management.domain.Member;
 import com.library_management.exceptions.DatabaseException;
 import com.library_management.utilities.DBConnection;
@@ -80,6 +76,7 @@ public class MemberDAOImplementation implements MemberDAOInterface {
 		try(PreparedStatement psInsertLog=conn.prepareStatement(insertMembersLogQuery);
 				PreparedStatement psUpdate=conn.prepareStatement(updateMembersQuery);) {
 			
+			conn.setAutoCommit(false);
 			psInsertLog.setInt(1, oldMember.getMemberId());
 			psInsertLog.setString(2, oldMember.getMemberName());
 			psInsertLog.setString(3,oldMember.getMemberMail());
@@ -95,8 +92,15 @@ public class MemberDAOImplementation implements MemberDAOInterface {
 			psUpdate.setInt(5,newMember.getMemberId());
 			
 			psUpdate.executeUpdate();
+			conn.commit();
+			conn.setAutoCommit(true);
 			
 		} catch (SQLException e) {
+			try {
+				conn.rollback();
+			}catch (SQLException ex) {
+				throw new DatabaseException("Member Updation Rollback Failed...");
+			}
 			throw new DatabaseException("Error Occurred while updating data...");
 		}
 		
@@ -107,8 +111,7 @@ public class MemberDAOImplementation implements MemberDAOInterface {
 		Member currentMember=null;
 		Connection conn=DBConnection.getConn();
 		String selectOneQuery="select * from lms.members where member_id=?";
-		try {
-			PreparedStatement psSelectOne=conn.prepareStatement(selectOneQuery);
+		try(PreparedStatement psSelectOne=conn.prepareStatement(selectOneQuery);) {
 			psSelectOne.setInt(1, id);
 			psSelectOne.execute();
 			ResultSet resultSet=psSelectOne.getResultSet();
@@ -136,11 +139,10 @@ public class MemberDAOImplementation implements MemberDAOInterface {
 	        String logInsertQuery="insert into lms.members_log(member_id, name, email, mobile, gender, address) values (?, ?, ?, ?, ?, ?)";
 	        String deleteQuery="delete from lms.members where member_id = ?";
 
-	        try (
-	            PreparedStatement psSelect=conn.prepareStatement(selectQuery);
-	            PreparedStatement psInsertLog=conn.prepareStatement(logInsertQuery);
-	            PreparedStatement psDelete=conn.prepareStatement(deleteQuery)
-	        ) {
+	        try(PreparedStatement psSelect=conn.prepareStatement(selectQuery);
+		            PreparedStatement psInsertLog=conn.prepareStatement(logInsertQuery);
+		            PreparedStatement psDelete=conn.prepareStatement(deleteQuery);){
+	        	conn.setAutoCommit(false);
 	            psSelect.setInt(1,memberId);
 	            ResultSet rs=psSelect.executeQuery();
 
@@ -169,10 +171,17 @@ public class MemberDAOImplementation implements MemberDAOInterface {
 	          
 	            psDelete.setInt(1, memberId);
 	            int rowsAffected = psDelete.executeUpdate();
-
+	            
+	            conn.commit();
+	            conn.setAutoCommit(true);
 	            return rowsAffected > 0;
 
 	        } catch (SQLException e) {
+	        	try {
+					conn.rollback();
+				}catch (SQLException ex) {
+					throw new DatabaseException("Member Deletion Rollback Failed...");
+				}
 	            throw new DatabaseException("Failed to delete member: " + e.getMessage());
 	        }
 	    }
