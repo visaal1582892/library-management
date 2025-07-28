@@ -110,7 +110,7 @@ public class IssueRecordDAOImplementation implements IssueRecordDAOInterface {
 				return "Failed to update issue record";
 			}
 			System.out.println("Book returned successfully");
-			logIssueAction(issueId);
+			logIssue(issueId);
 
 			String updateBookSql = "UPDATE books SET availability = 'A' WHERE book_id = ?";
 			PreparedStatement updateStmt = conn.prepareStatement(updateBookSql);
@@ -198,8 +198,7 @@ public class IssueRecordDAOImplementation implements IssueRecordDAOInterface {
 		return activeIssues;
 	}
 
-	private void logIssueAction(int issueId) {
-		
+	private void logIssue(int issueId) {
 		String logSql = "INSERT INTO issue_records_log (issue_id, book_id, member_id, status, issue_date, return_date) SELECT * FROM issue_records WHERE issue_records.issue_id = ?";
 		Connection conn = DBConnection.getConn();
 		try {
