@@ -1,3 +1,4 @@
+
 package com.library_management.controllers.book;
 
 import java.io.IOException;
@@ -106,6 +107,7 @@ public class ViewAllBooksController {
 
                     {
                         // Toggle availability event
+                    	
                         toggleAvailability.setOnAction(event -> {
                             CustomBookForTableView book = getTableView().getItems().get(getIndex());
                             String newAvailabilityValue = book.getAvailability().equals("Available") ? "Issued" : "Available";
@@ -129,6 +131,7 @@ public class ViewAllBooksController {
                         });
 
                         // Delete book event
+                        deleteButton.setStyle("-fx-background-color: #ef5350; -fx-text-fill: white; -fx-font-weight: bold; -fx-background-radius: 6;");
                         deleteButton.setOnAction(event -> {
                             CustomBookForTableView book = getTableView().getItems().get(getIndex());
                             Book currentBook = new Book(

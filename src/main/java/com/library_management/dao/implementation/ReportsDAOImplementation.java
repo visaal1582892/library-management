@@ -19,7 +19,7 @@ import com.library_management.services.implementation.ReportsServiceImplementati
 import com.library_management.utilities.DBConnection;
 
 public class ReportsDAOImplementation implements ReportsDAOInterface {
-	IssueRecordDAOInterface dao = new IssueRecordDAOImplementation();
+	static IssueRecordDAOInterface dao = new IssueRecordDAOImplementation();
 
 	@Override
 	public Map<Object, Long> countOfBooksPerCategory() {
@@ -30,7 +30,8 @@ public class ReportsDAOImplementation implements ReportsDAOInterface {
 		ResultSet resultSet;
 		try {
 			resultSet = statement.executeQuery(selectQuery);
-			while(resultSet.next()) {
+			while(resultSet.next()) 
+			{
 				String category=resultSet.getString(1);
 				booksList.add(category);
 			}
@@ -43,12 +44,13 @@ public class ReportsDAOImplementation implements ReportsDAOInterface {
 		return countMap;
 	}
 	
-	@Override
+
 	public List<IssueRecord> getOverdueBooks() {
 		//return dao.getOverdueBooks();
 		List<IssueRecord> overdue = dao.getAllIssues().stream()
 				.filter(b -> b.getReturnDate().isBefore(LocalDate.now().minusDays(17)))
 				.collect(Collectors.toList());
+		System.out.println(overdue);
 		return overdue;
 	}
 
@@ -57,6 +59,7 @@ public class ReportsDAOImplementation implements ReportsDAOInterface {
 		List<List<String>> data =  dao.getStatusTable().stream()
 				.filter(row -> row.get(4).equals("A") && row.get(3).equals("I"))
 				.collect(Collectors.toList());
+		System.out.println(data);
 		return data;
 	}
 }

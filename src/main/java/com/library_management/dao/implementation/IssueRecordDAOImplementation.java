@@ -131,7 +131,8 @@ public class IssueRecordDAOImplementation implements IssueRecordDAOInterface {
 	public List<IssueRecord> getOverdueBooks() {
 		List<IssueRecord> overdue = new ArrayList<>();
 		String sql = "SELECT * FROM issue_records WHERE status = 'I' AND issue_date < ?";
-		try (Connection conn = DBConnection.getConn()) {
+		try  {
+			Connection conn = DBConnection.getConn();
 			PreparedStatement pstmt = conn.prepareStatement(sql);
 			pstmt.setDate(1, Date.valueOf(LocalDate.now().minusDays(17)));
 			ResultSet rs = pstmt.executeQuery();
@@ -178,7 +179,8 @@ public class IssueRecordDAOImplementation implements IssueRecordDAOInterface {
 	public List<List<String>> getStatusTable() {
 		List<List<String>> activeIssues = new ArrayList<>();
 		String sql = "SELECT m.member_id, m.name, b.title, ir.status as issue_status, b.status as book_status FROM members m JOIN issue_records ir ON m.member_id = ir.member_id JOIN books b ON ir.book_id = b.book_id";
-		try (Connection conn = DBConnection.getConn()) {
+		try  {
+			Connection conn = DBConnection.getConn();
 			Statement stmt = conn.createStatement();
 			ResultSet rs = stmt.executeQuery(sql);
 			while (rs.next()) {
@@ -186,6 +188,8 @@ public class IssueRecordDAOImplementation implements IssueRecordDAOInterface {
 				issue.add(String.valueOf(rs.getInt("member_id")));
 				issue.add(rs.getString("name"));
 				issue.add(rs.getString("title"));
+				issue.add(rs.getString("issue_status"));
+				issue.add(rs.getString("book_status"));
 				activeIssues.add(issue);
 			}
 		} catch (SQLException e) {

@@ -91,9 +91,9 @@ public class UpdateMemberDetailsController {
             }
         } catch (Exception e) {
         	e.printStackTrace();
-//        	
-//            message.setText("Error loading member details.");
-//            message.setFill(Color.RED);
+        	
+            message.setText("Error loading member details.");
+            message.setFill(Color.RED);
         }
     }
 

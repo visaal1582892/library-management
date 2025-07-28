@@ -10,9 +10,9 @@ import com.library_management.exceptions.DatabaseException;
 public interface MemberDAOInterface {
    public void insertMember(Member member) throws SQLException;
    List<Member> getAllMembers() throws SQLException;
-   public void deleteBook();
 
 void updateMember(Member oldMember , Member newMember) throws DatabaseException;
 Member selectMemberById(int id) throws DatabaseException;
+boolean deleteMember(int memberId) throws DatabaseException;
    
 }

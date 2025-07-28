@@ -50,7 +50,7 @@ public class AddMemberController {
                 clearForm();
             }
             catch(Exception ex) {
-                showAlert("Error",ex.getMessage(),Alert.AlertType.ERROR);
+            	 ResponseHandler.showResponse(message, "Error while adding member data..", Color.RED);
             }
         });
     }
@@ -62,12 +62,6 @@ public class AddMemberController {
         genderComboBox.getSelectionModel().clearSelection();
         address.clear();
     }
-
-    private void showAlert(String title, String message, Alert.AlertType type) {
-        Alert alert=new Alert(type);
-        alert.setTitle(title);
-        alert.setHeaderText(null);
-        alert.setContentText(message);
-        alert.showAndWait();
-    }
 }
+
+   
