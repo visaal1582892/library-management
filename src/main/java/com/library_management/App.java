@@ -36,6 +36,8 @@ public class App extends Application {
     public static void main(String[] args) {
     	DBConnection.connectToDB("jdbc:mysql://localhost:3306/lms");
         launch();
+        DBConnection.closeStatement();
+        DBConnection.closeConn();
     }
 
 }
