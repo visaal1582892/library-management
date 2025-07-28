@@ -66,8 +66,9 @@ public class MemberDAOImplementation implements MemberDAOInterface {
 		Connection conn=DBConnection.getConn();
 		String updateMembersQuery="update lms.members set name=?, email=?, mobile=?, address=? where member_id=?";
 		String insertMembersLogQuery="insert into lms.members_log(member_id,name,email,mobile,gender,address) values(?,?,?,?,?,?)";
-		try {
-			PreparedStatement psInsertLog=conn.prepareStatement(insertMembersLogQuery);
+		try(PreparedStatement psInsertLog=conn.prepareStatement(insertMembersLogQuery);
+				PreparedStatement psUpdate=conn.prepareStatement(updateMembersQuery);) {
+			
 			psInsertLog.setInt(1, oldMember.getMemberId());
 			psInsertLog.setString(2, oldMember.getMemberName());
 			psInsertLog.setString(3,oldMember.getMemberMail());
@@ -75,8 +76,6 @@ public class MemberDAOImplementation implements MemberDAOInterface {
 			psInsertLog.setString(5, oldMember.getGender());
 			psInsertLog.setString(6,oldMember.getMemberAddress());
 			psInsertLog.executeUpdate();
-			
-			PreparedStatement psUpdate=conn.prepareStatement(updateMembersQuery);
 			
 			psUpdate.setString(1,newMember.getMemberName() );
 			psUpdate.setString(2,newMember.getMemberMail() );

@@ -15,7 +15,7 @@ import com.library_management.utilities.DBConnection;
 import com.library_management.dao.implementation.IssueRecordDAOImplementation;
 
 @RunWith(JUnit4.class)
-public class IssueRecordDAOImplementationTest {
+public class IssueRecordDaoImplementationTest {
 	
 	private IssueRecordDAOImplementation dao;
 	

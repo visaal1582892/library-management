@@ -45,6 +45,7 @@ public class BookDAOImplementation implements BookDAOInterface {
 		String insertBooksLogQuery="insert into books_log(book_id,title,author,category,status,availability) values(?,?,?,?,?,?)";
 		try(PreparedStatement psInsertLog=conn.prepareStatement(insertBooksLogQuery);
 				PreparedStatement psUpdate=conn.prepareStatement(updateBooksQuery);) {
+			conn.setAutoCommit(false);
 			
 			psInsertLog.setInt(1, oldBook.getBookId());
 			psInsertLog.setString(2, oldBook.getTitle());
@@ -60,8 +61,14 @@ public class BookDAOImplementation implements BookDAOInterface {
 			psUpdate.setString(4, newBook.getStatus().getStringValue());
 			psUpdate.setInt(5, oldBook.getBookId());
 			psUpdate.executeUpdate();
-			
+			conn.commit();
+			conn.setAutoCommit(true);
 		} catch (SQLException e) {
+			try {
+				conn.rollback();
+			}catch (SQLException ex) {
+				throw new DatabaseException("Update Details Rollback Failed...");
+			}
 			throw new DatabaseException("Error Occurred while updating data...");
 		}
 		
@@ -75,6 +82,7 @@ public class BookDAOImplementation implements BookDAOInterface {
 		String insertBookLog="insert into books_log(book_id,title,author,category,status,availability) values(?,?,?,?,?,?)";
 		try(PreparedStatement psUpdate=conn.prepareStatement(updateAvailabilityQuery);
 			PreparedStatement psInsertLog=conn.prepareStatement(insertBookLog);) {
+			conn.setAutoCommit(false);
 			psInsertLog.setInt(1, oldBook.getBookId());
 			psInsertLog.setString(2, oldBook.getTitle());
 			psInsertLog.setString(3, oldBook.getAuthor());
@@ -86,7 +94,14 @@ public class BookDAOImplementation implements BookDAOInterface {
 			psUpdate.setString(1, availability);
 			psUpdate.setInt(2, oldBook.getBookId());
 			psUpdate.executeUpdate();
+			conn.commit();
+			conn.setAutoCommit(true);
 		}catch(SQLException e) {
+			try {
+				conn.rollback();
+			}catch (SQLException ex) {
+				throw new DatabaseException("Update Availability Rollback Failed...");
+			}
 			throw new DatabaseException("Failed To Update Availability...");
 		}
 	}
@@ -98,6 +113,7 @@ public class BookDAOImplementation implements BookDAOInterface {
 		String insertBookLog="insert into books_log(book_id,title,author,category,status,availability) values(?,?,?,?,?,?)";
 		try(PreparedStatement psDelete=conn.prepareStatement(deleteQuery);
 			PreparedStatement psInsertLog=conn.prepareStatement(insertBookLog);) {
+			conn.setAutoCommit(false);
 			psInsertLog.setInt(1, oldBook.getBookId());
 			psInsertLog.setString(2, oldBook.getTitle());
 			psInsertLog.setString(3, oldBook.getAuthor());
@@ -108,7 +124,14 @@ public class BookDAOImplementation implements BookDAOInterface {
 			
 			psDelete.setInt(1, oldBook.getBookId());
 			psDelete.executeUpdate();
+			conn.commit();
+			conn.setAutoCommit(true);
 		}catch(SQLException e) {
+			try {
+				conn.rollback();
+			}catch (SQLException ex) {
+				throw new DatabaseException("Book Deletion Rollback Failed...");
+			}
 			throw new DatabaseException("Failed To Delete Book...");
 		}
 		
