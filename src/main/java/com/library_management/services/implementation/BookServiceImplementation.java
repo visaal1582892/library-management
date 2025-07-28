@@ -4,7 +4,6 @@ import java.util.List;
 
 import com.library_management.dao.implementation.BookDAOImplementation;
 import com.library_management.domain.Book;
-import com.library_management.domain.BookAvailability;
 import com.library_management.domain.BookCategory;
 import com.library_management.domain.BookStatus;
 import com.library_management.exceptions.DatabaseException;
@@ -12,6 +11,7 @@ import com.library_management.exceptions.InvalidDetailsException;
 import com.library_management.services.BookServiceInterface;
 
 public class BookServiceImplementation implements BookServiceInterface {
+	
 	public void validateAddBook(String title, String author, BookCategory category) throws InvalidDetailsException, DatabaseException {
 		if(title.trim().equals("") || author.trim().equals("") || category==null) {
 			throw new InvalidDetailsException("All Details Must Be Given...");
@@ -66,14 +66,8 @@ public class BookServiceImplementation implements BookServiceInterface {
 			}
 			
 //			Creating a new Book obj
-			Book newBook=new Book(id, title, author, category,status);
+			Book newBook=new Book(id, title, author, category, status);
 			new BookDAOImplementation().updateBookDetails(currentBook, newBook);
 		}
-	}
-
-	@Override
-	public void validateUpdateBookAvailability(int id, BookAvailability availability) {
-		// TODO Auto-generated method stub
-		
 	}
 }

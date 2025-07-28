@@ -49,7 +49,7 @@ public class ViewAllBooksController {
     @FXML
     private TableColumn<CustomBookForTableView, Void> actionsColumn;
     @FXML
-    private Text message1;
+    private Text message;
 
     private ObservableList<CustomBookForTableView> bookData1 = FXCollections.observableArrayList();
 
@@ -87,10 +87,10 @@ public class ViewAllBooksController {
             }
 
             viewBooksTable.setItems(bookData1);
-            ResponseHandler.showResponse(message1, "Books Fetched Successfully...", Color.GREEN);
+            ResponseHandler.showResponse(message, "Books Fetched Successfully...", Color.GREEN);
 
         } catch (DatabaseException e) {
-            ResponseHandler.showResponse(message1, "Cannot Fetch Books Data...", Color.RED);
+            ResponseHandler.showResponse(message, "Cannot Fetch Books Data...", Color.RED);
         }
 
         addActionsToTable();
@@ -124,9 +124,9 @@ public class ViewAllBooksController {
                                 new BookDAOImplementation().updateBookAvailability(currBook, newAvailabilityValue.substring(0, 1));
                                 book.setAvailability(newAvailabilityValue);
                                 viewBooksTable.refresh();
-                                ResponseHandler.showResponse(message1, "Successfully Updated Availability...", Color.GREEN);
+                                ResponseHandler.showResponse(message, "Successfully Updated Availability...", Color.GREEN);
                             } catch (DatabaseException e) {
-                                ResponseHandler.showResponse(message1, e.getMessage(), Color.RED);
+                                ResponseHandler.showResponse(message, e.getMessage(), Color.RED);
                             }
                         });
 
@@ -144,12 +144,12 @@ public class ViewAllBooksController {
                             );
 
                             getTableView().getItems().remove(getIndex());
-                            ResponseHandler.showResponse(message1, "Book Deleted Successfully...", Color.GREEN);
+                            ResponseHandler.showResponse(message, "Book Deleted Successfully...", Color.GREEN);
 
                             try {
                                 new BookDAOImplementation().deleteBook(currentBook);
                             } catch (DatabaseException e) {
-                                ResponseHandler.showResponse(message1, e.getMessage(), Color.RED);
+                                ResponseHandler.showResponse(message, e.getMessage(), Color.RED);
                             }
                         });
                     }
@@ -160,7 +160,8 @@ public class ViewAllBooksController {
                         if (empty) {
                             setGraphic(null);
                         } else {
-                            HBox buttons = new HBox(10, toggleAvailability, deleteButton);
+//                            HBox buttons = new HBox(10, toggleAvailability, deleteButton);
+                        	HBox buttons = new HBox(10, deleteButton);
                             buttons.setPadding(new Insets(5));
                             setGraphic(buttons);
                         }
