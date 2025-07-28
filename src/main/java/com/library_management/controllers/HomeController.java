@@ -1,7 +1,8 @@
-package com.library_management;
+package com.library_management.controllers;
 
 import java.io.IOException;
 
+import com.library_management.App;
 import com.library_management.dao.implementation.ReportsDaoImplementation;
 
 import javafx.fxml.FXML;
