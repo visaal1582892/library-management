@@ -4,8 +4,14 @@ import org.junit.Before;
 import org.junit.Test;
 import static org.junit.Assert.*;
 
+import org.junit.After;
+
+import com.library_management.dao.implementation.BookDAOImplementation;
+import com.library_management.domain.Book;
+import com.library_management.domain.BookAvailability;
 import com.library_management.domain.BookCategory;
 import com.library_management.domain.BookStatus;
+import com.library_management.exceptions.DatabaseException;
 import com.library_management.exceptions.InvalidDetailsException;
 import com.library_management.services.implementation.BookServiceImplementation;
 import com.library_management.utilities.DBConnection;
@@ -13,16 +19,15 @@ import com.library_management.utilities.DBConnection;
 
 public class BookServiceImplementationTest {
 	private BookServiceImplementation service;
+	private int generatedId;
 
     @Before
-    public void setUp() {
+    public void setUp() throws DatabaseException {
         service = new BookServiceImplementation();
+        BookDAOImplementation dao=new BookDAOImplementation();
+        DBConnection.connectToDB("jdbc:mysql://localhost:3306/lms_test");
+        this.generatedId=dao.addBook(new Book("test", "test", BookCategory.FICTION));
     }
-
-//    @Test
-//    public void testValidateAddBook_WithValidDetails_ShouldPass() throws Exception {
-//        service.validateAddBook("Brain Rot", "Rohit Varma", BookCategory.FICTION);
-//    }
 
     @Test(expected = InvalidDetailsException.class)
     public void testValidateAddBook_WithEmptyTitle_ShouldThrowException() throws Exception {
@@ -44,23 +49,31 @@ public class BookServiceImplementationTest {
         service.validateAddBook(overflowedTitle, "Author", BookCategory.SCIENCE_FICTION);
     }
 
-//    @Test
-//    public void testValidateViewAllBooks_ShouldReturnList() throws Exception {
-//        assertNotNull(service.validateViewAllBooks());
-//    }
+    @Test
+    public void testValidateViewAllBooks_ShouldReturnList() throws Exception {
+        assertNotNull(service.validateViewAllBooks());
+    }
 
     @Test(expected = InvalidDetailsException.class)
     public void testValidateUpdateBookDetails_WithEmptyFields_ShouldThrowException() throws Exception {
-        service.validateUpdateBookDetails(1, "", "", BookCategory.FICTION, BookStatus.ACTIVE);
+        service.validateUpdateBookDetails(this.generatedId, "", "", BookCategory.FICTION, BookStatus.ACTIVE);
     }
 
-//    @Test(expected = InvalidDetailsException.class)
-//    public void testValidateUpdateBookDetails_WithUnchangedData_ShouldThrowException() throws Exception {
-//        service.validateUpdateBookDetails(4, "aaaa", "aaaa", BookCategory.FICTION, BookStatus.ACTIVE);
-//    }
+    @Test(expected = InvalidDetailsException.class)
+    public void testValidateUpdateBookDetails_WithUnchangedData_ShouldThrowException() throws Exception {
+        service.validateUpdateBookDetails(this.generatedId, "test", "test", BookCategory.FICTION, BookStatus.ACTIVE);
+    }
 
-//    @Test
-//    public void testValidateUpdateBookDetails_WithChanges_ShouldPass() throws Exception {
-//        service.validateUpdateBookDetails(5, "Ross", "Varma", BookCategory.MYSTERY, BookStatus.INACTIVE);
-//    }
+    @Test
+    public void testValidateUpdateBookDetails_WithChanges_ShouldPass() throws Exception {
+        service.validateUpdateBookDetails(this.generatedId, "Ross", "Varma", BookCategory.MYSTERY, BookStatus.INACTIVE);
+    }
+    
+    @After
+    public void tearDown() throws Exception {
+    	BookDAOImplementation dao=new BookDAOImplementation();
+    	dao.deleteBook(new Book(this.generatedId, "test", "test", BookCategory.FICTION, BookStatus.ACTIVE, BookAvailability.AVAILABLE));
+    	DBConnection.closeStatement();
+        DBConnection.closeConn();
+    }
 }

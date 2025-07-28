@@ -6,7 +6,7 @@ import com.library_management.domain.Book;
 import com.library_management.exceptions.DatabaseException;
 
 public interface BookDAOInterface {
-	void addBook(Book book) throws DatabaseException;
+	int addBook(Book book) throws DatabaseException;
 	
 	void updateBookDetails(Book oldBook, Book newBook) throws DatabaseException;
 	
