@@ -19,11 +19,6 @@ public class BookOptionsController {
 	}
 	
 	@FXML
-	private void switchToUpdateBookAvailability() throws IOException{
-		App.setRoot("updateBookAvailability");
-	}
-	
-	@FXML
 	private void switchToViewAllBooks() throws IOException{
 		App.setRoot("viewAllBooks");
 	}

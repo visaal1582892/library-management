@@ -24,7 +24,7 @@
       <Button layoutX="20.0" layoutY="20.0" onAction="#backButton" prefHeight="30.0" prefWidth="80.0" style="-fx-background-color: #bbdefb; -fx-text-fill: #0d47a1; -fx-font-weight: bold; -fx-background-radius: 8;" text="← Back" />
 
 
-      <Button fx:id="viewAllBooksButton" layoutX="210.0" layoutY="380.0" onAction="#switchToViewAllBooks" prefHeight="52.0" prefWidth="310.0" style="-fx-background-color: lightblue; -fx-background-radius: 10px; -fx-font-size: 25px; -fx-font-family: 'System Italic';" text="View All Books">
+      <Button fx:id="viewAllBooksButton" layoutX="210.0" layoutY="302.0" onAction="#switchToViewAllBooks" prefHeight="52.0" prefWidth="310.0" style="-fx-background-color: lightblue; -fx-background-radius: 10px; -fx-font-size: 25px; -fx-font-family: 'System Italic';" text="View All Books">
          <effect>
             <DropShadow color="gray" offsetX="2" offsetY="2" radius="3" />
          </effect>
@@ -33,11 +33,7 @@
          </font>
       </Button>
 
-      <Button fx:id="updateBookAvailabilityButton" layoutX="210.0" layoutY="302.0" onAction="#switchToUpdateBookAvailability" prefHeight="52.0" prefWidth="310.0" style="-fx-background-color: lightblue; -fx-background-radius: 10px; -fx-font-size: 25px; -fx-font-family: 'System Italic';" text="Update Book Availability">
-         <effect>
-            <DropShadow color="gray" offsetX="2" offsetY="2" radius="3" />
-         </effect>
-      </Button>
+      
 
       <Button fx:id="updateBookDetailsButton" layoutX="210.0" layoutY="223.0" onAction="#switchToUpdateBookDetails" prefHeight="52.0" prefWidth="311.0" style="-fx-background-color: lightblue; -fx-background-radius: 10px; -fx-font-size: 25px; -fx-font-family: 'System Italic';" text="Update Book Details">
          <effect>
