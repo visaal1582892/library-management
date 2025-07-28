@@ -93,7 +93,7 @@ public class ViewAllMembersController {
     private void addDeleteButtonToTable() {
         deleteColumn.setCellFactory(new Callback<TableColumn<MemberTableView, Void>, TableCell<MemberTableView, Void>>() {
             @Override
-            public TableCell<MemberTableView, Void> call(final TableColumn<MemberTableView, Void> param) {
+            public TableCell<MemberTableView,Void> call(final TableColumn<MemberTableView, Void> param) {
                 return new TableCell<MemberTableView, Void>() {
 
                     private final Button deleteButton = new Button("Delete");

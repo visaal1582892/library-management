@@ -8,7 +8,7 @@ import com.library_management.domain.Member;
 import com.library_management.exceptions.DatabaseException;
 
 public interface MemberServiceInterface {
-	public void addMember(Member member) throws SQLException;
+	public void addMember(Member member) throws SQLException, DatabaseException;
 	public boolean isValidEmail(String email)throws SQLException;
 	List<Member> validateViewAllMembers() throws DatabaseException,SQLException;
 	

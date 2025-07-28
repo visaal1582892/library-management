@@ -55,7 +55,7 @@ public class UpdateMemberDetailsController {
     @FXML
     private ComboBox<String> genderComboBox;
 
-    @FXML
+    @FXML 
     private TextField addressField;
 
     @FXML

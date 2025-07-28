@@ -45,6 +45,7 @@ public class BookDaoImplementationTest {
     
     @Test
     public void testUpdateBookAvailability_ShouldPass() throws DatabaseException{
+    	System.out.println(this.generatedId);
     	Book oldBook=new Book(generatedId, "test", "test", BookCategory.FICTION, BookStatus.ACTIVE, BookAvailability.AVAILABLE);
     	String newAvailability="I";
     	dao.updateBookAvailability(oldBook, newAvailability);

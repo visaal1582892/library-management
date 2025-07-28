@@ -64,6 +64,16 @@ public class Member {
 		this.gender = gender;
 		this.memberAddress = memberAddress;
 	}
+	
+	
+	public Member(String memberName, String memberMail, String mobileNo, String gender, String memberAddress) {
+		super();
+		this.memberName = memberName;
+		this.memberMail = memberMail;
+		this.mobileNo = mobileNo;
+		this.gender = gender;
+		this.memberAddress = memberAddress;
+	}
 	@Override
 	public String toString() {
 		return "Member [memberId=" + memberId + ", memberName=" + memberName + ", memberMail=" + memberMail
