@@ -16,7 +16,7 @@ import com.library_management.services.implementation.*;
 public class MemberServiceImplementation implements MemberServiceInterface{
 
     private MemberDAOImplementation memberDAO = new MemberDAOImplementation();
-    public void addMember(Member member) throws SQLException {
+    public void addMember(Member member) throws SQLException, DatabaseException {
         if (member.getMemberName()==null || member.getMemberName().trim().isEmpty()) {
             throw new IllegalArgumentException("Name is required");
         }

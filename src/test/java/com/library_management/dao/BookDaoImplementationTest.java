@@ -30,10 +30,10 @@ public class BookDaoImplementationTest {
         this.generatedId=dao.addBook(new Book("test", "test", BookCategory.FICTION));
     }
 
-//    @Test
-//    public void testAddBook_ShouldPass() throws DatabaseException {
-//    	dao.addBook(new Book("Brain Rot", "Rohit", BookCategory.SCIENCE_FICTION));
-//    }
+    @Test
+    public void testAddBook_ShouldPass() throws DatabaseException {
+    	dao.addBook(new Book("Brain Rot", "Rohit", BookCategory.SCIENCE_FICTION));
+    }
     
     @Test
     public void testUpdateBookDetails_ShouldPass() throws DatabaseException {
@@ -42,48 +42,48 @@ public class BookDaoImplementationTest {
     	Book newBook=new Book(this.generatedId, "What is Health", "Varma", BookCategory.NON_FICTION, BookStatus.INACTIVE);
     	dao.updateBookDetails(oldBook, newBook);
     }
-//    
-//    @Test
-//    public void testUpdateBookAvailability_ShouldPass() throws DatabaseException{
-//    	System.out.println(this.generatedId);
-//    	Book oldBook=new Book(generatedId, "test", "test", BookCategory.FICTION, BookStatus.ACTIVE, BookAvailability.AVAILABLE);
-//    	String newAvailability="I";
-//    	dao.updateBookAvailability(oldBook, newAvailability);
-//    }
-//    
-//    @Test
-//    public void testSelectAllBooks_ShouldPass_ShouldReturnList() throws DatabaseException{
-//    	Object result=dao.selectAllBooks();
-//    	assertNotNull(result);
-//    	assertTrue(result instanceof List);
-//    }
-//    
-////    success Case
-//    @Test
-//    public void testSelectBookById_ShouldPass_ShouldReturnBook() throws DatabaseException{
-//    	Object result=dao.selectBookById(this.generatedId);
-//    	assertNotNull(result);
-//    	assertTrue(result instanceof Book);
-//    }
-//    
-////    Fail cAse
-//    @Test
-//    public void testSelectBookById_ShouldPass_ShouldReturnNull() throws DatabaseException{
-//    	Object result=dao.selectBookById(9999);
-//    	assertNull(result);
-//    }
-//    
-//    @Test
-//    public void testDeleteBook_ShoulPass() throws DatabaseException{
-//    	Book oldBook=new Book(this.generatedId, "test", "test", BookCategory.FICTION, BookStatus.ACTIVE, BookAvailability.AVAILABLE);
-//    	dao.deleteBook(oldBook);
-//    }
-//
-//    @After
-//    public void tearDown() throws Exception {
-//    	dao.deleteBook(new Book(this.generatedId, "test", "test", BookCategory.FICTION, BookStatus.ACTIVE, BookAvailability.AVAILABLE));
-//    	DBConnection.closeStatement();
-//        DBConnection.closeConn();
-//    }
+    
+    @Test
+    public void testUpdateBookAvailability_ShouldPass() throws DatabaseException{
+    	System.out.println(this.generatedId);
+    	Book oldBook=new Book(generatedId, "test", "test", BookCategory.FICTION, BookStatus.ACTIVE, BookAvailability.AVAILABLE);
+    	String newAvailability="I";
+    	dao.updateBookAvailability(oldBook, newAvailability);
+    }
+    
+    @Test
+    public void testSelectAllBooks_ShouldPass_ShouldReturnList() throws DatabaseException{
+    	Object result=dao.selectAllBooks();
+    	assertNotNull(result);
+    	assertTrue(result instanceof List);
+    }
+    
+//    success Case
+    @Test
+    public void testSelectBookById_ShouldPass_ShouldReturnBook() throws DatabaseException{
+    	Object result=dao.selectBookById(this.generatedId);
+    	assertNotNull(result);
+    	assertTrue(result instanceof Book);
+    }
+    
+//    Fail cAse
+    @Test
+    public void testSelectBookById_ShouldPass_ShouldReturnNull() throws DatabaseException{
+    	Object result=dao.selectBookById(9999);
+    	assertNull(result);
+    }
+    
+    @Test
+    public void testDeleteBook_ShoulPass() throws DatabaseException{
+    	Book oldBook=new Book(this.generatedId, "test", "test", BookCategory.FICTION, BookStatus.ACTIVE, BookAvailability.AVAILABLE);
+    	dao.deleteBook(oldBook);
+    }
+
+    @After
+    public void tearDown() throws Exception {
+    	dao.deleteBook(new Book(this.generatedId, "test", "test", BookCategory.FICTION, BookStatus.ACTIVE, BookAvailability.AVAILABLE));
+    	DBConnection.closeStatement();
+        DBConnection.closeConn();
+    }
 
 }

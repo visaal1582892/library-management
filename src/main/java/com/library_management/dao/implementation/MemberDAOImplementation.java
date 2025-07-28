@@ -4,6 +4,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -22,16 +23,26 @@ public class MemberDAOImplementation implements MemberDAOInterface {
 
 	@Override
 
-	public void insertMember(Member member) throws SQLException {
+	public int insertMember(Member member) throws SQLException, DatabaseException {
 		String query = "insert into members (name, email, mobile, gender, address) VALUES (?, ?, ?, ?, ?)";
 		Connection con=DBConnection.getConn();
-		PreparedStatement ps=con.prepareStatement(query);
-		ps.setString(1,member.getMemberName());
-		ps.setString(2,member.getMemberMail());
-		ps.setString(3, member.getMobileNo());
-		ps.setString(4,member.getGender());
-		ps.setString(5, member.getMemberAddress());
-		ps.execute();	
+		int id=-1;
+		try {
+			PreparedStatement ps=con.prepareStatement(query, Statement.RETURN_GENERATED_KEYS);
+			ps.setString(1,member.getMemberName());
+			ps.setString(2,member.getMemberMail());
+			ps.setString(3, member.getMobileNo());
+			ps.setString(4,member.getGender());
+			ps.setString(5, member.getMemberAddress());
+			ps.execute();
+			ResultSet rs=ps.getGeneratedKeys();
+			if(rs.next()) {
+				id=rs.getInt(1);
+			}
+		}catch(SQLException e) {
+			throw new DatabaseException(e.getMessage());
+		}
+		return id;
 
 	}
 	
@@ -122,9 +133,9 @@ public class MemberDAOImplementation implements MemberDAOInterface {
 	
 	 public boolean deleteMember(int memberId) throws DatabaseException {
 	        Connection conn=DBConnection.getConn();
-	        String selectQuery="SELECT * FROM lms.members WHERE member_id = ?";
-	        String logInsertQuery="INSERT INTO lms.members_log(member_id, name, email, mobile, gender, address) VALUES (?, ?, ?, ?, ?, ?)";
-	        String deleteQuery="DELETE FROM lms.members WHERE member_id = ?";
+	        String selectQuery="select * from lms.members where member_id = ?";
+	        String logInsertQuery="insert into lms.members_log(member_id, name, email, mobile, gender, address) values (?, ?, ?, ?, ?, ?)";
+	        String deleteQuery="delete from lms.members where member_id = ?";
 
 	        try (
 	            PreparedStatement psSelect=conn.prepareStatement(selectQuery);
@@ -147,7 +158,7 @@ public class MemberDAOImplementation implements MemberDAOInterface {
 	           String gender=rs.getString("gender");
 	           String address=rs.getString("address");
 
-	            // Insert into log
+	        
 	            psInsertLog.setInt(1, id);
 	            psInsertLog.setString(2, name);
 	            psInsertLog.setString(3, email);
@@ -156,7 +167,7 @@ public class MemberDAOImplementation implements MemberDAOInterface {
 	            psInsertLog.setString(6, address);
 	            psInsertLog.executeUpdate();
 
-	            // Delete from members table
+	          
 	            psDelete.setInt(1, memberId);
 	            int rowsAffected = psDelete.executeUpdate();
 

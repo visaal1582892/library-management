@@ -42,7 +42,7 @@ public class AddMemberController {
             String gender=genderComboBox.getValue();
             String memberAddress=address.getText();
 
-            Member member=new Member(0,memberName,memberMail,mobileNo,gender,memberAddress);
+            Member member=new Member(memberName,memberMail,mobileNo,gender,memberAddress);
 
             try{
                 memberService.addMember(member);

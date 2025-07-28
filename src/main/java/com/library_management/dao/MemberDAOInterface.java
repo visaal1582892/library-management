@@ -8,7 +8,7 @@ import com.library_management.domain.Member;
 import com.library_management.exceptions.DatabaseException;
 
 public interface MemberDAOInterface {
-   public void insertMember(Member member) throws SQLException;
+   public int insertMember(Member member) throws SQLException, DatabaseException;
    List<Member> getAllMembers() throws SQLException;
 
 void updateMember(Member oldMember , Member newMember) throws DatabaseException;
