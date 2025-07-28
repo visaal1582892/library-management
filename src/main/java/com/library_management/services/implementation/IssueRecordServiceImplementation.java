@@ -32,6 +32,7 @@ public class IssueRecordServiceImplementation implements IssueRecordServiceInter
 	public List<IssueRecord> getOverdueBooks() {
 		//return dao.getOverdueBooks();
 		List<IssueRecord> overdue = getAllIssues().stream()
+				.filter(b -> b.getReturnDate() != null) 
 				.filter(b -> b.getReturnDate().isBefore(LocalDate.now().minusDays(17)))
 				.collect(Collectors.toList());
 		return overdue;

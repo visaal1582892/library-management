@@ -186,6 +186,8 @@ public class IssueRecordDAOImplementation implements IssueRecordDAOInterface {
 				issue.add(String.valueOf(rs.getInt("member_id")));
 				issue.add(rs.getString("name"));
 				issue.add(rs.getString("title"));
+				issue.add(rs.getString("issue_status"));
+				issue.add(rs.getString("book_status"));
 				activeIssues.add(issue);
 			}
 		} catch (SQLException e) {
