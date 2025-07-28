@@ -7,12 +7,11 @@ public class CustomClassForCategoryCountTable {
 	private final SimpleStringProperty category;
 	private final SimpleIntegerProperty count;
 
-    public CustomClassForCategoryCountTable(String category, int count) {
-    	this.category=new SimpleStringProperty(category);
-    	this.count=new SimpleIntegerProperty(count);
-    }
-    
-//    Getters for values
+	public CustomClassForCategoryCountTable(String category, int count) {
+		this.category = new SimpleStringProperty(category);
+		this.count = new SimpleIntegerProperty(count);
+	}
+
 	public int getCount() {
 		return count.get();
 	}
@@ -21,12 +20,11 @@ public class CustomClassForCategoryCountTable {
 		return category.get();
 	}
 
-//	getters for properties
-	public SimpleIntegerProperty bookIdProperty() {
+	public SimpleIntegerProperty countProperty() {
 		return count;
 	}
-	
-	public SimpleStringProperty titleProperty() {
+
+	public SimpleStringProperty categoryProperty() {
 		return category;
 	}
 }

@@ -22,4 +22,9 @@ public class HomeController {
 	    private void issueAndReturnBooks() throws IOException {
 	        App.setRoot("IssueReturnMain");
 	    }
+	 
+	 @FXML
+	    private void reports() throws IOException {
+	        App.setRoot("reports");
+	    }
 }

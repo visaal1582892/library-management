@@ -6,11 +6,9 @@ import java.util.Map;
 
 import com.library_management.App;
 import com.library_management.dao.implementation.ReportsDAOImplementation;
-import com.library_management.domain.Book;
-import com.library_management.exceptions.DatabaseException;
-import com.library_management.services.implementation.BookServiceImplementation;
-import com.library_management.utilities.CustomBookForTableView;
+import com.library_management.domain.IssueRecord;
 import com.library_management.utilities.CustomClassForCategoryCountTable;
+import com.library_management.utilities.CustomClassForListOfOverdueBooks;
 import com.library_management.utilities.ResponseHandler;
 
 import javafx.collections.FXCollections;
@@ -22,14 +20,18 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Text;
 
-public class CategoryCountController {
-//	Declaring all fields
+public class ListOfOverDueBooks {
 	@FXML
-    private TableView<CustomClassForCategoryCountTable> categoryCountTable;
+    private TableView<CustomClassForListOfOverdueBooks> overDueBooksCountTable;
     @FXML
-    private TableColumn<CustomClassForCategoryCountTable, Integer> countColumn;
+   
+    private TableColumn<CustomClassForListOfOverdueBooks, String> booksColumn;
+    
     @FXML
-    private TableColumn<CustomClassForCategoryCountTable, String> categoryColumn;
+    private TableColumn<CustomClassForListOfOverdueBooks, String> membersColumn;
+    
+    @FXML
+    private TableColumn<CustomClassForListOfOverdueBooks, String> issueDateColumn;
     @FXML
     private Text message;
     @FXML
@@ -42,23 +44,25 @@ public class CategoryCountController {
         App.setRoot("home");
     }
 //    Creating Observable list
-    private ObservableList<CustomClassForCategoryCountTable> countData = FXCollections.observableArrayList();
+    private ObservableList<CustomClassForListOfOverdueBooks> countData = FXCollections.observableArrayList();
 	
 	@FXML
     public void initialize() {
 		
 //		Creating cell value factories for AllPermission columns
-        countColumn.setCellValueFactory(new PropertyValueFactory<>("count"));
-        categoryColumn.setCellValueFactory(new PropertyValueFactory<>("category"));
+        
+        booksColumn.setCellValueFactory(new PropertyValueFactory<>("Book Id"));
+        membersColumn.setCellValueFactory(new PropertyValueFactory<>("Member Id"));
+        issueDateColumn.setCellValueFactory(new PropertyValueFactory<>("Issue Date"));
 
         try {
-			Map<Object, Long> countMap=new ReportsDAOImplementation().countOfBooksPerCategory();
-			countMap.forEach((k,v) -> countData.add(new CustomClassForCategoryCountTable(String.valueOf(k),Integer.parseInt(String.valueOf(v)))));
+			List<IssueRecord> countMap=new ReportsDAOImplementation().getOverdueBooks();
+			countMap.forEach(b->countData.add(new CustomClassForListOfOverdueBooks(b.getBookId(),b.getMemberId(),b.getIssueDate())));
 		} catch (Exception e) {
 			ResponseHandler.showResponse(message, "Cannot Fetch Books Data...", Color.RED);
 		}
 		
-        categoryCountTable.setItems(countData);
+        overDueBooksCountTable.setItems(countData);
 		ResponseHandler.showResponse(message, "Report Data Fetched Succesfully...", null);
     }
 }

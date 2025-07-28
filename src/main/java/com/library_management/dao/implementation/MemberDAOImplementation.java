@@ -119,11 +119,55 @@ public class MemberDAOImplementation implements MemberDAOInterface {
 		return currentMember;
 	}
 
-	@Override
-	public void deleteBook() {
-		// TODO Auto-generated method stub
-		
+	
+	 public boolean deleteMember(int memberId) throws DatabaseException {
+	        Connection conn=DBConnection.getConn();
+	        String selectQuery="SELECT * FROM lms.members WHERE member_id = ?";
+	        String logInsertQuery="INSERT INTO lms.members_log(member_id, name, email, mobile, gender, address) VALUES (?, ?, ?, ?, ?, ?)";
+	        String deleteQuery="DELETE FROM lms.members WHERE member_id = ?";
+
+	        try (
+	            PreparedStatement psSelect=conn.prepareStatement(selectQuery);
+	            PreparedStatement psInsertLog=conn.prepareStatement(logInsertQuery);
+	            PreparedStatement psDelete=conn.prepareStatement(deleteQuery)
+	        ) {
+	            psSelect.setInt(1,memberId);
+	            ResultSet rs=psSelect.executeQuery();
+
+	            if (!rs.next()) {
+	                throw new DatabaseException("Member not found.");
+	            }
+               
+	            
+
+	            int id=rs.getInt("member_id");
+	           String name=rs.getString("name");
+	           String email=rs.getString("email");
+	           String mobile=rs.getString("mobile");
+	           String gender=rs.getString("gender");
+	           String address=rs.getString("address");
+
+	            // Insert into log
+	            psInsertLog.setInt(1, id);
+	            psInsertLog.setString(2, name);
+	            psInsertLog.setString(3, email);
+	            psInsertLog.setString(4, mobile);
+	            psInsertLog.setString(5, gender);
+	            psInsertLog.setString(6, address);
+	            psInsertLog.executeUpdate();
+
+	            // Delete from members table
+	            psDelete.setInt(1, memberId);
+	            int rowsAffected = psDelete.executeUpdate();
+
+	            return rowsAffected > 0;
+
+	        } catch (SQLException e) {
+	            throw new DatabaseException("Failed to delete member: " + e.getMessage());
+	        }
+	    }
 	}
+
 
 
 
@@ -132,4 +176,3 @@ public class MemberDAOImplementation implements MemberDAOInterface {
 
 	
 
-}

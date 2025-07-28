@@ -66,7 +66,7 @@ public class BookServiceImplementation implements BookServiceInterface {
 			}
 			
 //			Creating a new Book obj
-			Book newBook=new Book(id, title, author, category,status);
+			Book newBook=new Book(id, title, author, category, status);
 			new BookDAOImplementation().updateBookDetails(currentBook, newBook);
 		}
 	}

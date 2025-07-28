@@ -19,24 +19,30 @@ import com.library_management.utilities.DBConnection;
 public class BookDAOImplementation implements BookDAOInterface {
 
 	@Override
-	public void addBook(Book book) throws DatabaseException {
+	public int addBook(Book book) throws DatabaseException {
 		Connection conn=DBConnection.getConn();
-		try(PreparedStatement psInsert=conn.prepareStatement("insert into lms.books(title,author,category) values(?,?,?)");) {
+		int id=-1;
+		try(PreparedStatement psInsert=conn.prepareStatement("insert into books(title,author,category) values(?,?,?)", Statement.RETURN_GENERATED_KEYS);) {
 			
 			psInsert.setString(1, book.getTitle());
 			psInsert.setString(2, book.getAuthor());
 			psInsert.setString(3, book.getCategory().getStringValue());
 			psInsert.executeUpdate();
+			ResultSet rs=psInsert.getGeneratedKeys();
+			if(rs.next()) {
+				id=rs.getInt(1);
+			}
 		} catch (SQLException e) {
 			throw new DatabaseException(e.getMessage());
 		}
+		return id;
 	}
 
 	@Override
 	public void updateBookDetails(Book oldBook,Book newBook) throws DatabaseException {
 		Connection conn=DBConnection.getConn();
-		String updateBooksQuery="update lms.books set title=?, author=?, category=?, status=? where book_id=?";
-		String insertBooksLogQuery="insert into lms.books_log(book_id,title,author,category,status,availability) values(?,?,?,?,?,?)";
+		String updateBooksQuery="update books set title=?, author=?, category=?, status=? where book_id=?";
+		String insertBooksLogQuery="insert into books_log(book_id,title,author,category,status,availability) values(?,?,?,?,?,?)";
 		try(PreparedStatement psInsertLog=conn.prepareStatement(insertBooksLogQuery);
 				PreparedStatement psUpdate=conn.prepareStatement(updateBooksQuery);) {
 			
@@ -65,7 +71,7 @@ public class BookDAOImplementation implements BookDAOInterface {
 	public void updateBookAvailability(Book oldBook, String availability) throws DatabaseException {
 		
 		Connection conn=DBConnection.getConn();
-		String updateAvailabilityQuery="update lms.books set availability=? where book_id=?";
+		String updateAvailabilityQuery="update books set availability=? where book_id=?";
 		String insertBookLog="insert into books_log(book_id,title,author,category,status,availability) values(?,?,?,?,?,?)";
 		try(PreparedStatement psUpdate=conn.prepareStatement(updateAvailabilityQuery);
 			PreparedStatement psInsertLog=conn.prepareStatement(insertBookLog);) {
@@ -88,7 +94,7 @@ public class BookDAOImplementation implements BookDAOInterface {
 	@Override
 	public void deleteBook(Book oldBook) throws DatabaseException {
 		Connection conn=DBConnection.getConn();
-		String deleteQuery="delete from lms.books where book_id=?";
+		String deleteQuery="delete from books where book_id=?";
 		String insertBookLog="insert into books_log(book_id,title,author,category,status,availability) values(?,?,?,?,?,?)";
 		try(PreparedStatement psDelete=conn.prepareStatement(deleteQuery);
 			PreparedStatement psInsertLog=conn.prepareStatement(insertBookLog);) {
@@ -112,7 +118,7 @@ public class BookDAOImplementation implements BookDAOInterface {
 	public List<Book> selectAllBooks() throws DatabaseException {
 		List<Book> books=new ArrayList<>();
 		Statement statement=DBConnection.getStatement();
-		String selectQuery="select * from lms.books";
+		String selectQuery="select * from books";
 		try {
 			ResultSet result=statement.executeQuery(selectQuery);
 			while(result.next()) {
@@ -136,7 +142,7 @@ public class BookDAOImplementation implements BookDAOInterface {
 	public Book selectBookById(int id) throws DatabaseException {
 		Book currentBook=null;
 		Connection conn=DBConnection.getConn();
-		String selectOneQuery="select * from lms.books where book_id=?";
+		String selectOneQuery="select * from books where book_id=?";
 		try {
 			PreparedStatement psSelectOne=conn.prepareStatement(selectOneQuery);
 			psSelectOne.setInt(1, id);
