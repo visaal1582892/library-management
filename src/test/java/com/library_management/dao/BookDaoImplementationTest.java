@@ -11,7 +11,7 @@ import org.junit.Before;
 import org.junit.Test;
 import org.junit.internal.runners.statements.Fail;
 
-import com.library_management.dao.implementation.BookDAOImplementation;
+import com.library_management.dao.implementation.BookDaoImplementation;
 import com.library_management.domain.Book;
 import com.library_management.domain.BookAvailability;
 import com.library_management.domain.BookCategory;
@@ -20,13 +20,13 @@ import com.library_management.exceptions.DatabaseException;
 import com.library_management.utilities.DBConnection;
 
 public class BookDaoImplementationTest {
-    private BookDAOImplementation dao;
+    private BookDaoImplementation dao;
     private int generatedId;
 
     @Before
     public void setUp() throws Exception {
     	DBConnection.connectToDB("jdbc:mysql://localhost:3306/lms_test");
-        dao=new BookDAOImplementation();
+        dao=new BookDaoImplementation();
         this.generatedId=dao.addBook(new Book("test", "test", BookCategory.FICTION));
     }
 

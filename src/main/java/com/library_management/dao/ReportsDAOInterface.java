@@ -5,7 +5,7 @@ import java.util.Map;
 
 import com.library_management.domain.IssueRecord;
 
-public interface ReportsDAOInterface {
+public interface ReportsDaoInterface {
 	public Map<Object, Long> countOfBooksPerCategory();
 
 	List<IssueRecord> getOverdueBooks();

@@ -10,12 +10,12 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.library_management.dao.IssueRecordDAOInterface;
+import com.library_management.dao.IssueRecordDaoInterface;
 import com.library_management.domain.IssueRecord;
 import com.library_management.domain.IssueRecordStatus;
 import com.library_management.utilities.DBConnection;
 
-public class IssueRecordDAOImplementation implements IssueRecordDAOInterface {
+public class IssueRecordDaoImplementation implements IssueRecordDaoInterface {
 
 	@Override
 	public String issueBook(IssueRecord issue) {

@@ -7,7 +7,7 @@ import com.library_management.domain.Book;
 import com.library_management.domain.Member;
 import com.library_management.exceptions.DatabaseException;
 
-public interface MemberDAOInterface {
+public interface MemberDaoInterface {
    public int insertMember(Member member) throws SQLException, DatabaseException;
    List<Member> getAllMembers() throws SQLException;
 

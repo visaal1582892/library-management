@@ -10,16 +10,16 @@ import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
-import com.library_management.dao.IssueRecordDAOInterface;
-import com.library_management.dao.ReportsDAOInterface;
+import com.library_management.dao.IssueRecordDaoInterface;
+import com.library_management.dao.ReportsDaoInterface;
 import com.library_management.domain.Book;
 import com.library_management.domain.IssueRecord;
 import com.library_management.exceptions.DatabaseException;
 import com.library_management.services.implementation.ReportsServiceImplementation;
 import com.library_management.utilities.DBConnection;
 
-public class ReportsDAOImplementation implements ReportsDAOInterface {
-	static IssueRecordDAOInterface dao = new IssueRecordDAOImplementation();
+public class ReportsDaoImplementation implements ReportsDaoInterface {
+	static IssueRecordDaoInterface dao = new IssueRecordDaoImplementation();
 
 	@Override
 	public Map<Object, Long> countOfBooksPerCategory() {

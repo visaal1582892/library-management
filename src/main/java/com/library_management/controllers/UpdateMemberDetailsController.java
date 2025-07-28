@@ -1,11 +1,11 @@
-package com.library_management.controllers.member;
+package com.library_management.controllers;
 
 import java.io.IOException;
 import java.sql.SQLException;
 import java.util.List;
 
 import com.library_management.App;
-import com.library_management.dao.implementation.MemberDAOImplementation;
+import com.library_management.dao.implementation.MemberDaoImplementation;
 import com.library_management.domain.Member;
 import com.library_management.exceptions.DatabaseException;
 import com.library_management.exceptions.InvalidDetailsException;
@@ -63,7 +63,7 @@ public class UpdateMemberDetailsController {
 
     @FXML
     public void initialize() throws SQLException, DatabaseException {
-        List<Member> membersList = new MemberDAOImplementation().getAllMembers();
+        List<Member> membersList = new MemberDaoImplementation().getAllMembers();
         this.setMembersList(membersList);
 
         for (Member member : membersList) {

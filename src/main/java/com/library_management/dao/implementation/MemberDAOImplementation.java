@@ -8,14 +8,14 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.library_management.dao.MemberDAOInterface;
+import com.library_management.dao.MemberDaoInterface;
 import com.library_management.domain.Member;
 import com.library_management.exceptions.DatabaseException;
 import com.library_management.utilities.DBConnection;
 
 
 
-public class MemberDAOImplementation implements MemberDAOInterface {
+public class MemberDaoImplementation implements MemberDaoInterface {
 
 	@Override
 

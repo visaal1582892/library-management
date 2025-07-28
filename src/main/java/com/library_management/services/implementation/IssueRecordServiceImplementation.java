@@ -4,14 +4,14 @@ import java.time.LocalDate;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import com.library_management.dao.IssueRecordDAOInterface;
-import com.library_management.dao.implementation.IssueRecordDAOImplementation;
+import com.library_management.dao.IssueRecordDaoInterface;
+import com.library_management.dao.implementation.IssueRecordDaoImplementation;
 import com.library_management.domain.IssueRecord;
 import com.library_management.services.IssueRecordServiceInterface;
 
 public class IssueRecordServiceImplementation implements IssueRecordServiceInterface {
 
-	IssueRecordDAOInterface dao = new IssueRecordDAOImplementation();
+	IssueRecordDaoInterface dao = new IssueRecordDaoImplementation();
 
 	@Override
 	public String issueBook(IssueRecord issue) {

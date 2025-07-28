@@ -1,11 +1,11 @@
 
-package com.library_management.controllers.book;
+package com.library_management.controllers;
 
 import java.io.IOException;
 import java.util.List;
 
 import com.library_management.App;
-import com.library_management.dao.implementation.BookDAOImplementation;
+import com.library_management.dao.implementation.BookDaoImplementation;
 import com.library_management.domain.Book;
 import com.library_management.domain.BookAvailability;
 import com.library_management.domain.BookCategory;
@@ -121,7 +121,7 @@ public class ViewAllBooksController {
                             );
 
                             try {
-                                new BookDAOImplementation().updateBookAvailability(currBook, newAvailabilityValue.substring(0, 1));
+                                new BookDaoImplementation().updateBookAvailability(currBook, newAvailabilityValue.substring(0, 1));
                                 book.setAvailability(newAvailabilityValue);
                                 viewBooksTable.refresh();
                                 ResponseHandler.showResponse(message, "Successfully Updated Availability...", Color.GREEN);
@@ -147,7 +147,7 @@ public class ViewAllBooksController {
                             ResponseHandler.showResponse(message, "Book Deleted Successfully...", Color.GREEN);
 
                             try {
-                                new BookDAOImplementation().deleteBook(currentBook);
+                                new BookDaoImplementation().deleteBook(currentBook);
                             } catch (DatabaseException e) {
                                 ResponseHandler.showResponse(message, e.getMessage(), Color.RED);
                             }

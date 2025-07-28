@@ -9,7 +9,7 @@
             style="-fx-background-color: linear-gradient(to bottom right, #e3f2fd, #ffffff);"
             xmlns="http://javafx.com/javafx/24.0.1"
             xmlns:fx="http://javafx.com/fxml/1"
-            fx:controller="com.library_management.controllers.report.ListOfOverDueBooks">
+            fx:controller="com.library_management.controllers.ListOfOverDueBooks">
 
     <children>
 

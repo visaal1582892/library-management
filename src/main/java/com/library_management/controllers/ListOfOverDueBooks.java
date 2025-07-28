@@ -1,11 +1,11 @@
-package com.library_management.controllers.report;
+package com.library_management.controllers;
 
 import java.io.IOException;
 import java.util.List;
 import java.util.Map;
 
 import com.library_management.App;
-import com.library_management.dao.implementation.ReportsDAOImplementation;
+import com.library_management.dao.implementation.ReportsDaoImplementation;
 import com.library_management.domain.IssueRecord;
 import com.library_management.utilities.CustomClassForCategoryCountTable;
 import com.library_management.utilities.CustomClassForListOfOverdueBooks;
@@ -56,7 +56,7 @@ public class ListOfOverDueBooks {
         issueDateColumn.setCellValueFactory(new PropertyValueFactory<>("Issue Date"));
 
         try {
-			List<IssueRecord> countMap=new ReportsDAOImplementation().getOverdueBooks();
+			List<IssueRecord> countMap=new ReportsDaoImplementation().getOverdueBooks();
 			countMap.forEach(b->countData.add(new CustomClassForListOfOverdueBooks(b.getBookId(),b.getMemberId(),b.getIssueDate())));
 		} catch (Exception e) {
 			ResponseHandler.showResponse(message, "Cannot Fetch Books Data...", Color.RED);

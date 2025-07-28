@@ -1,12 +1,12 @@
-package com.library_management.controllers.issue_and_return_books;
+package com.library_management.controllers;
 
 import java.io.IOException;
 import java.sql.SQLException;
 import java.util.List;
 
 import com.library_management.App;
-import com.library_management.dao.implementation.BookDAOImplementation;
-import com.library_management.dao.implementation.MemberDAOImplementation;
+import com.library_management.dao.implementation.BookDaoImplementation;
+import com.library_management.dao.implementation.MemberDaoImplementation;
 import com.library_management.domain.Book;
 import com.library_management.domain.Member;
 import com.library_management.exceptions.DatabaseException;
@@ -75,7 +75,7 @@ public class ReturnBookController {
 //			e.printStackTrace();
 //		}
 		try {
-			List<Member> membersList = new MemberDAOImplementation().getAllMembers();
+			List<Member> membersList = new MemberDaoImplementation().getAllMembers();
 			this.setMembersList(membersList);
 			for (Member member : membersList) {
 				memberSelector.getItems().add(member.getMemberId() + ". " + member.getMemberName());
@@ -103,7 +103,7 @@ public class ReturnBookController {
 			memberId = Integer.parseInt(memberSelector.getValue().split("\\.")[0].trim());
 			System.out.println(memberId);
 
-			List<Book> booksList = new BookDAOImplementation().selectAllMemberBooks(memberId);
+			List<Book> booksList = new BookDaoImplementation().selectAllMemberBooks(memberId);
 			this.setBooksList(booksList);
 
 			for (Book book : booksList) {

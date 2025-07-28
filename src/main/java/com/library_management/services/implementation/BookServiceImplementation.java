@@ -2,7 +2,7 @@ package com.library_management.services.implementation;
 
 import java.util.List;
 
-import com.library_management.dao.implementation.BookDAOImplementation;
+import com.library_management.dao.implementation.BookDaoImplementation;
 import com.library_management.domain.Book;
 import com.library_management.domain.BookCategory;
 import com.library_management.domain.BookStatus;
@@ -22,7 +22,7 @@ public class BookServiceImplementation implements BookServiceInterface {
 		else {
 			Book newBook=new Book(title, author, category);
 			try {
-				new BookDAOImplementation().addBook(newBook);
+				new BookDaoImplementation().addBook(newBook);
 			} catch (DatabaseException e) {
 				// TODO Auto-generated catch block
 				throw new DatabaseException(e.getMessage());
@@ -33,7 +33,7 @@ public class BookServiceImplementation implements BookServiceInterface {
 	@Override
 	public List<Book> validateViewAllBooks() throws DatabaseException {
 		try {
-			List<Book> bookList=new BookDAOImplementation().selectAllBooks();
+			List<Book> bookList=new BookDaoImplementation().selectAllBooks();
 			return bookList;
 		} catch (DatabaseException e) {
 			throw new DatabaseException(e.getMessage());
@@ -52,7 +52,7 @@ public class BookServiceImplementation implements BookServiceInterface {
 		else {
 			Book currentBook=null;
 			try {
-				currentBook=new BookDAOImplementation().selectBookById(id);
+				currentBook=new BookDaoImplementation().selectBookById(id);
 			}catch(DatabaseException e) {
 				throw new DatabaseException("Mentioned Book Not Found...");
 			}
@@ -67,7 +67,7 @@ public class BookServiceImplementation implements BookServiceInterface {
 			
 //			Creating a new Book obj
 			Book newBook=new Book(id, title, author, category, status);
-			new BookDAOImplementation().updateBookDetails(currentBook, newBook);
+			new BookDaoImplementation().updateBookDetails(currentBook, newBook);
 		}
 	}
 }

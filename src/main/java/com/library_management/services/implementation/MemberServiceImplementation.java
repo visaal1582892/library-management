@@ -4,8 +4,8 @@ import java.sql.SQLException;
 import java.util.List;
 import java.util.regex.Pattern;
 
-import com.library_management.dao.implementation.BookDAOImplementation;
-import com.library_management.dao.implementation.MemberDAOImplementation;
+import com.library_management.dao.implementation.BookDaoImplementation;
+import com.library_management.dao.implementation.MemberDaoImplementation;
 import com.library_management.domain.Book;
 import com.library_management.domain.Member;
 import com.library_management.exceptions.DatabaseException;
@@ -15,7 +15,7 @@ import com.library_management.services.implementation.*;
 
 public class MemberServiceImplementation implements MemberServiceInterface{
 
-    private MemberDAOImplementation memberDAO = new MemberDAOImplementation();
+    private MemberDaoImplementation memberDAO = new MemberDaoImplementation();
     public void addMember(Member member) throws SQLException, DatabaseException, InvalidDetailsException {
         if (member.getMemberName()==null || member.getMemberName().trim().isEmpty()) {
             throw new InvalidDetailsException("Name is required");
@@ -54,7 +54,7 @@ public class MemberServiceImplementation implements MemberServiceInterface{
 		else {
 			Member currentMember=null;
 			try {
-				currentMember=new MemberDAOImplementation().selectMemberById(member.getMemberId());
+				currentMember=new MemberDaoImplementation().selectMemberById(member.getMemberId());
 			}catch(DatabaseException e) {
 				throw new DatabaseException("No Member found");
 			}
@@ -69,14 +69,14 @@ public class MemberServiceImplementation implements MemberServiceInterface{
 			
 //			Creating a new Book obj
 			Member newMember=new Member(member.getMemberId(),member.getMemberName(),member.getMemberMail(),member.getMobileNo(),member.getGender(),member.getMemberAddress());
-			new MemberDAOImplementation().updateMember(currentMember, newMember);
+			new MemberDaoImplementation().updateMember(currentMember, newMember);
 		}
     	
     }
     
     @Override
 	public List<Member> validateViewAllMembers() throws DatabaseException, SQLException {
-		List<Member> memberList=new MemberDAOImplementation().getAllMembers();
+		List<Member> memberList=new MemberDaoImplementation().getAllMembers();
 		return memberList;
 		
 	}
@@ -86,7 +86,7 @@ public class MemberServiceImplementation implements MemberServiceInterface{
         return Pattern.matches(regex, email);
     }
    public boolean deleteMemberById(int memberId) throws DatabaseException {
-	    return new MemberDAOImplementation().deleteMember(memberId);
+	    return new MemberDaoImplementation().deleteMember(memberId);
 	}
 
 }

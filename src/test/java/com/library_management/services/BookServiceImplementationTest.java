@@ -6,7 +6,7 @@ import static org.junit.Assert.*;
 
 import org.junit.After;
 
-import com.library_management.dao.implementation.BookDAOImplementation;
+import com.library_management.dao.implementation.BookDaoImplementation;
 import com.library_management.domain.Book;
 import com.library_management.domain.BookAvailability;
 import com.library_management.domain.BookCategory;
@@ -24,7 +24,7 @@ public class BookServiceImplementationTest {
     @Before
     public void setUp() throws DatabaseException {
         service = new BookServiceImplementation();
-        BookDAOImplementation dao=new BookDAOImplementation();
+        BookDaoImplementation dao=new BookDaoImplementation();
         DBConnection.connectToDB("jdbc:mysql://localhost:3306/lms_test");
         this.generatedId=dao.addBook(new Book("test", "test", BookCategory.FICTION));
     }
@@ -71,7 +71,7 @@ public class BookServiceImplementationTest {
     
     @After
     public void tearDown() throws Exception {
-    	BookDAOImplementation dao=new BookDAOImplementation();
+    	BookDaoImplementation dao=new BookDaoImplementation();
     	dao.deleteBook(new Book(this.generatedId, "test", "test", BookCategory.FICTION, BookStatus.ACTIVE, BookAvailability.AVAILABLE));
     	DBConnection.closeStatement();
         DBConnection.closeConn();

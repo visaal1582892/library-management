@@ -1,4 +1,4 @@
-package com.library_management.controllers.member;
+package com.library_management.controllers;
 import com.library_management.utilities.ResponseHandler;
 
 import java.io.IOException;

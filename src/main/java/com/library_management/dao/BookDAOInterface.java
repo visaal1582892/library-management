@@ -6,7 +6,7 @@ import java.util.List;
 import com.library_management.domain.Book;
 import com.library_management.exceptions.DatabaseException;
 
-public interface BookDAOInterface {
+public interface BookDaoInterface {
 	int addBook(Book book) throws DatabaseException;
 	
 	void updateBookDetails(Book oldBook, Book newBook) throws DatabaseException;

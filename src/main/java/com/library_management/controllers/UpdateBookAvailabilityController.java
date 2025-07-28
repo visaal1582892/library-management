@@ -1,4 +1,4 @@
-package com.library_management.controllers.book;
+package com.library_management.controllers;
 
 public class UpdateBookAvailabilityController {
 

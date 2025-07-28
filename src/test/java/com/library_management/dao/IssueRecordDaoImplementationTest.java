@@ -12,17 +12,17 @@ import org.junit.runners.JUnit4;
 
 import com.library_management.domain.IssueRecord;
 import com.library_management.utilities.DBConnection;
-import com.library_management.dao.implementation.IssueRecordDAOImplementation;
+import com.library_management.dao.implementation.IssueRecordDaoImplementation;
 
 @RunWith(JUnit4.class)
 public class IssueRecordDaoImplementationTest {
 	
-	private IssueRecordDAOImplementation dao;
+	private IssueRecordDaoImplementation dao;
 	
 	@Before
     public void setUp() {
 		 DBConnection.connectToDB("jdbc:mysql://localhost:3306/lms");
-        dao = new IssueRecordDAOImplementation();
+        dao = new IssueRecordDaoImplementation();
     }
 	
 	@Test

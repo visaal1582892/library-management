@@ -1,11 +1,11 @@
-package com.library_management.controllers.report;
+package com.library_management.controllers;
 
 import java.io.IOException;
 import java.util.List;
 import java.util.Map;
 
 import com.library_management.App;
-import com.library_management.dao.implementation.ReportsDAOImplementation;
+import com.library_management.dao.implementation.ReportsDaoImplementation;
 import com.library_management.domain.Book;
 import com.library_management.exceptions.DatabaseException;
 import com.library_management.services.implementation.BookServiceImplementation;
@@ -52,7 +52,7 @@ public class CategoryCountController {
         categoryColumn.setCellValueFactory(new PropertyValueFactory<>("category"));
 
         try {
-			Map<Object, Long> countMap=new ReportsDAOImplementation().countOfBooksPerCategory();
+			Map<Object, Long> countMap=new ReportsDaoImplementation().countOfBooksPerCategory();
 			countMap.forEach((k,v) -> countData.add(new CustomClassForCategoryCountTable(String.valueOf(k),Integer.parseInt(String.valueOf(v)))));
 		} catch (Exception e) {
 			ResponseHandler.showResponse(message, "Cannot Fetch Books Data...", Color.RED);

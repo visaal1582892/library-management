@@ -1,4 +1,4 @@
-package com.library_management.controllers.issue_and_return_books;
+package com.library_management.controllers;
 
 import java.io.IOException;
 import java.sql.SQLException;
@@ -8,8 +8,8 @@ import java.util.List;
 import com.library_management.exceptions.DatabaseException;
 import com.library_management.exceptions.InvalidDetailsException;
 import com.library_management.App;
-import com.library_management.dao.implementation.BookDAOImplementation;
-import com.library_management.dao.implementation.MemberDAOImplementation;
+import com.library_management.dao.implementation.BookDaoImplementation;
+import com.library_management.dao.implementation.MemberDaoImplementation;
 import com.library_management.domain.Book;
 import com.library_management.domain.IssueRecord;
 import com.library_management.domain.Member;
@@ -67,12 +67,12 @@ public class IssueBookController {
 	@FXML
 	public void initialize() {
 		try {
-			List<Book> booksList = new BookDAOImplementation().selectAllBooks();
+			List<Book> booksList = new BookDaoImplementation().selectAllBooks();
 			this.setBooksList(booksList);
 			for (Book book : booksList) {
 				bookSelector.getItems().add(book.getBookId() + ". " + book.getTitle());
 			}
-			List<Member> membersList = new MemberDAOImplementation().getAllMembers();
+			List<Member> membersList = new MemberDaoImplementation().getAllMembers();
 			this.setMembersList(membersList);
 			for (Member member : membersList) {
 				memberSelector.getItems().add(member.getMemberId() + ". " + member.getMemberName());

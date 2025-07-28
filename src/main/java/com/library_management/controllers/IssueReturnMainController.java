@@ -1,4 +1,4 @@
-package com.library_management.controllers.issue_and_return_books;
+package com.library_management.controllers;
 
 import java.io.IOException;
 import com.library_management.App;

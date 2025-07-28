@@ -1,10 +1,10 @@
-package com.library_management.controllers.book;
+package com.library_management.controllers;
 
 import java.io.IOException;
 import java.util.List;
 
 import com.library_management.App;
-import com.library_management.dao.implementation.BookDAOImplementation;
+import com.library_management.dao.implementation.BookDaoImplementation;
 import com.library_management.domain.Book;
 import com.library_management.domain.BookAvailability;
 import com.library_management.domain.BookCategory;
@@ -74,7 +74,7 @@ public class UpdateBookDetailsController {
 	@FXML
     public void initialize() {
 		try {
-			List<Book> booksList=new BookDAOImplementation().selectAllBooks();
+			List<Book> booksList=new BookDaoImplementation().selectAllBooks();
 			this.setBooksList(booksList);
 			for(Book book:booksList) {
 				bookSelector.getItems().add(book.getBookId()+". "+book.getTitle());

@@ -12,8 +12,8 @@ import org.junit.Before;
 import org.junit.Test;
 import org.junit.internal.runners.statements.Fail;
 
-import com.library_management.dao.implementation.BookDAOImplementation;
-import com.library_management.dao.implementation.MemberDAOImplementation;
+import com.library_management.dao.implementation.BookDaoImplementation;
+import com.library_management.dao.implementation.MemberDaoImplementation;
 import com.library_management.domain.Book;
 import com.library_management.domain.BookAvailability;
 import com.library_management.domain.BookCategory;
@@ -23,13 +23,13 @@ import com.library_management.exceptions.DatabaseException;
 import com.library_management.utilities.DBConnection;
 
 public class MemberDaoImplementationTest {
-    private MemberDAOImplementation dao;
+    private MemberDaoImplementation dao;
     private int generatedId;
 
     @Before
     public void setUp() throws Exception {
     	DBConnection.connectToDB("jdbc:mysql://localhost:3306/lms_test");
-        dao=new MemberDAOImplementation();
+        dao=new MemberDaoImplementation();
         
         this.generatedId=dao.insertMember(new Member("test", "test3@gmail.com","9899999989","M","seeeyhas"));
     }
