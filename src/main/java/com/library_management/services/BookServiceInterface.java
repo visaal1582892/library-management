@@ -14,7 +14,5 @@ public interface BookServiceInterface {
 	
 	void validateUpdateBookDetails(int id, String title, String author, BookCategory category, BookStatus status) throws InvalidDetailsException, DatabaseException;
 	
-	void validateUpdateBookAvailability(int id, BookAvailability availability);
-	
 	List<Book> validateViewAllBooks() throws DatabaseException;
 }
