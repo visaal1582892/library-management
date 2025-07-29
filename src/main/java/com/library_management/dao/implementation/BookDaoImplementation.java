@@ -214,7 +214,4 @@ public class BookDaoImplementation implements BookDaoInterface {
 		}
 		return memberBooks;
 	}
-	
-	
-
 }
