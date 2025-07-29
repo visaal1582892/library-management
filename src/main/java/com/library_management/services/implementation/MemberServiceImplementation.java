@@ -88,4 +88,6 @@ public class MemberServiceImplementation implements MemberServiceInterface{
 	    return new MemberDaoImplementation().deleteMember(memberId);
 	}
 
+
+
 }

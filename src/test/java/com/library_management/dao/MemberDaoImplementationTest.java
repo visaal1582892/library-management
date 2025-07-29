@@ -31,57 +31,46 @@ public class MemberDaoImplementationTest {
     	DBConnection.connectToDB("jdbc:mysql://localhost:3306/lms_test");
         dao=new MemberDaoImplementation();
         
-        this.generatedId=dao.insertMember(new Member("test", "test3@gmail.com","9899999989","M","seeeyhas"));
+//        this.generatedId=dao.insertMember(new Member("test", "test353442@gmail.com","9090909090","M","seeeyhas"));
     }
 
     @Test
-    public void testAddBook_ShouldPass() throws DatabaseException, SQLException {
-    	dao.insertMember(new Member("tarun","tarun12345@gmail.com","9397626811","M","seethampetys"));
+    public void testAddMember_ShouldPass() throws DatabaseException, SQLException {
+    	dao.insertMember(new Member("tarun","tarun67671@gmail.com","9907626081","M","seethampetys"));
     }
 
-//    
-//    @Test
-//    public void testUpdateBookAvailability_ShouldPass() throws DatabaseException{
-//    	System.out.println(this.generatedId);
-//    	Book oldBook=new Book(generatedId, "test", "test", BookCategory.FICTION, BookStatus.ACTIVE, BookAvailability.AVAILABLE);
-//    	String newAvailability="I";
-//    	dao.updateBookAvailability(oldBook, newAvailability);
-//    }
-//    
-//    @Test
-//    public void testSelectAllBooks_ShouldPass_ShouldReturnList() throws DatabaseException{
-//    	Object result=dao.selectAllBooks();
-//    	assertNotNull(result);
-//    	assertTrue(result instanceof List);
-//    }
-//    
-////    success Case
-//    @Test
-//    public void testSelectBookById_ShouldPass_ShouldReturnBook() throws DatabaseException{
-//    	Object result=dao.selectBookById(this.generatedId);
-//    	assertNotNull(result);
-//    	assertTrue(result instanceof Book);
-//    }
-//    
+    
+    @Test
+    public void testUpdateMemberAvailability_ShouldPass() throws DatabaseException{
+    	System.out.println(this.generatedId);
+    	Member oldMember=new Member(generatedId, "test", "test121212@gmail.com","9292929212","F","Hyderabad");
+    	dao.updateMember(oldMember, oldMember);
+    }    
+    @Test
+    public void testSelectAllMembers_ShouldPass_ShouldReturnList() throws DatabaseException, SQLException{
+    	Object result=dao.getAllMembers();
+    	assertNotNull(result);
+    	assertTrue(result instanceof List);
+    }
+    
 ////    Fail cAse
-//    @Test
-//    public void testSelectBookById_ShouldPass_ShouldReturnNull() throws DatabaseException{
-//    	Object result=dao.selectBookById(9999);
-//    	assertNull(result);
-//    }
-//    
-//    @Test
-//    public void testDeleteBook_ShoulPass() throws DatabaseException{
-//    	Book oldBook=new Book(this.generatedId, "test", "test", BookCategory.FICTION, BookStatus.ACTIVE, BookAvailability.AVAILABLE);
-//    	dao.deleteBook(oldBook);
-//    }
-
-    @After
-    public void tearDown() throws Exception {
-    	dao.deleteMember(this.generatedId);
-    	DBConnection.closeStatement();
-        DBConnection.closeConn();
+    @Test
+    public void testSelectMemberById_ShouldPass_ShouldReturnNull() throws DatabaseException{
+    	Object result=dao.selectMemberById(9999);
+    	assertNull(result);
     }
+//    
+    @Test
+    public void testDeleteMember_ShoulPass() throws DatabaseException{
+    	Member oldMember=new Member(this.generatedId, "test", "test@gmail.com", "1231231233","M","hyderabad");
+    }
+//
+//    @After
+//    public void tearDown() throws Exception {
+//    	dao.deleteMember(this.generatedId);
+//    	DBConnection.closeStatement();
+//        DBConnection.closeConn();
+//    }
 
 }
     
