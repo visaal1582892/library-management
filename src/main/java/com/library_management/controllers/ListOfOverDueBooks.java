@@ -2,12 +2,10 @@ package com.library_management.controllers;
 
 import java.io.IOException;
 import java.util.List;
-import java.util.Map;
 
 import com.library_management.App;
 import com.library_management.dao.implementation.ReportsDaoImplementation;
 import com.library_management.domain.IssueRecord;
-import com.library_management.utilities.CustomClassForCategoryCountTable;
 import com.library_management.utilities.CustomClassForListOfOverdueBooks;
 import com.library_management.utilities.ResponseHandler;
 
