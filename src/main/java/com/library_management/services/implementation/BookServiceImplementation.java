@@ -24,7 +24,6 @@ public class BookServiceImplementation implements BookServiceInterface {
 			try {
 				new BookDaoImplementation().addBook(newBook);
 			} catch (DatabaseException e) {
-				// TODO Auto-generated catch block
 				throw new DatabaseException(e.getMessage());
 			}
 		}
