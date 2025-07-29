@@ -16,8 +16,8 @@ public class BookServiceImplementation implements BookServiceInterface {
 		if(title.trim().equals("") || author.trim().equals("") || category==null) {
 			throw new InvalidDetailsException("All Details Must Be Given...");
 		}
-		else if(title.length()>255 || author.length()>255) {
-			throw new InvalidDetailsException("Lengths Of Fields Exceeded Max Length...");
+		else if(title.length()>60 || author.length()>60 || title.length()<3 || author.length()<3) {
+			throw new InvalidDetailsException("Lengths Of Title And Author Must Be greater Than 3 And Less Than 60...");
 		}
 		else {
 			Book newBook=new Book(title, author, category);
@@ -45,8 +45,8 @@ public class BookServiceImplementation implements BookServiceInterface {
 		if(title.trim().equals("") || author.trim().equals("") || category==null || status==null) {
 			throw new InvalidDetailsException("All Details Must Be Given...");
 		}
-		else if(title.length()>255 || author.length()>255) {
-			throw new InvalidDetailsException("Lengths Of Fields Exceeded Max Length...");
+		else if(title.length()>60 || author.length()>60 || title.length()<3 || author.length()<3) {
+			throw new InvalidDetailsException("Lengths Of Title And Author Must Be greater Than 3 And Less Than 60...");
 		}
 		else {
 			Book currentBook=null;
