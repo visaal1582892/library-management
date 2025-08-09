@@ -1,6 +1,6 @@
 package com.library_management.dao;
 
-import java.sql.SQLException;
+import java.sql.Connection;
 import java.util.List;
 
 import com.library_management.domain.Book;
@@ -17,7 +17,7 @@ public interface BookDaoInterface {
 	
 	List<Book> selectAllMemberBooks(int memberId) throws DatabaseException;
 
-	void updateBookAvailability(Book book, String availability) throws DatabaseException;
-
 	void deleteBook(Book oldBook) throws DatabaseException;
+
+	void updateBookAvailability(Book oldBook, String availability, Connection argConn) throws DatabaseException;
 }

@@ -9,13 +9,12 @@ import java.util.List;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
-import org.junit.internal.runners.statements.Fail;
 
+import com.library_management.constants.BookAvailability;
+import com.library_management.constants.BookCategory;
+import com.library_management.constants.BookStatus;
 import com.library_management.dao.implementation.BookDaoImplementation;
 import com.library_management.domain.Book;
-import com.library_management.domain.BookAvailability;
-import com.library_management.domain.BookCategory;
-import com.library_management.domain.BookStatus;
 import com.library_management.exceptions.DatabaseException;
 import com.library_management.utilities.DBConnection;
 

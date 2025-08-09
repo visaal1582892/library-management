@@ -1,5 +1,9 @@
 package com.library_management.domain;
 
+import com.library_management.constants.BookAvailability;
+import com.library_management.constants.BookCategory;
+import com.library_management.constants.BookStatus;
+
 public class Book {
 	// All fields of a book
 		private int bookId;

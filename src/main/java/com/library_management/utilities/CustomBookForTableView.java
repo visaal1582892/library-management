@@ -1,8 +1,8 @@
 package com.library_management.utilities;
 
-import com.library_management.domain.BookAvailability;
-import com.library_management.domain.BookCategory;
-import com.library_management.domain.BookStatus;
+import com.library_management.constants.BookAvailability;
+import com.library_management.constants.BookCategory;
+import com.library_management.constants.BookStatus;
 
 import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.SimpleStringProperty;
