@@ -85,8 +85,8 @@ public class MemberDaoImplementation implements MemberDaoInterface {
 			psInsertLog.setString(6,oldMember.getMemberAddress());
 			psInsertLog.executeUpdate();
 			
-			psUpdate.setString(1,newMember.getMemberName() );
-			psUpdate.setString(2,newMember.getMemberMail() );
+			psUpdate.setString(1,newMember.getMemberName());
+			psUpdate.setString(2,newMember.getMemberMail());
 			psUpdate.setString(3,newMember.getMobileNo());
 			psUpdate.setString(4,newMember.getMemberAddress());
 			psUpdate.setInt(5,newMember.getMemberId());

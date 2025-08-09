@@ -36,7 +36,7 @@ public class MemberDaoImplementationTest {
 
     @Test
     public void testAddMember_ShouldPass() throws DatabaseException, SQLException {
-    	dao.insertMember(new Member("tarun","tarun67671@gmail.com","9907626081","M","seethampetys"));
+    	dao.insertMember(new Member("tarun","tarun6761@gmail.com","9907426081","M","seethampetys"));
     }
 
     
