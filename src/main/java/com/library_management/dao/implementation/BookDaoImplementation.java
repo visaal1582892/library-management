@@ -8,34 +8,58 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.library_management.constants.BookAvailability;
+import com.library_management.constants.BookCategory;
+import com.library_management.constants.BookStatus;
 import com.library_management.dao.BookDaoInterface;
 import com.library_management.domain.Book;
-import com.library_management.domain.BookAvailability;
-import com.library_management.domain.BookCategory;
-import com.library_management.domain.BookStatus;
 import com.library_management.exceptions.DatabaseException;
 import com.library_management.utilities.DBConnection;
 
 public class BookDaoImplementation implements BookDaoInterface {
 
+	
+//  Functional to insert logs 
+  private void insertBookLog(Connection conn, Book book) throws SQLException, DatabaseException {
+      String insertBooksLogQuery = 
+          "INSERT INTO books_log(book_id, title, author, category, status, availability) VALUES (?, ?, ?, ?, ?, ?)";
+      try (PreparedStatement psInsertLog = conn.prepareStatement(insertBooksLogQuery)) {
+          psInsertLog.setInt(1, book.getBookId());
+          psInsertLog.setString(2, book.getTitle());
+          psInsertLog.setString(3, book.getAuthor());
+          psInsertLog.setString(4, book.getCategory().getStringValue());
+          psInsertLog.setString(5, book.getStatus().getStringValue());
+          psInsertLog.setString(6, book.getAvailability().getStringValue());
+          psInsertLog.executeUpdate();
+      }catch (SQLException e) {
+		throw new DatabaseException("Log Insertion Failed...");
+	}
+  }
+	
 	@Override
 	public int addBook(Book book) throws DatabaseException {
 		Connection conn=DBConnection.getConn();
-		int id=-1;
-		try(PreparedStatement psInsert=conn.prepareStatement("insert into books(title,author,category) values(?,?,?)", Statement.RETURN_GENERATED_KEYS);) {
-			
-			psInsert.setString(1, book.getTitle());
-			psInsert.setString(2, book.getAuthor());
-			psInsert.setString(3, book.getCategory().getStringValue());
-			psInsert.executeUpdate();
-			ResultSet rs=psInsert.getGeneratedKeys();
-			if(rs.next()) {
-				id=rs.getInt(1);
-			}
-		} catch (SQLException e) {
-			throw new DatabaseException(e.getMessage());
-		}
-		return id;
+		int id=0;
+		try (
+	             PreparedStatement psInsert = conn.prepareStatement(
+	                 "INSERT INTO books(title, author, category, status, availability) VALUES (?, ?, ?, ?, ?)",
+	                 Statement.RETURN_GENERATED_KEYS)) {
+
+	            psInsert.setString(1, book.getTitle());
+	            psInsert.setString(2, book.getAuthor());
+	            psInsert.setString(3, book.getCategory().getStringValue());
+	            psInsert.setString(4, book.getStatus().getStringValue());
+	            psInsert.setString(5, book.getAvailability().getStringValue());
+	            psInsert.executeUpdate();
+
+	            ResultSet rs = psInsert.getGeneratedKeys();
+	            if (rs.next()) {
+	                id = rs.getInt(1);
+	            }
+	        } catch (SQLException e) {
+	            throw new DatabaseException("Failed to add book: " + e.getMessage());
+	        }
+	        return id;
 	}
 
 	@Override
@@ -43,17 +67,11 @@ public class BookDaoImplementation implements BookDaoInterface {
 		Connection conn=DBConnection.getConn();
 		String updateBooksQuery="update books set title=?, author=?, category=?, status=? where book_id=?";
 		String insertBooksLogQuery="insert into books_log(book_id,title,author,category,status,availability) values(?,?,?,?,?,?)";
-		try(PreparedStatement psInsertLog=conn.prepareStatement(insertBooksLogQuery);
+		try(
 				PreparedStatement psUpdate=conn.prepareStatement(updateBooksQuery);) {
 			conn.setAutoCommit(false);
 			
-			psInsertLog.setInt(1, oldBook.getBookId());
-			psInsertLog.setString(2, oldBook.getTitle());
-			psInsertLog.setString(3, oldBook.getAuthor());
-			psInsertLog.setString(4, oldBook.getCategory().getStringValue());
-			psInsertLog.setString(5, oldBook.getStatus().getStringValue());
-			psInsertLog.setString(6, oldBook.getAvailability().getStringValue());
-			psInsertLog.executeUpdate();
+			insertBookLog(conn, oldBook);
 			
 			psUpdate.setString(1, newBook.getTitle());
 			psUpdate.setString(2, newBook.getAuthor());
@@ -75,58 +93,50 @@ public class BookDaoImplementation implements BookDaoInterface {
 	}
 
 	@Override
-	public void updateBookAvailability(Book oldBook, String availability) throws DatabaseException {
-		
-		Connection conn=DBConnection.getConn();
-		String updateAvailabilityQuery="update books set availability=? where book_id=?";
-		String insertBookLog="insert into books_log(book_id,title,author,category,status,availability) values(?,?,?,?,?,?)";
-		try(PreparedStatement psUpdate=conn.prepareStatement(updateAvailabilityQuery);
-			PreparedStatement psInsertLog=conn.prepareStatement(insertBookLog);) {
-			conn.setAutoCommit(false);
-			psInsertLog.setInt(1, oldBook.getBookId());
-			psInsertLog.setString(2, oldBook.getTitle());
-			psInsertLog.setString(3, oldBook.getAuthor());
-			psInsertLog.setString(4, oldBook.getCategory().getStringValue());
-			psInsertLog.setString(5, oldBook.getStatus().getStringValue());
-			psInsertLog.setString(6, oldBook.getAvailability().getStringValue());
-			psInsertLog.executeUpdate();
-			
-			psUpdate.setString(1, availability);
-			psUpdate.setInt(2, oldBook.getBookId());
-			psUpdate.executeUpdate();
-			conn.commit();
-			conn.setAutoCommit(true);
-		}catch(SQLException e) {
-			try {
-				conn.rollback();
-			}catch (SQLException ex) {
-				throw new DatabaseException("Update Availability Rollback Failed...");
-			}
-			throw new DatabaseException("Failed To Update Availability...");
-		}
+	public void updateBookAvailability(Book oldBook, String availability, Connection argConn) throws DatabaseException {
+	    
+//	    checking if Book is active or not
+	    if (!BookStatus.ACTIVE.equals(oldBook.getStatus())) {
+	        throw new DatabaseException("Book Cannot Be Issued Since It Is Inactive");
+	    }
+
+	    Connection conn = argConn==null?DBConnection.getConn():argConn;
+	    String updateAvailabilityQuery = "UPDATE books SET availability=? WHERE book_id=?";
+	    try (PreparedStatement psUpdate = conn.prepareStatement(updateAvailabilityQuery)) {
+	        conn.setAutoCommit(false);
+
+	        insertBookLog(conn, oldBook);
+
+	        psUpdate.setString(1, availability);
+	        psUpdate.setInt(2, oldBook.getBookId());
+	        psUpdate.executeUpdate();
+
+	        conn.commit();
+	        conn.setAutoCommit(true);
+	    } catch (SQLException e) {
+	        try {
+	            conn.rollback();
+	        } catch (SQLException ex) {
+	            throw new DatabaseException("Update Availability Rollback Failed...");
+	        }
+	        throw new DatabaseException("Failed To Update Availability...");
+	    }
 	}
+
 
 	@Override
 	public void deleteBook(Book oldBook) throws DatabaseException {
 		Connection conn=DBConnection.getConn();
-		String deleteQuery="delete from books where book_id=?";
-		String insertBookLog="insert into books_log(book_id,title,author,category,status,availability) values(?,?,?,?,?,?)";
-		try(PreparedStatement psDelete=conn.prepareStatement(deleteQuery);
-			PreparedStatement psInsertLog=conn.prepareStatement(insertBookLog);) {
+		String updateStatusQuery = "UPDATE books SET status=? WHERE book_id=?";
+		try (PreparedStatement psUpdateStatus = conn.prepareStatement(updateStatusQuery)) {
 			conn.setAutoCommit(false);
-			psInsertLog.setInt(1, oldBook.getBookId());
-			psInsertLog.setString(2, oldBook.getTitle());
-			psInsertLog.setString(3, oldBook.getAuthor());
-			psInsertLog.setString(4, oldBook.getCategory().getStringValue());
-			psInsertLog.setString(5, oldBook.getStatus().getStringValue());
-			psInsertLog.setString(6, oldBook.getAvailability().getStringValue());
-			psInsertLog.executeUpdate();
 			
-			psDelete.setInt(1, oldBook.getBookId());
-			psDelete.executeUpdate();
-			conn.commit();
-			conn.setAutoCommit(true);
-		}catch(SQLException e) {
+			insertBookLog(conn, oldBook);
+			
+            psUpdateStatus.setString(1, BookStatus.INACTIVE.getStringValue());
+            psUpdateStatus.setInt(2, oldBook.getBookId());
+            psUpdateStatus.executeUpdate();
+        }catch(SQLException e) {
 			try {
 				conn.rollback();
 			}catch (SQLException ex) {
@@ -141,9 +151,8 @@ public class BookDaoImplementation implements BookDaoInterface {
 	public List<Book> selectAllBooks() throws DatabaseException {
 		List<Book> books=new ArrayList<>();
 		Statement statement=DBConnection.getStatement();
-		String selectQuery="select * from books";
-		try {
-			ResultSet result=statement.executeQuery(selectQuery);
+		String selectQuery = "SELECT * FROM books WHERE status = 'A'";
+		try(ResultSet result=statement.executeQuery(selectQuery);) {
 			while(result.next()) {
 				int id=result.getInt(1);
 				String title=result.getString(2);
@@ -165,9 +174,8 @@ public class BookDaoImplementation implements BookDaoInterface {
 	public Book selectBookById(int id) throws DatabaseException {
 		Book currentBook=null;
 		Connection conn=DBConnection.getConn();
-		String selectOneQuery="select * from books where book_id=?";
-		try {
-			PreparedStatement psSelectOne=conn.prepareStatement(selectOneQuery);
+		String selectOneQuery = "SELECT * FROM books WHERE book_id=? and status='A'";
+		try(PreparedStatement psSelectOne=conn.prepareStatement(selectOneQuery);) {
 			psSelectOne.setInt(1, id);
 			psSelectOne.execute();
 			ResultSet resultSet=psSelectOne.getResultSet();
@@ -194,7 +202,9 @@ public class BookDaoImplementation implements BookDaoInterface {
 		List<Book> memberBooks=new ArrayList<Book>();
 		try {
 			
-			String selectQuery="select b.* from books b join issue_records i on b.book_id=i.book_id join members m on i.member_id=m.member_id where i.member_id=? and i.status='I'";
+			String selectQuery = 
+		            "SELECT b.* FROM books b JOIN issue_records i ON b.book_id = i.book_id " +
+		            "WHERE i.member_id = ? AND i.status = 'I' AND b.status = 'A'";
 			PreparedStatement psSelect=conn.prepareStatement(selectQuery);
 			psSelect.setInt(1, memberId);
 			ResultSet result=psSelect.executeQuery();
@@ -214,7 +224,4 @@ public class BookDaoImplementation implements BookDaoInterface {
 		}
 		return memberBooks;
 	}
-	
-	
-
 }

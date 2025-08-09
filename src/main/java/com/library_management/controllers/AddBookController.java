@@ -2,9 +2,7 @@ package com.library_management.controllers;
 import java.io.IOException;
 
 import com.library_management.App;
-import com.library_management.domain.BookAvailability;
-
-import com.library_management.domain.BookCategory;
+import com.library_management.constants.BookCategory;
 import com.library_management.exceptions.DatabaseException;
 import com.library_management.exceptions.InvalidDetailsException;
 import com.library_management.services.implementation.BookServiceImplementation;
@@ -24,12 +22,6 @@ public class AddBookController {
     @FXML
     private TextField authorField;
 
-//    @FXML
-//    private ComboBox<String> statusComboBox;
-//
-//    @FXML
-//    private ComboBox<String> availabilityComboBox;
-
     @FXML
     private ComboBox<BookCategory> categoryComboBox;
     
@@ -38,12 +30,7 @@ public class AddBookController {
 
     @FXML
     public void initialize() {
-        // Adding categories from enum values.
     	categoryComboBox.getItems().addAll(BookCategory.values());
-    	
-//    	statusComboBox.getItems().addAll(BookStatus.values());
-//    	
-//    	statusComboBox.getItems().addAll(BookAvailability.values());
     }
 
     public void clearForm() {
@@ -69,11 +56,6 @@ public class AddBookController {
     	String title=titleField.getText();
     	String author=authorField.getText();
     	BookCategory category=categoryComboBox.getSelectionModel().getSelectedItem();
-//    	String status=statusComboBox.getValue();
-//    	String availability=availabilityComboBox.getValue();
-    	
-//    	System.out.println(title+" "+author+" "+category+" "+status+" "+availability);
-//    	System.out.println(title+" "+author+" "+category);
     	try {
 			new BookServiceImplementation().validateAddBook(title, author, category);
 			clearForm();

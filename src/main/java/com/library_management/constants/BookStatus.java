@@ -1,22 +1,24 @@
-package com.library_management.domain;
+package com.library_management.constants;
 
 import java.util.stream.Stream;
 
 public enum BookStatus {
 //	Defining all the status constants
-	ACTIVE("Active"),
-	INACTIVE("Inactive");
+	ACTIVE("Active", "A"),
+	INACTIVE("Inactive", "I");
 	
 	private String displayName;
+	private String dbName;
 	
 //	Constructor
-	BookStatus(String displayName){
+	BookStatus(String displayName, String dbName){
 		this.displayName=displayName;
+		this.dbName=dbName;
 	}
 	
 //	Defining all the related functions
 	public String getStringValue() {
-		return this.displayName.substring(0,1);
+		return this.dbName;
 	}
 	
 	@Override
