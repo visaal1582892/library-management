@@ -103,26 +103,26 @@ public class ViewAllBooksController {
 							{
 								// Toggle availability event
 
-								toggleAvailability.setOnAction(event -> {
-									CustomBookForTableView book = getTableView().getItems().get(getIndex());
-									String newAvailabilityValue = book.getAvailability().equals("Available") ? "Issued"
-											: "Available";
-									Book currBook = new Book(book.getBookId(), book.getTitle(), book.getAuthor(),
-											BookCategory.getEnumConstant(book.getCategory()),
-											BookStatus.getEnumConstant(book.getStatus().substring(0, 1)),
-											BookAvailability.getEnumConstant(book.getAvailability().substring(0, 1)));
-
-									try {
-										new BookDaoImplementation().updateBookAvailability(currBook,
-												newAvailabilityValue.substring(0, 1));
-										book.setAvailability(newAvailabilityValue);
-										viewBooksTable.refresh();
-										ResponseHandler.showResponse(message, "Successfully Updated Availability...",
-												Color.GREEN);
-									} catch (DatabaseException e) {
-										ResponseHandler.showResponse(message, e.getMessage(), Color.RED);
-									}
-								});
+//								toggleAvailability.setOnAction(event -> {
+//									CustomBookForTableView book = getTableView().getItems().get(getIndex());
+//									String newAvailabilityValue = book.getAvailability().equals("Available") ? "Issued"
+//											: "Available";
+//									Book currBook = new Book(book.getBookId(), book.getTitle(), book.getAuthor(),
+//											BookCategory.getEnumConstant(book.getCategory()),
+//											BookStatus.getEnumConstant(book.getStatus().substring(0, 1)),
+//											BookAvailability.getEnumConstant(book.getAvailability().substring(0, 1)));
+//
+//									try {
+//										new BookDaoImplementation().updateBookAvailability(currBook,
+//												newAvailabilityValue.substring(0, 1));
+//										book.setAvailability(newAvailabilityValue);
+//										viewBooksTable.refresh();
+//										ResponseHandler.showResponse(message, "Successfully Updated Availability...",
+//												Color.GREEN);
+//									} catch (DatabaseException e) {
+//										ResponseHandler.showResponse(message, e.getMessage(), Color.RED);
+//									}
+//								});
 
 								// Delete book event
 								deleteButton.setStyle(
