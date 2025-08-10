@@ -7,14 +7,11 @@ import java.util.List;
 
 import org.junit.Before;
 import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.junit.runners.JUnit4;
 
 import com.library_management.domain.IssueRecord;
 import com.library_management.utilities.DBConnection;
 import com.library_management.dao.implementation.IssueRecordDaoImplementation;
 
-@RunWith(JUnit4.class)
 public class IssueRecordDaoImplementationTest {
 	
 	private IssueRecordDaoImplementation dao;

@@ -32,8 +32,11 @@
                    layoutX="4.0" layoutY="140.0" prefHeight="400.0" prefWidth="767.0"
                    style="-fx-background-radius: 10; -fx-border-color: #90caf9; -fx-border-radius: 10;">
             <columns>
-                <TableColumn fx:id="booksColumn" prefWidth="250.0" text="Book ID"/>
-                <TableColumn fx:id="membersColumn" prefWidth="250.0" text="Member ID"/>
+                
+                <TableColumn fx:id="membersColumn" prefWidth="150.0" text="Member ID"/>
+                <TableColumn fx:id="membersNameColumn" prefWidth="200.0" text="Member Name"/>
+                <TableColumn fx:id="booksColumn" prefWidth="150.0" text="Book ID"/>
+                <TableColumn fx:id="titleColumn" prefWidth="200.0" text="Book Title"/>
                 <TableColumn fx:id="issueDateColumn" prefWidth="250.0" text="Issue Date"/>
             </columns>
         </TableView>
