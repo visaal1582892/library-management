@@ -1,8 +1,9 @@
 package com.library_management.utilities;
 
-
+import com.library_management.constants.MemberGender;
 
 import javafx.beans.property.SimpleIntegerProperty;
+import javafx.beans.property.SimpleObjectProperty;
 import javafx.beans.property.SimpleStringProperty;
 
 public class MemberTableView {
@@ -10,19 +11,19 @@ public class MemberTableView {
 	private final SimpleStringProperty name;
 	private final SimpleStringProperty emailId;
 	private final SimpleStringProperty mobileNo;
-	private final SimpleStringProperty gender;
+	private final SimpleObjectProperty<MemberGender> gender;
 	private final SimpleStringProperty address;
 
-    public MemberTableView(int id, String name, String emailId, String mobileNo, String gender, String address) {
-    	this.memberId=new SimpleIntegerProperty(id);
-		this.name=new SimpleStringProperty(name);
-		this.emailId=new SimpleStringProperty(emailId);
-		this.mobileNo=new SimpleStringProperty(mobileNo);
-		this.gender=new SimpleStringProperty(gender);
-		this.address=new SimpleStringProperty(address);
-    }
-    
-//    Getters for values
+	public MemberTableView(int id, String name, String emailId, String mobileNo, MemberGender gender, String address) {
+		this.memberId = new SimpleIntegerProperty(id);
+		this.name = new SimpleStringProperty(name);
+		this.emailId = new SimpleStringProperty(emailId);
+		this.mobileNo = new SimpleStringProperty(mobileNo);
+		this.gender = new SimpleObjectProperty<>(gender);
+		this.address = new SimpleStringProperty(address);
+	}
+
+	// Getters for values
 	public int getMemberId() {
 		return memberId.get();
 	}
@@ -39,37 +40,36 @@ public class MemberTableView {
 		return mobileNo.get();
 	}
 
-	public String getGender() {
+	public MemberGender getGender() {
 		return gender.get();
 	}
 
 	public String getAddress() {
 		return address.get();
 	}
-	
-	public SimpleIntegerProperty bookIdProperty() {
+
+	// Property getters for table binding
+	public SimpleIntegerProperty memberIdProperty() {
 		return memberId;
 	}
 
-//	getters for properties
-	public SimpleStringProperty titleProperty() {
+	public SimpleStringProperty nameProperty() {
 		return name;
 	}
 
-	public SimpleStringProperty authorProperty() {
+	public SimpleStringProperty emailIdProperty() {
 		return emailId;
 	}
 
-	public SimpleStringProperty categoryProperty() {
+	public SimpleStringProperty mobileNoProperty() {
 		return mobileNo;
 	}
 
-	public SimpleStringProperty statusProperty() {
+	public SimpleObjectProperty<MemberGender> genderProperty() {
 		return gender;
 	}
 
-	public SimpleStringProperty availabilityProperty() {
+	public SimpleStringProperty addressProperty() {
 		return address;
 	}
-    
 }

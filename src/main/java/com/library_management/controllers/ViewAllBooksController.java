@@ -114,7 +114,7 @@ public class ViewAllBooksController {
 
 									try {
 										new BookDaoImplementation().updateBookAvailability(currBook,
-												newAvailabilityValue.substring(0, 1));
+												newAvailabilityValue.substring(0, 1), null);
 										book.setAvailability(newAvailabilityValue);
 										viewBooksTable.refresh();
 										ResponseHandler.showResponse(message, "Successfully Updated Availability...",

@@ -8,6 +8,7 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
+
 <AnchorPane prefHeight="562.0" prefWidth="756.0" style="-fx-background-color: linear-gradient(to bottom right, #e3f2fd, #ffffff);" xmlns="http://javafx.com/javafx/24.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.library_management.controllers.ViewAllMembersController">
    <children>
       <!-- Heading -->
@@ -33,7 +34,7 @@
         <TableColumn fx:id="memberMobileNoColumn" prefWidth="94.0" text="Mobile No" />
         <TableColumn fx:id="memberGenderColumn" prefWidth="66.0" text="Gender" />
         <TableColumn fx:id="memberAddressColumn" prefWidth="144.0" text="Address" />
-        <TableColumn fx:id="deleteColumn" prefWidth="89.0" text="Delete" />
+    <!--    <TableColumn fx:id="deleteColumn" prefWidth="89.0" text="Delete" />-->
         
     </columns>
 </TableView>

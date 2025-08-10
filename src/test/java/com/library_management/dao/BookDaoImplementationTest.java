@@ -47,7 +47,7 @@ public class BookDaoImplementationTest {
     	System.out.println(this.generatedId);
     	Book oldBook=new Book(generatedId, "test", "test", BookCategory.FICTION, BookStatus.ACTIVE, BookAvailability.AVAILABLE);
     	String newAvailability="I";
-    	dao.updateBookAvailability(oldBook, newAvailability);
+    	dao.updateBookAvailability(oldBook, newAvailability, null);
     }
     
     @Test
