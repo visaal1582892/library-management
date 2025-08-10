@@ -1,42 +1,44 @@
 package com.library_management.utilities;
 
-import java.time.LocalDate;
-
 import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.SimpleStringProperty;
 
 public class CustomClassForListOfOverdueBooks {
-	private final SimpleIntegerProperty bookId;
+
 	private final SimpleIntegerProperty memberId;
-	private final LocalDate issueDate;
+	private final SimpleStringProperty memberName;
+	private final SimpleIntegerProperty bookId;
+	private final SimpleStringProperty bookTitle;
+	private final SimpleStringProperty issueDate;
 
-    
-    
-	public CustomClassForListOfOverdueBooks(int bookId, int memberId, LocalDate issueDate) {
+	public CustomClassForListOfOverdueBooks(String memberId, String memberName, String bookId, String bookTitle,
+			String issueDate) {
 		this.bookId = new SimpleIntegerProperty();
-		this.memberId=new SimpleIntegerProperty();
-		this.issueDate=issueDate;
-		
-		// TODO Auto-generated constructor stub
+		this.memberId = new SimpleIntegerProperty();
+		this.memberName = new SimpleStringProperty(memberName);
+		this.bookTitle = new SimpleStringProperty(bookTitle);
+		this.issueDate = new SimpleStringProperty(issueDate);
+
 	}
 
-
-
-	public SimpleIntegerProperty getBookId() {
-		return bookId;
+	public int getMemberId() {
+		return memberId.get();
 	}
 
-
-
-	public SimpleIntegerProperty getMemberId() {
-		return memberId;
+	public String getMemberName() {
+		return memberName.get();
 	}
 
-
-
-	public LocalDate getIssueDate() {
-		return issueDate;
+	public int getBookId() {
+		return bookId.get();
 	}
 
-	
+	public String getBookTitle() {
+		return bookTitle.get();
+	}
+
+	public String getIssueDate() {
+		return issueDate.get();
+	}
+
 }

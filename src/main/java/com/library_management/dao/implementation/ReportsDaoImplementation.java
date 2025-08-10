@@ -1,5 +1,6 @@
 package com.library_management.dao.implementation;
 
+import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -10,16 +11,12 @@ import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
-import com.library_management.dao.IssueRecordDaoInterface;
 import com.library_management.dao.ReportsDaoInterface;
-import com.library_management.domain.Book;
-import com.library_management.domain.IssueRecord;
 import com.library_management.exceptions.DatabaseException;
-import com.library_management.services.implementation.ReportsServiceImplementation;
 import com.library_management.utilities.DBConnection;
 
+
 public class ReportsDaoImplementation implements ReportsDaoInterface {
-	static IssueRecordDaoInterface dao = new IssueRecordDaoImplementation();
 
 	@Override
 	public Map<Object, Long> countOfBooksPerCategory() {
@@ -45,18 +42,52 @@ public class ReportsDaoImplementation implements ReportsDaoInterface {
 	}
 	
 
-	public List<IssueRecord> getOverdueBooks() {
+	public List<List<String>> getOverdueBooks() {
 		//return dao.getOverdueBooks();
-		List<IssueRecord> overdue = dao.getAllIssues().stream()
-				.filter(b -> b.getReturnDate().isBefore(LocalDate.now().minusDays(17)))
-				.collect(Collectors.toList());
-		System.out.println(overdue);
-		return overdue;
+		List<List<String>> temp = new ArrayList<>();
+
+	    String sql = "SELECT m.member_id, m.name, b.book_id, b.title, ir.issue_date, ir.return_date FROM members m JOIN issue_records ir ON m.member_id = ir.member_id JOIN books b ON ir.book_id = b.book_id";
+
+	    Connection conn = DBConnection.getConn();
+	        try {
+	        	Statement stmt = conn.createStatement();
+	         ResultSet rs = stmt.executeQuery(sql);
+	         
+
+	        while (rs.next()) {
+	            List<String> issue = new ArrayList<>();
+	            issue.add(String.valueOf(rs.getInt("member_id")));   
+	            issue.add(rs.getString("name"));                     
+	            issue.add(rs.getString("book_id"));                  
+	            issue.add(rs.getString("title"));                    
+	            issue.add(rs.getString("issue_date"));               
+	            issue.add(rs.getString("return_date"));              
+	            temp.add(issue);
+	        }
+
+	    } catch (SQLException e) {
+	        e.printStackTrace();
+	    }
+
+	    List<List<String>> overdue = temp.stream()
+	        .filter(b -> b.get(5) == null || b.get(5).trim().isEmpty())
+	        .filter(b -> {
+	            try {
+	                LocalDate issueDate = LocalDate.parse(b.get(4));
+	                return issueDate.isBefore(LocalDate.now().minusDays(17));
+	            } catch (Exception e) {
+	                return false; 
+	            }
+	        })
+	        .collect(Collectors.toList());
+
+	    System.out.println(overdue);
+	    return overdue;
 	}
 
 	@Override
 	public List<List<String>> getActiveIssuedBooks() {
-		List<List<String>> data =  dao.getStatusTable().stream()
+		List<List<String>> data =  new IssueRecordDaoImplementation().getStatusTable().stream()
 				.filter(row -> row.get(4).equals("A") && row.get(3).equals("I"))
 				.collect(Collectors.toList());
 		System.out.println(data);

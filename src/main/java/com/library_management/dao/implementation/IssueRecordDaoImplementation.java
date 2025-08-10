@@ -10,9 +10,14 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.library_management.constants.BookAvailability;
+import com.library_management.constants.BookCategory;
+import com.library_management.constants.BookStatus;
 import com.library_management.dao.IssueRecordDaoInterface;
+import com.library_management.domain.Book;
 import com.library_management.domain.IssueRecord;
 import com.library_management.domain.IssueRecordStatus;
+import com.library_management.exceptions.DatabaseException;
 import com.library_management.utilities.DBConnection;
 
 public class IssueRecordDaoImplementation implements IssueRecordDaoInterface {
@@ -59,6 +64,11 @@ public class IssueRecordDaoImplementation implements IssueRecordDaoInterface {
 				return "Book is not available for issue";
 			}
 
+			Book book = new Book(bookRs.getInt("book_id"), bookRs.getString("title"), bookRs.getString("author"),
+					BookCategory.getEnumConstant(bookRs.getString("category")),
+				    BookStatus.getEnumConstant(bookRs.getString("status")),
+				    BookAvailability.getEnumConstant(bookRs.getString("availability")));
+
 			String issueSql = "INSERT INTO issue_records (book_id, member_id, status, issue_date, return_date) VALUES (?, ?, ?, ?, ?)";
 			PreparedStatement pstmt = conn.prepareStatement(issueSql);
 			pstmt.setInt(1, issue.getBookId());
@@ -70,16 +80,14 @@ public class IssueRecordDaoImplementation implements IssueRecordDaoInterface {
 			pstmt.executeUpdate();
 			System.out.println("Book issued successfully");
 
-			String updateSql = "UPDATE books SET availability = 'I' WHERE book_id = ?";
-			PreparedStatement updateStmt = conn.prepareStatement(updateSql);
-			updateStmt.setInt(1, issue.getBookId());
-			int rows = updateStmt.executeUpdate();
-			if (rows == 0) {
-				System.out.println("Failed to update book availability");
-				return "Failed to update book availability";
-			}
+			new BookDaoImplementation().updateBookAvailability(book, "I", conn);
+
 		} catch (SQLException e) {
 			e.printStackTrace();
+			return "Failed to issue book: " + e.getMessage();
+		} catch (DatabaseException e) {
+			e.printStackTrace();
+			return "Failed to update book: " + e.getMessage();
 		}
 		return "Book issued successfully";
 	}
@@ -100,6 +108,8 @@ public class IssueRecordDaoImplementation implements IssueRecordDaoInterface {
 			}
 			issueId = rs.getInt("issue_id");
 
+			logIssue(issueId);
+
 			String updateIssueSql = "UPDATE issue_records SET status = 'R', return_date = ? WHERE issue_id = ?";
 			PreparedStatement pstmt = conn.prepareStatement(updateIssueSql);
 			pstmt.setDate(1, Date.valueOf(LocalDate.now()));
@@ -110,20 +120,27 @@ public class IssueRecordDaoImplementation implements IssueRecordDaoInterface {
 				return "Failed to update issue record";
 			}
 			System.out.println("Book returned successfully");
-			logIssue(issueId);
 
-			String updateBookSql = "UPDATE books SET availability = 'A' WHERE book_id = ?";
-			PreparedStatement updateStmt = conn.prepareStatement(updateBookSql);
-			updateStmt.setInt(1, bookId);
-			int rowsUpdated = updateStmt.executeUpdate();
-			if (rowsUpdated == 0) {
-				System.out.println("Failed to update book availability");
-				return "Failed to update book availability";
+			String bookSql = "SELECT * FROM books WHERE book_id = ?";
+			PreparedStatement bookStmt = conn.prepareStatement(bookSql);
+			bookStmt.setInt(1, bookId);
+			ResultSet bookRs = bookStmt.executeQuery();
+			if (!bookRs.next()) {
+				return "Book not found for availability update";
 			}
-			System.out.println("Book status updated successfully");
-			
+			Book book = new Book(bookRs.getInt("book_id"), bookRs.getString("title"), bookRs.getString("author"),
+					BookCategory.getEnumConstant(bookRs.getString("category")),
+				    BookStatus.getEnumConstant(bookRs.getString("status")),
+				    BookAvailability.getEnumConstant(bookRs.getString("availability")));
+
+			new BookDaoImplementation().updateBookAvailability(book, "A", conn);
+
 		} catch (SQLException e) {
 			e.printStackTrace();
+			return "Failed to issue book: " + e.getMessage();
+		} catch (DatabaseException e) {
+			e.printStackTrace();
+			return "Failed to update book: " + e.getMessage();
 		}
 		return "Book returned successfully";
 	}
@@ -131,7 +148,7 @@ public class IssueRecordDaoImplementation implements IssueRecordDaoInterface {
 	public List<IssueRecord> getOverdueBooks() {
 		List<IssueRecord> overdue = new ArrayList<>();
 		String sql = "SELECT * FROM issue_records WHERE status = 'I' AND issue_date < ?";
-		try  {
+		try {
 			Connection conn = DBConnection.getConn();
 			PreparedStatement pstmt = conn.prepareStatement(sql);
 			pstmt.setDate(1, Date.valueOf(LocalDate.now().minusDays(17)));
@@ -156,7 +173,7 @@ public class IssueRecordDaoImplementation implements IssueRecordDaoInterface {
 		List<IssueRecord> issues = new ArrayList<>();
 		String sql = "SELECT * FROM issue_records";
 		Connection conn = DBConnection.getConn();
-		try  {
+		try {
 			Statement stmt = conn.createStatement();
 			ResultSet rs = stmt.executeQuery(sql);
 			while (rs.next()) {
@@ -179,7 +196,7 @@ public class IssueRecordDaoImplementation implements IssueRecordDaoInterface {
 	public List<List<String>> getStatusTable() {
 		List<List<String>> activeIssues = new ArrayList<>();
 		String sql = "SELECT m.member_id, m.name, b.title, ir.status as issue_status, b.status as book_status FROM members m JOIN issue_records ir ON m.member_id = ir.member_id JOIN books b ON ir.book_id = b.book_id";
-		try  {
+		try {
 			Connection conn = DBConnection.getConn();
 			Statement stmt = conn.createStatement();
 			ResultSet rs = stmt.executeQuery(sql);

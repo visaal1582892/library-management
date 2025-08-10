@@ -21,17 +21,25 @@ import javafx.scene.text.Text;
 public class ListOfOverDueBooks {
 	@FXML
     private TableView<CustomClassForListOfOverdueBooks> overDueBooksCountTable;
+	
     @FXML
-   
     private TableColumn<CustomClassForListOfOverdueBooks, String> booksColumn;
     
     @FXML
     private TableColumn<CustomClassForListOfOverdueBooks, String> membersColumn;
     
     @FXML
+    private TableColumn<CustomClassForListOfOverdueBooks, String> membersNameColumn;
+    
+    @FXML
     private TableColumn<CustomClassForListOfOverdueBooks, String> issueDateColumn;
+    
+    @FXML
+    private TableColumn<CustomClassForListOfOverdueBooks, String> titleColumn;
+    
     @FXML
     private Text message;
+    
     @FXML
     private void backButton() throws IOException {
         App.setRoot("reports");
@@ -49,13 +57,17 @@ public class ListOfOverDueBooks {
 		
 //		Creating cell value factories for AllPermission columns
         
-        booksColumn.setCellValueFactory(new PropertyValueFactory<>("Book Id"));
+        
         membersColumn.setCellValueFactory(new PropertyValueFactory<>("Member Id"));
+        membersNameColumn.setCellValueFactory(new PropertyValueFactory<>("Member Name"));
+        booksColumn.setCellValueFactory(new PropertyValueFactory<>("Book Id"));
+        
+		titleColumn.setCellValueFactory(new PropertyValueFactory<>("Book Title"));
         issueDateColumn.setCellValueFactory(new PropertyValueFactory<>("Issue Date"));
 
         try {
-			List<IssueRecord> countMap=new ReportsDaoImplementation().getOverdueBooks();
-			countMap.forEach(b->countData.add(new CustomClassForListOfOverdueBooks(b.getBookId(),b.getMemberId(),b.getIssueDate())));
+			List<List<String>> countMap=new ReportsDaoImplementation().getOverdueBooks();
+			countMap.forEach(b->countData.add(new CustomClassForListOfOverdueBooks(b.get(0),b.get(1),b.get(2),b.get(3),b.get(4))));
 		} catch (Exception e) {
 			ResponseHandler.showResponse(message, "Cannot Fetch Books Data...", Color.RED);
 		}
