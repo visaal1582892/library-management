@@ -37,14 +37,15 @@ public class IssueRecordDaoImplementation implements IssueRecordDaoInterface {
 			}
 
 			Book book = bookDao.selectBookById(issue.getBookId());
+			System.out.println("Book " +book);
 			if (book == null) {
 				return "Book does not exist";
 			}
 
-			if (book.getStatus() != BookStatus.INACTIVE) {
+			if (book.getStatus() != BookStatus.ACTIVE) {
 				return "Book is not active";
 			}
-			if (book.getAvailability() != BookAvailability.ISSUED) {
+			if (book.getAvailability() != BookAvailability.AVAILABLE) {
 				return "Book is not available for issue";
 			}
 
