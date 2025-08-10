@@ -1,6 +1,5 @@
-package com.library_management.domain;
+package com.library_management.constants;
 
-import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 public enum BookCategory {

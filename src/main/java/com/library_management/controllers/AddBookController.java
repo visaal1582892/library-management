@@ -2,8 +2,7 @@ package com.library_management.controllers;
 import java.io.IOException;
 
 import com.library_management.App;
-
-import com.library_management.domain.BookCategory;
+import com.library_management.constants.BookCategory;
 import com.library_management.exceptions.DatabaseException;
 import com.library_management.exceptions.InvalidDetailsException;
 import com.library_management.services.implementation.BookServiceImplementation;

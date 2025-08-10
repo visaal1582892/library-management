@@ -1,16 +1,16 @@
 package com.library_management.services;
 
-import org.junit.Before;
-import org.junit.Test;
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertNotNull;
 
 import org.junit.After;
+import org.junit.Before;
+import org.junit.Test;
 
+import com.library_management.constants.BookAvailability;
+import com.library_management.constants.BookCategory;
+import com.library_management.constants.BookStatus;
 import com.library_management.dao.implementation.BookDaoImplementation;
 import com.library_management.domain.Book;
-import com.library_management.domain.BookAvailability;
-import com.library_management.domain.BookCategory;
-import com.library_management.domain.BookStatus;
 import com.library_management.exceptions.DatabaseException;
 import com.library_management.exceptions.InvalidDetailsException;
 import com.library_management.services.implementation.BookServiceImplementation;
