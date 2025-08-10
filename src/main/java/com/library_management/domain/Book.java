@@ -43,6 +43,13 @@ public class Book {
 			this.status=status;
 		}
 		
+		public Book(int id, String title, String author, BookCategory category) {
+			this.bookId=id;
+			this.title=title;
+			this.author=author;
+			this.category=category;
+		}
+		
 		public Book(int bookId,String category) {
 			this.bookId=bookId;
 			this.category=BookCategory.getEnumConstant(category);

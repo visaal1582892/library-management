@@ -37,9 +37,9 @@
       <font><Font name="System Italic" size="24.0" /></font>
    </Label>
 
-   <Label layoutX="190.0" layoutY="389.0" text="Status">
+   <!-- <Label layoutX="190.0" layoutY="389.0" text="Status">
       <font><Font name="System Italic" size="24.0" /></font>
-   </Label>
+   </Label> -->
 
    <!-- Input Fields -->
    <TextField fx:id="titleField" layoutX="340.0" layoutY="236.0" prefWidth="209.0" promptText="Enter Title" style="-fx-background-radius: 10; -fx-font-size: 14px;" />
@@ -48,10 +48,10 @@
 
    <ComboBox fx:id="categoryComboBox" layoutX="340.0" layoutY="335.0" prefWidth="209.0" promptText="Select Category" style="-fx-background-radius: 10; -fx-font-size: 14px;" />
 
-   <ComboBox fx:id="statusComboBox" layoutX="340.0" layoutY="389.0" prefWidth="209.0" promptText="Select Status" style="-fx-background-radius: 10; -fx-font-size: 14px;" />
+   <!-- <ComboBox fx:id="statusComboBox" layoutX="340.0" layoutY="389.0" prefWidth="209.0" promptText="Select Status" style="-fx-background-radius: 10; -fx-font-size: 14px;" /> -->
 
    <!-- Update Button -->
-   <Button layoutX="300.0" layoutY="473.0" onAction="#handleButtonClick" prefHeight="34.0" prefWidth="79.0" style="-fx-background-color: lightblue; -fx-background-radius: 10px; -fx-font-size: 16px;" text="Update">
+   <Button layoutX="300.0" layoutY="403.0" onAction="#handleButtonClick" prefHeight="34.0" prefWidth="79.0" style="-fx-background-color: lightblue; -fx-background-radius: 10px; -fx-font-size: 16px;" text="Update">
       <effect>
          <DropShadow color="gray" offsetX="2" offsetY="2" radius="3" />
       </effect>

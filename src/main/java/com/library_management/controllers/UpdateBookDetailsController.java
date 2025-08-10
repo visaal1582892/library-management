@@ -5,7 +5,6 @@ import java.util.List;
 
 import com.library_management.App;
 import com.library_management.constants.BookCategory;
-import com.library_management.constants.BookStatus;
 import com.library_management.dao.implementation.BookDaoImplementation;
 import com.library_management.domain.Book;
 import com.library_management.exceptions.DatabaseException;
@@ -28,7 +27,7 @@ public class UpdateBookDetailsController {
 		titleField.setText("");
 		authorField.setText("");
 		categoryComboBox.setValue(null);
-		statusComboBox.setValue(null);
+//		statusComboBox.setValue(null);
 	}
 	
 	public void setBooksList(List<Book> booksList) {
@@ -51,8 +50,8 @@ public class UpdateBookDetailsController {
 	@FXML
 	private ComboBox<BookCategory> categoryComboBox;
 	
-	@FXML
-	private ComboBox<BookStatus> statusComboBox;
+//	@FXML
+//	private ComboBox<BookStatus> statusComboBox;
 	
 	@FXML
 	private Text message;
@@ -69,6 +68,28 @@ public class UpdateBookDetailsController {
 
 	@FXML
     public void initialize() {
+		
+		titleField.textProperty().addListener((obs, oldValue, newValue) -> {
+            String cleaned = newValue.replaceAll("[^a-zA-Z0-9 ]", "");
+            
+            if (cleaned.length() > 60) {
+                cleaned = cleaned.substring(0, 60);
+            }
+            if (!cleaned.equals(newValue)) {
+                titleField.setText(cleaned);
+            }
+        });
+
+        authorField.textProperty().addListener((obs, oldValue, newValue) -> {
+            String cleaned = newValue.replaceAll("[^a-zA-Z ]", ""); // only letters/spaces
+            if (cleaned.length() > 60) {
+                cleaned = cleaned.substring(0, 60);
+            }
+            if (!cleaned.equals(newValue)) {
+                authorField.setText(cleaned);
+            }
+        });
+		
 		try {
 			List<Book> booksList=new BookDaoImplementation().selectAllBooks();
 			this.setBooksList(booksList);
@@ -80,7 +101,7 @@ public class UpdateBookDetailsController {
 		}
 		
 		categoryComboBox.getItems().addAll(BookCategory.values());
-    	statusComboBox.getItems().addAll(BookStatus.values());
+//    	statusComboBox.getItems().addAll(BookStatus.values());
     }
 	
 	@FXML
@@ -97,7 +118,7 @@ public class UpdateBookDetailsController {
 			titleField.setText(selectedBook.getTitle());
 			authorField.setText(selectedBook.getAuthor());
 			categoryComboBox.setValue(selectedBook.getCategory());
-			statusComboBox.setValue(selectedBook.getStatus());
+//			statusComboBox.setValue(selectedBook.getStatus());
 		}
 	}
 	
@@ -111,8 +132,15 @@ public class UpdateBookDetailsController {
 			String title=titleField.getText();
 			String author=authorField.getText();
 			BookCategory category=categoryComboBox.getSelectionModel().getSelectedItem();
-			BookStatus status=statusComboBox.getSelectionModel().getSelectedItem();
-			new BookServiceImplementation().validateUpdateBookDetails(id, title, author, category, status);
+//			BookStatus status=statusComboBox.getSelectionModel().getSelectedItem();
+//			new BookServiceImplementation().validateUpdateBookDetails(id, title, author, category, status);
+			new BookServiceImplementation().validateUpdateBookDetails(id, title, author, category);
+			try {
+				App.setRoot("updateBookDetails");
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+			
 			clearForm();
 			ResponseHandler.showResponse(message, "Book Details Updated Succesfully...", Color.GREEN);
 		}catch(InvalidDetailsException|DatabaseException e) {
