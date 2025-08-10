@@ -13,9 +13,9 @@ public class CustomClassForListOfOverdueBooks {
 
 	public CustomClassForListOfOverdueBooks(String memberId, String memberName, String bookId, String bookTitle,
 			String issueDate) {
-		this.bookId = new SimpleIntegerProperty();
-		this.memberId = new SimpleIntegerProperty();
+		this.memberId = new SimpleIntegerProperty(Integer.parseInt(memberId));
 		this.memberName = new SimpleStringProperty(memberName);
+		this.bookId = new SimpleIntegerProperty(Integer.parseInt(bookId));
 		this.bookTitle = new SimpleStringProperty(bookTitle);
 		this.issueDate = new SimpleStringProperty(issueDate);
 
