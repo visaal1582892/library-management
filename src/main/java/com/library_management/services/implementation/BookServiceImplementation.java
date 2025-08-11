@@ -50,8 +50,50 @@ public class BookServiceImplementation implements BookServiceInterface {
 
 	}
 
+//	@Override
+//	public void validateUpdateBookDetails(int id, String title, String author, BookCategory category, BookStatus status)
+//			throws InvalidDetailsException, DatabaseException {
+//		if (title.trim().equals("")) {
+//			throw new InvalidDetailsException("Title Must Not Be Empty...");
+//		}
+//		if (author.trim().equals("")) {
+//			throw new InvalidDetailsException("Author Must Not Be Empty...");
+//		}
+//		if (category == null) {
+//			throw new InvalidDetailsException("Select A Valid Category...");
+//		}
+//		if (status == null) {
+//			throw new InvalidDetailsException("Select A Valid Status...");
+//		}
+//		if (author.length() > 60 || author.length() < 3) {
+//			throw new InvalidDetailsException("Length Of Author Must Be greater Than 3 And Less Than 60...");
+//		}
+//		if(title.length() > 60 || title.length() < 3) {
+//			throw new InvalidDetailsException("Length Of Title Must Be greater Than 3 And Less Than 60...");
+//		}
+//		
+//		Book currentBook = null;
+//		try {
+//			currentBook = new BookDaoImplementation().selectBookById(id);
+//		} catch (DatabaseException e) {
+//			throw new DatabaseException("Mentioned Book Not Found...");
+//		}
+//		if (currentBook == null) {
+//			throw new InvalidDetailsException("Book Details Not Found...");
+//		}
+//
+//		if (currentBook.getTitle().equals(title) && currentBook.getAuthor().equals(author)
+//				&& currentBook.getCategory() == category && currentBook.getStatus() == status) {
+//			throw new InvalidDetailsException("Atleast One Detail Should Be Updated...");
+//		}
+//
+//		Book newBook = new Book(id, title, author, category, status);
+//		new BookDaoImplementation().updateBookDetails(currentBook, newBook);
+//
+//	}
+	
 	@Override
-	public void validateUpdateBookDetails(int id, String title, String author, BookCategory category, BookStatus status)
+	public void validateUpdateBookDetails(int id, String title, String author, BookCategory category)
 			throws InvalidDetailsException, DatabaseException {
 		if (title.trim().equals("")) {
 			throw new InvalidDetailsException("Title Must Not Be Empty...");
@@ -61,9 +103,6 @@ public class BookServiceImplementation implements BookServiceInterface {
 		}
 		if (category == null) {
 			throw new InvalidDetailsException("Select A Valid Category...");
-		}
-		if (status == null) {
-			throw new InvalidDetailsException("Select A Valid Status...");
 		}
 		if (author.length() > 60 || author.length() < 3) {
 			throw new InvalidDetailsException("Length Of Author Must Be greater Than 3 And Less Than 60...");
@@ -84,13 +123,20 @@ public class BookServiceImplementation implements BookServiceInterface {
 
 //		Checking if atleast one detail is changed or not
 		if (currentBook.getTitle().equals(title) && currentBook.getAuthor().equals(author)
-				&& currentBook.getCategory() == category && currentBook.getStatus() == status) {
+				&& currentBook.getCategory() == category) {
 			throw new InvalidDetailsException("Atleast One Detail Should Be Updated...");
 		}
 
 //		Creating a new Book obj
-		Book newBook = new Book(id, title, author, category, status);
+		Book newBook = new Book(id, title, author, category);
 		new BookDaoImplementation().updateBookDetails(currentBook, newBook);
 
+	}
+
+	@Override
+	public void validateUpdateBookDetails(int id, String title, String author, BookCategory category, BookStatus status)
+			throws InvalidDetailsException, DatabaseException {
+		// TODO Auto-generated method stub
+		
 	}
 }
