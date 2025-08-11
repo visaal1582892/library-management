@@ -133,6 +133,7 @@ public class UpdateBookDetailsController {
 
             suggestionsList.getItems().setAll(matched);
             suggestionsList.setVisible(!matched.isEmpty());
+            suggestionsList.toFront();
         });
     }
 
