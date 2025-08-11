@@ -88,7 +88,7 @@ public class ReturnBookController {
 
 	@FXML
 	public void loadBookDetails() {
-		System.out.println("Book selected: " + bookSelector.getValue());
+//		System.out.println("Book selected: " + bookSelector.getValue());
 	}
 
 	@FXML
@@ -101,7 +101,7 @@ public class ReturnBookController {
 			bookSelector.getItems().clear();
 
 			memberId = Integer.parseInt(memberSelector.getValue().split("\\.")[0].trim());
-			System.out.println(memberId);
+//			System.out.println(memberId);
 
 			List<Book> booksList = new BookDaoImplementation().selectAllMemberBooks(memberId);
 			this.setBooksList(booksList);
@@ -110,13 +110,12 @@ public class ReturnBookController {
 				bookSelector.getItems().add(book.getBookId() + ". " + book.getTitle());
 			}
 
-			System.out.println("Member selected: " + memberSelector.getValue());
+//			System.out.println("Member selected: " + memberSelector.getValue());
 		} catch (DatabaseException e) {
 			e.printStackTrace();
 		}
 //		System.out.println("Member selected: " + memberSelector.getValue());
 		catch (InvalidDetailsException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}
@@ -131,7 +130,7 @@ public class ReturnBookController {
 			int bookId = Integer.parseInt(bookSelector.getValue().split("\\.")[0].trim());
 
 			String print_message = service.returnBook(memberId, bookId);
-			System.out.println(print_message);
+//			System.out.println(print_message);
 			if (print_message == "Book returned successfully") {
 				ResponseHandler.showResponse(message, print_message, Color.GREEN);
 			} else {

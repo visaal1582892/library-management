@@ -53,7 +53,6 @@ public class ReportsDaoImplementation implements ReportsDaoInterface {
 	        	Statement stmt = conn.createStatement();
 	         ResultSet rs = stmt.executeQuery(sql);
 	         
-
 	        while (rs.next()) {
 	            List<String> issue = new ArrayList<>();
 	            issue.add(String.valueOf(rs.getInt("member_id")));   
@@ -81,7 +80,7 @@ public class ReportsDaoImplementation implements ReportsDaoInterface {
 	        })
 	        .collect(Collectors.toList());
 
-	    System.out.println(overdue);
+//	    System.out.println(overdue);
 	    return overdue;
 	}
 
@@ -90,7 +89,7 @@ public class ReportsDaoImplementation implements ReportsDaoInterface {
 		List<List<String>> data =  new IssueRecordDaoImplementation().getStatusTable().stream()
 				.filter(row -> row.get(4).equals("A") && row.get(3).equals("I"))
 				.collect(Collectors.toList());
-		System.out.println(data);
+//		System.out.println(data);
 		return data;
 	}
 }

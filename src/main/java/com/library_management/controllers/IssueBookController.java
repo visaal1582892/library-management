@@ -29,16 +29,16 @@ public class IssueBookController {
 	private List<Book> booksList;
 	private List<Member> memberList;
 
-	 @FXML
-	    private void backButton() throws IOException {
-	        App.setRoot("IssueReturnMain");
-	    }
-		
-		@FXML
-		private void homeButton() throws IOException{
-			App.setRoot("home");
-		}
-		
+	@FXML
+	private void backButton() throws IOException {
+		App.setRoot("IssueReturnMain");
+	}
+
+	@FXML
+	private void homeButton() throws IOException {
+		App.setRoot("home");
+	}
+
 	public void setBooksList(List<Book> booksList) {
 		this.booksList = booksList;
 	}
@@ -84,12 +84,12 @@ public class IssueBookController {
 
 	@FXML
 	public void loadBookDetails() {
-		System.out.println("Book selected: " + bookSelector.getValue());
+//		System.out.println("Book selected: " + bookSelector.getValue());
 	}
 
 	@FXML
 	public void loadMemberDetails() {
-		System.out.println("Member selected: " + memberSelector.getValue());
+//		System.out.println("Member selected: " + memberSelector.getValue());
 	}
 
 	@FXML
