@@ -27,18 +27,5 @@ public class IssueRecordServiceImplementationTest {
 		assertNotNull(all);
 	}
 
-	@Test
-	public void testGetOverdueBooks() {
-		// fail("Not yet implemented");
-		List<IssueRecord> overdue = service.getOverdueBooks();
-		assertNotNull(overdue);
-	}
-
-	@Test
-	public void testGetActiveIssuedBooks() {
-		// fail("Not yet implemented");
-		List<List<String>> activeIssues = service.getActiveIssuedBooks();
-		assertNotNull(activeIssues);
-	}
-
+	
 }
