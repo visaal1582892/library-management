@@ -34,7 +34,7 @@ public class MemberDaoImplementation implements MemberDaoInterface {
 	@Override
 
 	public int insertMember(Member member) throws SQLException, DatabaseException {
-		String query = "insert into members (name, email, mobile, gender, address) VALUES (?, ?, ?, ?, ?)";
+		String query = "insert into members (name, email, mobile, gender, address) values (?, ?, ?, ?, ?)";
 		Connection con = DBConnection.getConn();
 		int id = -1;
 		try {
