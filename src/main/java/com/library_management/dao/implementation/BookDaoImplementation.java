@@ -30,9 +30,14 @@ public class BookDaoImplementation implements BookDaoInterface {
           psInsertLog.setString(4, book.getCategory().getStringValue());
           psInsertLog.setString(5, book.getStatus().getStringValue());
           psInsertLog.setString(6, book.getAvailability().getStringValue());
-          psInsertLog.executeUpdate();
+          int count=psInsertLog.executeUpdate();
+          if(count!=1) {
+        	  throw new DatabaseException("Log Not Inserted Correctly...");
+          }
       }catch (SQLException e) {
 		throw new DatabaseException("Log Insertion Failed...");
+	}catch (DatabaseException e) {
+		throw e;
 	}
   }
 	
@@ -50,7 +55,10 @@ public class BookDaoImplementation implements BookDaoInterface {
 	            psInsert.setString(3, book.getCategory().getStringValue());
 	            psInsert.setString(4, book.getStatus().getStringValue());
 	            psInsert.setString(5, book.getAvailability().getStringValue());
-	            psInsert.executeUpdate();
+	            int count=psInsert.executeUpdate();
+	            if(count!=1) {
+	            	throw new DatabaseException("Book Not Inserted Correctly...");
+	            }
 
 	            ResultSet rs = psInsert.getGeneratedKeys();
 	            if (rs.next()) {
@@ -58,15 +66,46 @@ public class BookDaoImplementation implements BookDaoInterface {
 	            }
 	        } catch (SQLException e) {
 	            throw new DatabaseException("Failed to add book: " + e.getMessage());
-	        }
+	        }catch (DatabaseException e) {
+				throw e;
+			}
 	        return id;
 	}
 
+//	@Override
+//	public void updateBookDetails(Book oldBook,Book newBook) throws DatabaseException {
+//		Connection conn=DBConnection.getConn();
+//		String updateBooksQuery="update books set title=?, author=?, category=?, status=? where book_id=?";
+//		String insertBooksLogQuery="insert into books_log(book_id,title,author,category,status,availability) values(?,?,?,?,?,?)";
+//		try(
+//				PreparedStatement psUpdate=conn.prepareStatement(updateBooksQuery);) {
+//			conn.setAutoCommit(false);
+//			
+//			insertBookLog(conn, oldBook);
+//			
+//			psUpdate.setString(1, newBook.getTitle());
+//			psUpdate.setString(2, newBook.getAuthor());
+//			psUpdate.setString(3, newBook.getCategory().getStringValue());
+//			psUpdate.setString(4, newBook.getStatus().getStringValue());
+//			psUpdate.setInt(5, oldBook.getBookId());
+//			psUpdate.executeUpdate();
+//			conn.commit();
+//			conn.setAutoCommit(true);
+//		} catch (SQLException e) {
+//			try {
+//				conn.rollback();
+//			}catch (SQLException ex) {
+//				throw new DatabaseException("Update Details Rollback Failed...");
+//			}
+//			throw new DatabaseException("Error Occurred while updating data...");
+//		}
+//		
+//	}
+	
 	@Override
 	public void updateBookDetails(Book oldBook,Book newBook) throws DatabaseException {
 		Connection conn=DBConnection.getConn();
-		String updateBooksQuery="update books set title=?, author=?, category=?, status=? where book_id=?";
-		String insertBooksLogQuery="insert into books_log(book_id,title,author,category,status,availability) values(?,?,?,?,?,?)";
+		String updateBooksQuery="update books set title=?, author=?, category=? where book_id=?";
 		try(
 				PreparedStatement psUpdate=conn.prepareStatement(updateBooksQuery);) {
 			conn.setAutoCommit(false);
@@ -76,10 +115,11 @@ public class BookDaoImplementation implements BookDaoInterface {
 			psUpdate.setString(1, newBook.getTitle());
 			psUpdate.setString(2, newBook.getAuthor());
 			psUpdate.setString(3, newBook.getCategory().getStringValue());
-			psUpdate.setString(4, newBook.getStatus().getStringValue());
-			psUpdate.setInt(5, oldBook.getBookId());
-			psUpdate.executeUpdate();
-			conn.commit();
+			psUpdate.setInt(4, oldBook.getBookId());
+			int count=psUpdate.executeUpdate();
+			if(count!=1) {
+				throw new DatabaseException("Book Not Updated Correctly...");
+			}
 			conn.setAutoCommit(true);
 		} catch (SQLException e) {
 			try {
@@ -88,6 +128,8 @@ public class BookDaoImplementation implements BookDaoInterface {
 				throw new DatabaseException("Update Details Rollback Failed...");
 			}
 			throw new DatabaseException("Error Occurred while updating data...");
+		}catch (DatabaseException e) {
+			throw e;
 		}
 		
 	}
@@ -109,7 +151,10 @@ public class BookDaoImplementation implements BookDaoInterface {
 
 	        psUpdate.setString(1, availability);
 	        psUpdate.setInt(2, oldBook.getBookId());
-	        psUpdate.executeUpdate();
+	        int count=psUpdate.executeUpdate();
+	        if (count!=1) {
+				throw new DatabaseException("Book Availability Not Updated Correctly...");
+			}
 
 	        conn.commit();
 	        conn.setAutoCommit(true);
@@ -120,14 +165,16 @@ public class BookDaoImplementation implements BookDaoInterface {
 	            throw new DatabaseException("Update Availability Rollback Failed...");
 	        }
 	        throw new DatabaseException("Failed To Update Availability...");
-	    }
+	    }catch (DatabaseException e) {
+			throw e;
+		}
 	}
 
 
 	@Override
 	public void deleteBook(Book oldBook) throws DatabaseException {
 		Connection conn=DBConnection.getConn();
-		String updateStatusQuery = "UPDATE books SET status=? WHERE book_id=?";
+		String updateStatusQuery = "UPDATE books SET status=? WHERE book_id=? and availability=?";
 		try (PreparedStatement psUpdateStatus = conn.prepareStatement(updateStatusQuery)) {
 			conn.setAutoCommit(false);
 			
@@ -135,7 +182,14 @@ public class BookDaoImplementation implements BookDaoInterface {
 			
             psUpdateStatus.setString(1, BookStatus.INACTIVE.getStringValue());
             psUpdateStatus.setInt(2, oldBook.getBookId());
-            psUpdateStatus.executeUpdate();
+            psUpdateStatus.setString(3, BookAvailability.AVAILABLE.getStringValue());
+            int count=psUpdateStatus.executeUpdate();
+            if (count!=1) {
+            	throw new DatabaseException("An Issued Book Cannot Be Deleted, Not deleted Correcly...");
+			}
+            
+            conn.commit();
+            conn.setAutoCommit(true);
         }catch(SQLException e) {
 			try {
 				conn.rollback();

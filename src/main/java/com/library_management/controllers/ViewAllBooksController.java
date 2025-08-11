@@ -134,14 +134,16 @@ public class ViewAllBooksController {
 											BookStatus.getEnumConstant(book.getStatus().substring(0, 1)),
 											BookAvailability.getEnumConstant(book.getAvailability().substring(0, 1)));
 
-									getTableView().getItems().remove(getIndex());
-									ResponseHandler.showResponse(message, "Book Deleted Successfully...", Color.GREEN);
 
 									try {
 										new BookDaoImplementation().deleteBook(currentBook);
 									} catch (DatabaseException e) {
 										ResponseHandler.showResponse(message, e.getMessage(), Color.RED);
+										return;
 									}
+									
+									getTableView().getItems().remove(getIndex());
+									ResponseHandler.showResponse(message, "Book Deleted Successfully...", Color.GREEN);
 								});
 							}
 
