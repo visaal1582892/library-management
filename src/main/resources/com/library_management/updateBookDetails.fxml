@@ -20,7 +20,7 @@
 
     <!-- Message -->
     <Text fx:id="message" layoutX="190.0" layoutY="123.0" 
-          style="-fx-fill: #d32f2f;" textAlignment="CENTER" 
+          textAlignment="CENTER" 
           wrappingWidth="414.6667">
         <font><Font size="22.0" /></font>
     </Text>

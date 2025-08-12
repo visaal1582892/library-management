@@ -105,7 +105,7 @@ public class BookDaoImplementation implements BookDaoInterface {
 	@Override
 	public void updateBookDetails(Book oldBook,Book newBook) throws DatabaseException {
 		Connection conn=DBConnection.getConn();
-		String updateBooksQuery="update books set title=?, author=?, category=? where book_id=?";
+		String updateBooksQuery="update books set title=?, author=?, category=? where book_id=? and availability='A'";
 		try(
 				PreparedStatement psUpdate=conn.prepareStatement(updateBooksQuery);) {
 			conn.setAutoCommit(false);
@@ -118,7 +118,7 @@ public class BookDaoImplementation implements BookDaoInterface {
 			psUpdate.setInt(4, oldBook.getBookId());
 			int count=psUpdate.executeUpdate();
 			if(count!=1) {
-				throw new DatabaseException("Book Not Updated Correctly...");
+				throw new DatabaseException("Book Currently Issued Or Not Updated Correctly...");
 			}
 			conn.setAutoCommit(true);
 		} catch (SQLException e) {

@@ -74,6 +74,9 @@ public class UpdateBookDetailsController {
 
     @FXML
     public void initialize() {
+    	
+//    	ResponseHandler.showResponse(message, "Book Updated Succesfully...", Color.GREEN);
+    	
         // Validation for Title
         titleField.textProperty().addListener((obs, oldValue, newValue) -> {
             String cleaned = newValue.replaceAll("[^a-zA-Z0-9 ]", "");
@@ -151,7 +154,7 @@ public class UpdateBookDetailsController {
     }
 
     @FXML
-    public void handleButtonClick() {
+    public void handleButtonClick() throws InterruptedException, IOException {
         try {
             if (selectedBook == null) {
                 throw new InvalidDetailsException("First search and select a book to update...");
@@ -159,14 +162,11 @@ public class UpdateBookDetailsController {
             String title = titleField.getText();
             String author = authorField.getText();
             BookCategory category = categoryComboBox.getSelectionModel().getSelectedItem();
-
+            
             new BookServiceImplementation().validateUpdateBookDetails(selectedBook.getBookId(), title, author, category);
-
+            
             App.setRoot("updateBookDetails");
-
-            clearForm();
-            ResponseHandler.showResponse(message, "Book Details Updated Successfully...", Color.GREEN);
-        } catch (InvalidDetailsException | DatabaseException | IOException e) {
+        } catch (InvalidDetailsException | DatabaseException e) {
             ResponseHandler.showResponse(message, e.getMessage(), Color.RED);
         }
     }
